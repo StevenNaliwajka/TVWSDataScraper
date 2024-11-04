@@ -22,4 +22,6 @@ if __name__ == "__main__":
     outfile_list = read_outfile_config()
 
     # Run Webscraper
-    webscraper = WebScraper()
+    #webscraper = WebScraper()
+
+

@@ -11,8 +11,8 @@ def gen_outfile_config_json():
         "outfileStorageTypes": [
             {
                 "name": "localoutfile",
-                "type": "txt",
-                "location": "TxtOutput/",
+                "type": "csv",
+                "location": "CSVOutput",
                 "active": "T"
             },
             {

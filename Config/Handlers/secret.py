@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 class Secret:
     def __init__(self):
+        # Reads in secret data from secret .env file
         load_dotenv("secret.env")
         self.basestation_ip = os.getenv("BASESTATION_IP")
         self.basestation_username = os.getenv("BASESTATION_USERNAME")

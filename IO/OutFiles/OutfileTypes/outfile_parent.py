@@ -1,3 +1,4 @@
+import os
 from abc import ABC, abstractmethod
 
 
@@ -33,8 +34,8 @@ class OutfileParent(ABC):
     @outfile_type.setter
     def outfile_type(self, value):
         text = value.lower()
-        if text not in {"browser", "localdb", "txt"}:
-            raise ValueError("Active must be either \"browser\", \"localdb\" or \"txt\".")
+        if text not in {"browser", "localdb", "csv"}:
+            raise ValueError("Active must be either \"browser\", \"localdb\" or \"csv\".")
         self._location = value
 
     @property

@@ -1,6 +1,6 @@
 from IO.OutFiles.OutfileTypes.Browser.browser import Browser
 from IO.OutFiles.OutfileTypes.LocalDB.localdb import LocalDB
-from IO.OutFiles.OutfileTypes.TXT.txt import TXT
+from IO.OutFiles.OutfileTypes.CSV.csv import CSV
 
 
 def create_outfile(name, outfile_type, location):
@@ -8,7 +8,7 @@ def create_outfile(name, outfile_type, location):
     outfile_switcher = {
         "browser": Browser(name, 'browser', location),
         "localdb": LocalDB(name, 'localdb', location),
-        "txt": TXT(name, 'txt', location)
+        "csv": CSV(name, 'csv', location)
     }
 
     new_outfile = outfile_switcher.get(outfile_type)
