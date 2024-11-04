@@ -8,3 +8,4 @@ CSVOutput/*
 .env
 .json
 .idea/
+__pycache__/
