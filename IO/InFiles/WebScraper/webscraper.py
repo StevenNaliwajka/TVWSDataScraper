@@ -3,7 +3,7 @@ import time
 
 
 class WebScraper:
-    def __init__(self):
+    def __init__(self, secret):
         # Using https://scrapfly.io/blog/web-scraping-with-selenium-and-python/ as a guide.
         # Verifies latest version of chrome is installed
         driver = webdriver.Chrome()

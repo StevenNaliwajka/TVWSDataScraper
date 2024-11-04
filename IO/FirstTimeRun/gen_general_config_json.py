@@ -9,8 +9,8 @@ def gen_general_config_json():
     # Define the JSON data to write if the file doesn't exist
     default_config = {
         "browser_headless": "T",
-        "sec_between_reads": 50,
-        "sec_between_writes": 100
+        "sec_between_reads": 10,
+        "reads_per_setting": 5
     }
 
     # Check if the file already exists
