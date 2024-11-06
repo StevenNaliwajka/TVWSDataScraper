@@ -2,8 +2,8 @@ from IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
 
 
 class LocalDB(OutfileParent):
-    def __init__(self, name, outfile_type, location):
-        super().__init__(name, outfile_type, location)
+    def __init__(self, name, outfile_type, location, base_station, child_radio_list):
+        super().__init__(name, outfile_type, location, base_station, child_radio_list)
 
         ## NOT SUPPORTED
 

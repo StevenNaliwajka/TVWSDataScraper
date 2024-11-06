@@ -3,17 +3,19 @@ from abc import ABC, abstractmethod
 
 
 class OutfileParent(ABC):
-    def __init__(self, name, outfile_type, location):
+    def __init__(self, name, outfile_type, location, base_station, child_radio_list):
         self._name = None
         self._outfile_type = None
         self._location = None
+        self.base_station = base_station
+        self.child_radio_list = child_radio_list
 
         self.name = name
         self.outfile_type = outfile_type
         self.location = location
 
     @abstractmethod
-    def write_to_outfile(self, data_to_write):
+    def write_to_outfile(self):
         """Writes Data to outfile..."""
         pass
 

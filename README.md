@@ -54,6 +54,8 @@ If chrome driver is out of version have to dl latest:
 I DON'T KNOW RIGHT NOW HOW TO VERIFY THAT THE CORRECT DRIVER IS INSTALLED AUTOMATICALY.
 Newest driver has to be dropped in system path "C:\Windows"
 
+Install, extract and drop "chromedriver.exe" into C:\Windows from this link:
+
 https://googlechromelabs.github.io/chrome-for-testing/#stable
 
 If project turns into something more maybe ill write bash script to handle that if needed.

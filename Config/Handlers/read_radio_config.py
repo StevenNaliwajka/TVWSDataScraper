@@ -2,7 +2,6 @@ import json
 
 from IO.InFiles.Radios.RadioTypes.child import Child
 from IO.InFiles.Radios.RadioTypes.parent import Parent
-from IO.OutFiles.create_outfile import create_outfile
 
 
 def read_radio_config():
@@ -11,10 +10,13 @@ def read_radio_config():
     # If able to be opened
     with open(radio_json_path, "r") as file:
         data = json.load(file)
-        basestation = None
+        base_station = None
         radio_child_list = []
         # For each radio in json
+        print("*****")
+        print(type(data["radioUnitsToMonitor"]))
         for radio in data["radioUnitsToMonitor"]:
+            print("FOUND A RADIO")
             monitor = radio["monitor"]
             # to lower
             if isinstance(monitor, str):
@@ -25,10 +27,11 @@ def read_radio_config():
                 outfile_type = radio["type"]
 
                 outfile_type = outfile_type.lower()
+                print(f"Outfile Type is: {outfile_type}")
 
                 # if a parent, create base station
                 if outfile_type == "parent":
-                    basestation = Parent(name)
+                    base_station = Parent(name)
 
                 # if a child, get more data and make child radio
                 elif outfile_type == "child":
@@ -38,9 +41,10 @@ def read_radio_config():
                     v_distance = radio["v_distance"]
                     special_char_name = radio.get("special_char_name", None)
                     special_char_value = radio.get("special_char_value", None)
+                    print("Making a child radio")
                     new_child = Child(name, base_antenna_angle, this_antenna_angle, h_distance, v_distance,
                                       special_char_name, special_char_value)
                     radio_child_list.append(new_child)
                 else:
                     raise ValueError(f"Config is Invalid, \"{outfile_type}\" is not an acceptable outfile type.")
-            return basestation, radio_child_list
+        return base_station, radio_child_list

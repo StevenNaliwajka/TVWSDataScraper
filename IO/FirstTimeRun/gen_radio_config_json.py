@@ -16,7 +16,7 @@ def gen_radio_config_json():
             },
             {
                 "name": "radio1",
-                "monitor": "F",
+                "monitor": "T",
                 "type": "child",
                 "base_antenna_angle_to_this_deg": 15,
                 "this_antenna_angle_to_base_deg": 60,
@@ -27,7 +27,7 @@ def gen_radio_config_json():
             },
             {
                 "name": "radio2",
-                "monitor": "F",
+                "monitor": "T",
                 "type": "child",
                 "base_antenna_angle_to_this_deg": 15,
                 "this_antenna_angle_to_base_deg": 60,

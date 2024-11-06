@@ -5,7 +5,7 @@ class Child(RadioParent):
     def __init__(self, name, base_antenna_angle, this_antenna_angle, h_distance, v_distance,
                  special_char_name, special_char_value):
         # Child radio type, used as a "register" to store data, Constantly pulled from and pushed too.
-
+        print("Creating A radio pair")
         super().__init__(name)
         # 'config data'
         self.base_antenna_angle = base_antenna_angle

@@ -22,9 +22,10 @@ if __name__ == "__main__":
 
     # Get radio Base station and a list of the children.
     base_station, radio_children_list = read_radio_config()
+    print(len(radio_children_list))
 
     # Generate a list of all the outfile. Allows for multiple options to write data at once.
-    outfile_list = read_outfile_config()
+    outfile_list = read_outfile_config(base_station, radio_children_list)
 
     # Creates WebScraper Object
     web_scraper = WebScraper(secret)

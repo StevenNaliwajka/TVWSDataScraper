@@ -1,7 +1,7 @@
 import threading
 
 from IO.InFiles.update_data_thread import update_data_thread
-from IO.OutFiles import write_data_thread
+from IO.OutFiles.write_data_thread import write_data_thread
 
 
 class ThreadManager:
@@ -20,7 +20,10 @@ class ThreadManager:
                                          config.sec_between_reads, config.reads_per_setting))
         self.thread2 = threading.Thread(target=write_data_thread,
                                    args=(write_data_event, base_station, child_radio_list, outfile_list))
+        print("Threads Created")
 
     def start(self):
+        print("Starting Update Thread")
         self.thread1.start()
+        print("Starting Write Thread")
         self.thread2.start()

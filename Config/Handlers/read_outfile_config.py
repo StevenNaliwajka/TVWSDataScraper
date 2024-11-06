@@ -3,7 +3,7 @@ import json
 from IO.OutFiles.create_outfile import create_outfile
 
 
-def read_outfile_config():
+def read_outfile_config(base_station, child_radio_list):
     outfile_json_path = "Config/outfile_config.json"
 
     # If able to be opened
@@ -21,6 +21,6 @@ def read_outfile_config():
                 name = outfile["name"]
                 outfile_type = outfile["type"]
                 location = outfile["location"]
-                new_outfile = create_outfile(name, outfile_type, location)
+                new_outfile = create_outfile(name, outfile_type, location, base_station, child_radio_list)
                 outfile_list.append(new_outfile)
         return outfile_list
