@@ -82,6 +82,7 @@ class WebScraper:
         channel_element = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.ID, "channel-value"))
         )
+        print("Freq Exists")
 
         # GET CHANNEL & Freq + parse
         channel_text = channel_element.text
