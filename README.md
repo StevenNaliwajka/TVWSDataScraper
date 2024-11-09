@@ -44,18 +44,11 @@ Input: Uses Selenium to navigate through webgui, toggles through settings and re
 Output: Currently only .csv files supported, DB can be implemented if school has somewhere to store data.
 
 # SETUP:
-1) Make sure to get required dependencies:
-'''
-pip install -r requirements.txt
-'''
-2) Config + Secret files are built on first run. Run and you will be prompted to fill out config.
+1) While in the TVWSDataScraper/ path, run the bash file to download requirements:
 
-If chrome driver is out of version have to dl latest:
-I DON'T KNOW RIGHT NOW HOW TO VERIFY THAT THE CORRECT DRIVER IS INSTALLED AUTOMATICALY.
-Newest driver has to be dropped in system path "C:\Windows"
+'
+bash setup.sh
+'
+2) Config + Secret files are built on first run to save from leaking settings. Run the below code to run the program.
 
-Install, extract and drop "chromedriver.exe" into C:\Windows from this link:
-
-https://googlechromelabs.github.io/chrome-for-testing/#stable
-
-If project turns into something more maybe ill write bash script to handle that if needed.
+'python tvwsdatascraper.py'
