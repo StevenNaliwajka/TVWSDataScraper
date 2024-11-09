@@ -90,10 +90,12 @@ class WebScraper:
             match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
             if match and match.group(1) and int(match.group(1)) != 0:
                 wait_flag = 0
+                print(int(match.group(1)))
             else:
                 pass
             time.sleep(.5)
         print("Freq NonZero")
+
 
         # GET CHANNEL & Freq + parse
         channel_text = channel_element.text
