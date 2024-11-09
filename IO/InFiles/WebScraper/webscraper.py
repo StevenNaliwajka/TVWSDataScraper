@@ -59,7 +59,13 @@ class WebScraper:
             )
             # Input the password
             password_field.send_keys(self.secret.basestation_password)
-            print("Base Station Login Succuessful.")
+
+            # Wait for the login button to be present and click it
+            login_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.ID, "login"))
+            )
+            login_button.click()
+            print("Base Station Login Successful.")
 
         except TimeoutException:
             print("Username or password field did not load within the specified time")
