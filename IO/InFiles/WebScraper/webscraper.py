@@ -72,13 +72,19 @@ class WebScraper:
             print("Username or password field did not load within the specified time")
 
     def update_settings(self):
+
         pass
 
     def read_first_time(self):
         # gets the 'static' values that are used to change around data.
 
+        # WAIT TILL FREQ EXISTS
+        channel_element = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.ID, "channel-value"))
+        )
+
         # GET CHANNEL & Freq + parse
-        channel_text = self.driver.find_element(By.ID, "channel-value").text
+        channel_text = channel_element.text
         match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
         if match:
             self.base_station.channel = int(match.group(1))  # Extracts 17

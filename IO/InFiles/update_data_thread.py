@@ -9,8 +9,10 @@ def update_data_thread(write_data_event, web_scraper, config):
     web_scraper.update_settings()
     # Give time to registers to populate on WEBGUI.
     time.sleep(5)
+    print("Thread creation done.")
     write_counter = 0
     setting_counter = 0
+    web_scraper.read_first_time()
     while 1:
         # Read data
         web_scraper.read_data()

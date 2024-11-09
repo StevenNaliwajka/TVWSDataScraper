@@ -42,7 +42,7 @@ class CSVFile(OutfileParent):
             # Gets child radio, makes code cleaner.
             CRadio = self.child_radio_list[i]
             with open(file, 'w') as file:
-                print(f"(CSVFile) Created file, {file_name}")
+                print(f"(CSVFile) Created file: {file_name}")
                 # Headder Table 1: MetaData
                 file.write(f"ReceiverName,BaseAntennaAngle,ReceiverAntennaAngle,HDistance,"
                            f"VDistance,SpecialCharName,SpecialCharValue\n")
