@@ -11,7 +11,7 @@ from IO.OutFiles import write_data_thread
 from IO.thread_manager import ThreadManager
 
 if __name__ == "__main__":
-    print(f"Initializing TVWS Web Scraper")
+    print(f"(TVWSDataScraper) Initializing TVWS Web Scraper.")
     # Initializes config files and prompts user to configure them.
     config_init()
 
@@ -22,7 +22,6 @@ if __name__ == "__main__":
 
     # Get radio Base station and a list of the children.
     base_station, radio_children_list = read_radio_config()
-    print(len(radio_children_list))
 
     # Generate a list of all the outfile. Allows for multiple options to write data at once.
     outfile_list = read_outfile_config(base_station, radio_children_list)
@@ -30,11 +29,11 @@ if __name__ == "__main__":
     # Creates WebScraper Object
     web_scraper = WebScraper(secret, base_station, radio_children_list)
 
-    print(f"Initializing Threads")
+    print(f"(TVWSDataScraper) Initializing Threads.")
     # Creates instance of ThreadManager where threads are created.
     program = ThreadManager(web_scraper, base_station, radio_children_list, outfile_list, config)
 
-    print(f"Starting Program")
+    print(f"(TVWSDataScraper) Starting Program.")
     # Starts Program.
     program.start()
 

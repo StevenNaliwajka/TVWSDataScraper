@@ -14,16 +14,16 @@ class CSVFile(OutfileParent):
             parent_folder = os.path.abspath(os.path.join(current_path, *[".."] * levels_up))
             location = os.path.join(parent_folder, location)
         super().__init__(name, outfile_type, location, base_station, child_radio_list)
-        print(f"Output CSV files to be saved in: {location}")
+        print(f"(CSVFile) Output CSV files to be saved in: {location}")
         os.makedirs(self.location, exist_ok=True)
 
         self.date = None
         self.time = None
         self.update_time()
         self.file_name_list = []
-        print("Building CSV File Names")
+        #print("Building CSV File Names")
         self.build_file_names()
-        print("INITING CSV Files")
+        #print("INITING CSV Files")
         self.create_file_and_init()
 
     def build_file_names(self):
@@ -38,10 +38,11 @@ class CSVFile(OutfileParent):
     def create_file_and_init(self):
         i = 0
         for file in self.file_name_list:
+            file_name = file
             # Gets child radio, makes code cleaner.
             CRadio = self.child_radio_list[i]
             with open(file, 'w') as file:
-                print(f"Created file: {file}")
+                print(f"(CSVFile) Created file, {file_name}")
                 # Headder Table 1: MetaData
                 file.write(f"ReceiverName,BaseAntennaAngle,ReceiverAntennaAngle,HDistance,"
                            f"VDistance,SpecialCharName,SpecialCharValue\n")

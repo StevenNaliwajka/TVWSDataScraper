@@ -7,7 +7,7 @@ class Child(RadioParent):
     def __init__(self, name, base_antenna_angle, this_antenna_angle, h_distance, v_distance,
                  special_char_name, special_char_value):
         # Child radio type, used as a "register" to store data, Constantly pulled from and pushed too.
-        print("Creating A radio pair")
+        # print("Creating A radio pair")
         super().__init__(name)
         # 'config data'
         self.base_antenna_angle = base_antenna_angle
@@ -42,7 +42,7 @@ class Child(RadioParent):
             else:
                 setattr(self, key, value)
         else:
-            raise ValueError("Key not in Child Radio object.")
+            raise ValueError(f"(ChildRadio): Key \'{key}\' not in radio \'{self.name}\' object.")
 
     def pull_data(self, key):
         key = "_" + key
@@ -57,5 +57,5 @@ class Child(RadioParent):
                 setattr(self, key, None)
             return avg
         else:
-            raise ValueError("Key not in Child Radio object.")
+            raise ValueError(f"(ChildRadio): Key \'{key}\' not in radio \'{self.name}\' object.")
 

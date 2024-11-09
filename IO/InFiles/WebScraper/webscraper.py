@@ -31,7 +31,7 @@ class WebScraper:
 
     def get_firefox_driver(self):
         system_architecture = platform.machine()
-        print(system_architecture)
+        # print(system_architecture)
         # For x86_64 architecture (Windows,linux)
         if system_architecture == "AMD64":
             service = FirefoxService(GeckoDriverManager().install())

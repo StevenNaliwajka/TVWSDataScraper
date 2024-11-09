@@ -52,3 +52,5 @@ bash setup.sh
 2) Config + Secret files are built on first run to save from leaking settings. Run the below code to run the program.
 
 'python tvwsdatascraper.py'
+
+Note to self. fix the bash script to create correct 'tvws' venv and then on python run swap to the venv

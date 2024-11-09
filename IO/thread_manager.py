@@ -18,10 +18,10 @@ class ThreadManager:
                                    args=(write_data_event, web_scraper, config))
         self.thread2 = threading.Thread(target=write_data_thread,
                                    args=(write_data_event, outfile_list))
-        print("Threads Created")
+        # print("Threads Created")
 
     def start(self):
-        print("Starting Update Thread")
+        print("(ThreadManager) Starting Update Thread")
         self.thread1.start()
-        print("Starting Write Thread")
+        print("(ThreadManager) Starting Write Thread")
         self.thread2.start()

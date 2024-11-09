@@ -22,8 +22,8 @@ CLIENT2_PASSWORD="""
         # Write the content to the file
         with open(env_file_path, "w") as file:
             file.write(env_content)
-        print(f"{env_file_path} has been created with default values.")
+        print(f"(Config) {env_file_path} has been created with default values.")
         return True
     else:
-        print(f"{env_file_path} already exists. No action taken.")
+        print(f"(Config) {env_file_path} already exists. No action taken.")
         return False

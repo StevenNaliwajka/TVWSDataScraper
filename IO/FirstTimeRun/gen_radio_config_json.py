@@ -48,8 +48,8 @@ def gen_radio_config_json():
         # Create and write the default JSON data
         with open(json_file_path, "w") as file:
             json.dump(default_config, file, indent=4)
-        print(f"{json_file_path} has been created with default configuration.")
+        print(f"(Config) {json_file_path} has been created with default configuration.")
         return True
     else:
-        print(f"{json_file_path} already exists. No action taken.")
+        print(f"(Config) {json_file_path} already exists. No action taken.")
         return False
