@@ -83,6 +83,16 @@ class WebScraper:
             EC.presence_of_element_located((By.ID, "channel-value"))
         )
         print("Freq Exists")
+        # Wait for data to load on the radio.
+        wait_flag = 1
+        while wait_flag:
+            channel_text = channel_element.text
+            match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
+            if 0 == int(match.group(1)):
+                pass
+            else:
+                wait_flag = 0
+        print("Freq NonZero")
 
         # GET CHANNEL & Freq + parse
         channel_text = channel_element.text
