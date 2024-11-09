@@ -31,7 +31,26 @@ def read_radio_config():
 
                 # if a parent, create base station
                 if outfile_type == "parent":
-                    base_station = Parent(name)
+                    if radio["cycle_channel"] in {True, "t", "true"}:
+                        cycle_channel = True
+                    else:
+                        cycle_channel = False
+
+                    if radio["cycle_tx_power"] in {True, "t", "true"}:
+                        cycle_tx_power = True
+                    else:
+                        cycle_tx_power = False
+
+                    if radio["cycle_rx_gain"] in {True, "t", "true"}:
+                        cycle_rx_gain = True
+                    else:
+                        cycle_rx_gain = False
+
+                    if radio["cycle_channel_bandwidth"] in {True, "t", "true"}:
+                        cycle_channel_bandwidth = True
+                    else:
+                        cycle_channel_bandwidth = False
+                    base_station = Parent(name, cycle_channel, cycle_tx_power, cycle_rx_gain, cycle_channel_bandwidth)
 
                 # if a child, get more data and make child radio
                 elif outfile_type == "child":

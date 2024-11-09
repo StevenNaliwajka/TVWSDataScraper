@@ -10,7 +10,8 @@ def gen_general_config_json():
     default_config = {
         "browser_headless": "T",
         "sec_between_reads": 10,
-        "reads_per_setting": 5
+        "reads_between_writes": 1,
+        "writes_per_setting": 4
     }
 
     # Check if the file already exists

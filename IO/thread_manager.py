@@ -12,14 +12,12 @@ class ThreadManager:
         self.config = config
         self.outfile_list = outfile_list
 
-        read_data_event = threading.Event()
         write_data_event = threading.Event()
 
         self.thread1 = threading.Thread(target=update_data_thread,
-                                   args=(read_data_event, write_data_event, web_scraper, base_station, child_radio_list,
-                                         config.sec_between_reads, config.reads_per_setting))
+                                   args=(write_data_event, web_scraper, config))
         self.thread2 = threading.Thread(target=write_data_thread,
-                                   args=(write_data_event, base_station, child_radio_list, outfile_list))
+                                   args=(write_data_event, outfile_list))
         print("Threads Created")
 
     def start(self):

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>6Harmonics Inc.</title>
+    <link rel="stylesheet" href="stylesheet.css" />
+    <link rel="stylesheet" href="w3.css">
+    <link rel="stylesheet" href="tippy.css">
+    <link rel="stylesheet" href="Chart.min.css">
+    <link rel='icon' type='image/x-icon' href='/gws/favicon.ico' />
+    <link src="javascript.js" />
+</head>
+
+<body style=" font-family: Helvetica Neue, Helvetica, Arial, sans-serif;background-color:#d6d6d6 ">
+    <div class="wrapper">
+        <div id="loadPage" class="loadPage w3-animate-opacity">
+            <img src="logo_only.png" class="loader" />
+            <p>Loading...</p>
+        </div>
+        <div id="menuBar" class="w3-top w3-black w3-responsive w3-row" style="visibility:hidden;">
+            <img src="full_logo_col_sm_all_white.png" / style="height:40px;">
+            <ul class="w3-navbar   w3-large w3-right">
+                <li class="w3-white">
+                    <a href="Monitor.html">Monitor</a>
+                </li>
+                <li>
+                    <a href="System.html">System</a>
+                </li>
+                <li>
+                    <a href="About.html">About</a>
+                </li>
+            </ul>
+        </div>
+        <br>
+        <br>
+        <div id="content" class="w3-container" style="margin-left:0;visibility:hidden;">
+            <div class="innertube">
+                <div id="radioStatus" class="w3-container" style="margin-left:0;">
+
+
+                    <h2 id="radioStatusTitle" name='titles'>Radio Status</h2>
+                    <div class="">
+                        <div class="w3-row w3-responsive w3-layout-container ">
+                            <div id="radio-board" class="monitor-board w3-container w3-layout-cell" style="width:100%;padding-left:0;padding-right:0">
+                                <div id="deviceTableDiv" class="w3-container w3-padding-0">
+                                    <table id="deviceTable" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-card-4">
+                                        <thead>
+                                            <tr class="w3-light-grey">
+                                                <th class="w3-border-right" style="width:30%;">
+                                                    <div id="circle-monitor" class="circle w3-green"></div>
+                                                </th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tr>
+                                            <td class="w3-border-right">Radio Type / MAC</td>
+                                            <td>
+                                                    <span id="radiotype-value"></span>
+                                                    <span id='macdivider' class='spanDivider'> / </span>
+                                                    <span id="mac-value"></span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="w3-border-right">Connected Stations</td>
+                                            <td>
+                                                <p id="stanum-value" class="radio-table-cell"></p>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td id="ip-title" class="w3-border-right">IP / SSID</td>
+                                            <td >
+                                                <span id="ip-value"></span>
+                                                <span class='spanDivider'> / </span>
+                                                <span id="ssid-value"></span>
+                                                <span id="psk-value"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-border-right">LAN Speed Duplex</td>
+                                            <td>
+                                                <div id="duplex-value" style="display:inline-block"></div>
+                                                <button class="w3-btn w3-blue-grey w3-round-large w3-tiny" style="float:right;display:inline-block;" id="diag-button">Diagnosis</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="w3-border-right">Location</td>
+                                            <td>
+                                                <div id="location-value" class="radio-table-cell"></div>
+                                                <button id="map-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny" style="float:right;" onclick="toggleMap()" disabled>Map</button>
+                                                <span id="map-warn" class="w3-tooltip w3-right" style="display:none">
+                                                    <span class="w3-tag w3-amber w3-right w3-small w3-text-white w3-round-large" style="margin-top:0.1em">!</span>
+                                                    <span class="w3-right w3-deep-orange w3-round w3-margin-right w3-text w3-tag w3-animate-opacity">Failed to load Maps. Please check internet connection on PC</span>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-border-right" id='monitor-channel-row'>
+                                                <button id="chan-freq-switch-btn" class="w3-button w3-left w3-light-grey w3-padding-0 w3-border-0" onclick="chanFreqSwitchBtn()"
+                                                    title="Click to switch to frequency mode">Channel(Freq)/Noise/Region</button>
+                                                <span id="chan-freq-switch-text" style="display:none">Channel / Region</span>
+                                            </td>
+                                            <td>
+                                                <div id="channel-config-div" style="display:block">
+                                                    <p  id='chan-row-div'class="radio-table-cell">
+                                                        <span id="channel-value"></span>
+                                                        <span class='bink_text' id='hopping-value' title=""></span>
+                                                        <span class='spanDivider'> / </span>
+                                                        <span id="selfnf-value"></span>
+                                                        <span class='spanDivider'> / </span>
+                                                        <span id="region-value"></span>
+                                                    </p>
+                                                    <select id="channel-config" class="w3-select w3-border config-bar-button config-bar-input" name="option">
+                                                        <option value="" disabled selected>Choose your channel</option>
+                                                    </select>
+                                                    <button id="channel-config-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configBtn" onclick="configBtn('channel')">Config</button>
+                                                    <button id="channel-cancel-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configCancelBtn" onclick="cancelChanBtn()">Cancel</button>
+                                                    <button id="channel-save-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configSaveBtn" onclick="saveChannel()">Save</button>
+                                                </div>
+                                                <div id="freq-config-div" style="display:none">
+                                                    <p id="freq-value" class="radio-table-cell"></p>
+
+                                                    <input id="freq-config" title='input frequency' style="width:50% !important"type="number" class="w3-input w3-border w3-tiny config-bar-button config-bar-input" placeholder="Input frquency"
+                                                    />
+
+                                                    <button id="freq-config-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configBtn" onclick="configBtn('freq')">Config</button>
+                                                    <button id="freq-cancel-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configCancelBtn" onclick="cancelBtn('freq')">Cancel</button>
+                                                    <button id="freq-save-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configSaveBtn" onclick="saveFreq()">Save</button>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="w3-border-right">Tx State / Tx Power</td>
+                                            <td>
+                                                <p id="txpwr-row-div" class="radio-table-cell">
+                                                    <span id="txstate-value"></span>
+                                                    <span class='spanDivider'> / </span>
+                                                    <span id="txpwr-value"></span>
+                                                </p>
+                                                <select id="txpwr-config" class="w3-select w3-border config-bar-button config-bar-input" name="option">
+                                                    <option value="" disabled selected>Choose your TX power</option>
+                                                </select>
+                                                <button id="txpwr-config-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configBtn" onclick="configBtn('txpwr')">Config</button>
+                                                <button id="txpwr-cancel-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configCancelBtn" onclick="cancelTxpwrBtn()">Cancel</button>
+                                                <button id="txpwr-save-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configSaveBtn" onclick="saveTxPwr()">Save</button>
+
+                                            </td>
+                                        </tr>
+
+                                        <tr id='rxgain-row'>
+                                            <td class="w3-border-right">RX Gain</td>
+                                            <td>
+                                                <p id="rxgain-value" class="radio-table-cell"></p>
+                                                <select id="rxgain-config" class="w3-select w3-border config-bar-button config-bar-input" name="option">
+                                                    <option value="" disabled selected>Choose your RX gain</option>
+                                                </select>
+                                                <button id="rxgain-config-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configBtn" onclick="configBtn('rxgain')" style="display:none">Config</button>
+                                                <button id="rxgain-cancel-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configCancelBtn" onclick="cancelBtn('rxgain')">Cancel</button>
+                                                <button id="rxgain-save-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configSaveBtn" style="float:right;display:none;margin:0 5px"
+                                                    onclick="saveRxGain()">Save</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="w3-border-right">Temperature</td>
+                                            <td id="temp-value"></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="w3-border-right">Channel Bandwidth</td>
+                                            <td>
+                                                <p id="chanbw-value" class="radio-table-cell"></p>
+                                                <select id="chanbw-config" class="w3-select w3-border config-bar-button config-bar-input" name="option">
+                                                    <option value="" disabled selected>Choose your channel bandwidth</option>
+                                                </select>
+                                                <button id="chanbw-config-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configBtn" style="display:none" onclick="configBtn('chanbw')">Config</button>
+                                                <button id="chanbw-cancel-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configCancelBtn" onclick="cancelBtn('chanbw')">Cancel</button>
+                                                <button id="chanbw-save-btn" class="w3-btn w3-blue-grey w3-round-large w3-tiny configSaveBtn" onclick="clickSaveChanBw()">Save</button>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-border-right">System Up Time</td>
+                                            <td id="uptime-value"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-border-right">Free Memory</td>
+                                            <td id="freemem-value"></td>
+                                        </tr>
+                                        <tr id='runningfeatures-row'>
+                                            <td class="w3-border-right">Current Running Features</td>
+                                            <td id="runningfeatures-value"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div id="mapDiv" class="monitor-board w3-container w3-layout-cell Flexible-container w3-card-4 w3-content" style="padding: 0.01em;">
+                                <div id="myMap" class="  " style='width:100%;height:100%;'></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h1>
+                        <button id="specchanscan-btn" onclick="document.getElementById('specchanscan-tab').style.display='block';"
+                            class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round" style="float:right; font-size: 16px;" disabled>
+                            <strong>Channel Noise/Beacon Scan</strong>
+                        </button>
+                        <button id="text-btn" onclick="document.getElementById('text-tab').style.display='block';"
+                            class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round w3-tiny" style=" float:right; margin-right:10px; display: none">
+                            <strong>Text</strong>
+                        </button>
+                    </h1>
+                    <div id='diag-panel' style="display:none" class='w3-animate-left'>
+                        <h2 name='titles'>Diagnosis Tool</h2>
+                        <p id='diag-status' class="blink_text" style="margin-top:0"></p>
+                        <button class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round w3-tiny w3-margin-bottom" id='diag-restart' onClick="dx.init()" style=" margin-right:8px">Test Again</button>
+                        <a href="/logfiles"  download="logfiles"><button class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round w3-tiny w3-margin-bottom" id='log-download'>Download Log Files</button></a>
+                        <div class="w3-row-padding w3-padding-0" id='diag-panel-body'>
+                        </div>
+                    </div>
+
+                    <div id="specchanscan-tab" style="display:none">
+                        <h2 name='titles'>Channel Noise/Beacon Scan</h2>
+                        <div class="w3-card-4" id="channelscanPanel">
+                            <header class="w3-light-grey w3-padding-0">
+                                <div class="w3-container w3-padding-0">
+                                    <button onclick="document.getElementById('specchanscan-tab').style.display='none'" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round"
+                                        id="specScanCloseBtn" style=" float:right; font-size: 16px;">
+                                        <strong>Close</strong>
+                                    </button>
+                                </div>
+                            </header>
+                            <div class="w3-container" id="scan-modal-content">
+                                <div class="">
+                                    <div style="margin-top:8px;margin-bottom:8px">
+                                        <button id="specchanscan-start-btn" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round" style="margin-right:8px; font-size: 16px;">Start Spectrum Channel Scan</button>
+                                        <button id="beaconscan-start-btn" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round" style="margin-right:8px; display:none; font-size: 16px;">Start Full Channel Beacon Signal Scan</button>
+                                        <button id="sbeaconscan-start-btn" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round" style="margin-right:8px; display:none; font-size: 16px;">Start Current Channel Beacon Signal Scan</button>
+                                        <button id="shownoiseres-btn" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round" style="margin-right:8px; font-size: 16px;">Show Noise Scan Result</button>
+                                        <button id="showbeaconres-btn" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round" style="margin-right:8px; font-size: 16px;">Show Beacon Scan Result</button>
+                                    </div>
+
+                                    <div id="scanwait" class="w3-animate-opacity" style="margin:auto; display:none">
+                                        <span>
+                                            <div class="w3-row">
+                                                <p>
+                                                    <img id="specScanLoader" src="logo_only.png" class="loader" style="height:25px;width:25px"
+                                                    />
+                                                    <text id="specScanStatus"></text>
+                                                    <text id="specScanRes"></text>
+                                                </p>
+                                            </div>
+                                        </span>
+                                    </div>
+
+
+                                    <div id="noiseScanPanel" style="display:none">
+                                        <!--<h4>噪声/信标扫描</h4>-->
+                                        <h4> </h4>
+                                        <div id="noisescan-progress-container" class="w3-progress-container" style="display:none; margin-bottom: 10px;">
+                                            <div id="noisescan-progress" class="w3-progressbar w3-blue" style="width:0%">
+                                            </div>
+                                        </div>
+                                        <div id="graphDiv2"></div>
+                                    </div>
+                                    <div id="beaconScanPanel" style="display:none">
+                                        <!-- <h4>信标信号扫描</h4> -->
+
+                                        <div id="beaconscan-progress-container" class="w3-progress-container" style="display:none; margin-bottom: 10px;">
+                                            <div id="beaconscan-progress" class="w3-progressbar w3-blue" style="width:0%">
+                                            </div>
+                                        </div>
+
+                                        <div id="beaconScan-chart" class="w3-padding-0" style="height:100px; width: 400px; display:none">
+                                            <canvas id="beaconChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="text-tab" style="display:none">
+                        <h2 name='titles'>Text</h2>
+                        <div class="w3-card-4" id="channelscanPanel">
+                            <header class="w3-light-grey w3-padding-0">
+                                <div class="w3-container w3-padding-0">
+                                    <button onclick="document.getElementById('text-tab').style.display='none'" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round w3-tiny"
+                                        id="textCloseBtn" style=" float:right">
+                                        <strong>Close</strong>
+                                    </button>
+                                </div>
+                            </header>
+                            <div class="w3-container" id="text-content">
+                                <div class="">
+                                    <div style="margin-top:8px;margin-bottom:8px">
+                                        <div class="w3-cell inline" style="vertical-align: top;">
+                                            <label class="w3-cell"> Receive: </label>
+                                        </div>
+                                        <div class="w3-cell inline w3-margin-left">
+                                            <p id="rcvmsg"></p>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top:8px;margin-bottom:8px">
+                                        <div class="w3-cell inline">
+                                            <label class="w3-cell"> Input Text: </label>
+                                        </div>
+                                        <div class="w3-cell inline w3-margin-left">
+                                            <input type="text" id="text-input" class="w3-input w3-border w3-round w3-padding-4" name="inputtext" />
+                                        </div>
+                                    </div>
+                                    <div class="w3-row" style="display: none;">
+                                        <p>发送地址:</p>
+                                    </div>
+                                    <div style="margin-top:8px;margin-bottom:8px">
+                                        <button id="shortmsgbtn" class="w3-btn w3-teal">Send</button>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div id="mop-tab" style="display:none">
+                        <h2 name='titles'>MOP Channel List</h2>
+                        <div class="w3-card-4" id="mopListPanel">
+                                <header class="w3-light-grey w3-padding-0">
+                                    <div class="w3-container w3-padding-0">
+                                        <button onclick="document.getElementById('mop-tab').style.display='none'" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round w3-tiny"
+                                            id="mopListCloseBtn" style=" float:right">
+                                            <strong>Close</strong>
+                                        </button>
+                                    </div>
+                                </header>
+                                <div class="w3-container" id="mop-list-content">
+                                        <div id="mop-chart" style="width: 1100px;height:300px;"></div>
+                                </div>
+                        </div>
+                    </div> -->
+                    <div class="w3-container w3-padding-0" id="dbTableDiv" style="display:none">
+                        <h2 name='titles'>Database Agent Status</h2>
+                        <div class="w3-responsive w3-card-4">
+                            <table id="dbTable" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-card-4 " style="white-space:nowrap">
+                                <tr>
+                                    <td class="w3-border-right" class="w3-border-right" style="width:20%;">Database access</td>
+                                    <td id="dbaccess-value" class="w3-border-right" style="width:30%;"></td>
+
+                                    <td class="w3-border-right" style="width:20%;">System time</td>
+                                    <td id="dbsystime-value" style="width:30%;"></td>
+                                </tr>
+                                <tr>
+                                    <td class="w3-border-right" style="width:20%;">T-validity</td>
+                                    <td id="chanlistexptime-value" class="w3-border-right"></td>
+                                    <td class="w3-border-right" class="w3-border-right" style="width:20%;">T-Update</td>
+                                    <td id="querytimeleft-value" class="w3-border-right"></td>
+                                </tr>
+                                <tr id="channelscan-row">
+                                    <td id="channelscan-title" class="w3-border-right">Agent status</td>
+                                    <td id="channelscan-value" class="w3-border-right"></td>
+                                    <td class="w3-border-right">Database log</td>
+                                    <td id="dbdlog-value" class="w3-border-right w3-text-red"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="connStatus" class="w3-container" style="margin-left:0;">
+                    <div class="w3-container w3-padding-0" id="TabContainer" style="margin:0;">
+                        <div class="w3-row">
+                            <h2 class="w3-left" name='titles'>Connection Status</h2>
+
+                            <h2 class="w3-right">
+                                <button id="beaconScan-btn" onclick="scanBeacon();" class="w3-btn  w3-border-bottom w3-blue w3-padding-tiny w3-round"
+                                    style="display: none; font-size: 16px;">
+                                    <strong>Beacon</strong>
+                                </button>
+                            </h2>
+                            <h1 id="beaconScan-value-div" class="w3-hide w3-animate-opacity w3-right w3-padding-top w3-margin" style="font-size: 20px;">
+                                <div id="beaconScan-value" class="w3-text-green"></div>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="connTable">
+                        <div class="w3-container w3-padding-0 w3-responsive " id="StaConfContainer" style="display:none">
+                        </div>
+                        <div class="w3-container w3-responsive w3-padding-0" id="StaContainer" style="margin:0;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="push"></div>
+    </div>
+    <div id="beaconToolTipTemplate" style="display:none">
+
+    </div>
+    <div id="confirmPanel-monitor" class="w3-modal">
+        <div class="w3-modal-content w3-card-8 w3-animate-top w3-round-large">
+            <header class="w3-container w3-blue-grey w3-round-large" style="border-bottom-left-radius:0px!important;border-bottom-right-radius:0px!important;">
+                <span onclick="document.getElementById('confirmPanel').style.display='none'" class="w3-closebtn" style="display:none">&times;</span>
+                <h2 id="modal-head">Reboot</h2>
+            </header>
+            <div class="w3-container">
+                <p id="modal-body">Are you sure to reboot?</p>
+                <div id="progBarContainer" class="w3-progress-container progBar" style="">
+                    <div id="progBar" class="w3-progressbar w3-blue progBar" style="width:0%;">
+                        <div id="progBarText" class="w3-container w3-text-white">Setting...</div>
+                    </div>
+                    <div id="successBar" class="w3-progressbar w3-green w3-animate-left progBar" style="width:100%;">
+                        <div class="w3-container w3-text-white">Success!</div>
+                    </div>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-half w3-padding">
+                        <button id="modal-yes" class="w3-btn-block w3-round w3-small w3-blue-grey">YES</button>
+                    </div>
+                    <div class="w3-half w3-padding">
+                        <button id="modal-no" onclick="document.getElementById('confirmPanel-monitor').style.display='none'" class=" w3-btn-block w3-round w3-small w3-blue-grey">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer w3-container w3-padding-8 w3-center w3-opacity w3-light-grey">
+        <p class="w3-tiny w3-margin-0">© 2018 6Harmonics Inc. All Rights Reserved. </p>
+    </div>
+</body>
+<script src="platform.js"></script>
+<script src="axios.min.js"></script>
+
+<script>
+    axios.defaults.baseURL = '/cgi-bin/gws/'
+</script>
+
+<script src="spin.js"></script>
+<script src="tippy.min.js"></script>
+<script src="Chart.min.js"></script>
+<script src="chartjs-plugin-datalabels.min.js"></script>
+<script src="functions.js"></script>
+
+<script src="map.js"></script>
+<script src="dx.js"></script>
+<script src="Config.js"></script>
+<script src="beaconScan.js"></script>
+<script src="noiseScan.js"></script>
+<script src="Monitor-js.js"></script>
+<script src="canvas_bar_graph.js"></script>
+
+
+</html>

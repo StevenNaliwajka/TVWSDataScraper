@@ -12,7 +12,11 @@ def gen_radio_config_json():
             {
                 "name": "basestation",
                 "monitor": "T",
-                "type": "parent"
+                "type": "parent",
+                "cycle_channel": "F",
+                "cycle_tx_power": "F",
+                "cycle_rx_gain": "F",
+                "cycle_channel_bandwidth": "F"
             },
             {
                 "name": "radio1",

@@ -1,4 +1,6 @@
 from IO.InFiles.Radios.radio_parent import RadioParent
+import re
+import subprocess
 
 
 class Child(RadioParent):
@@ -32,7 +34,7 @@ class Child(RadioParent):
 
     def push_data(self, key, value):
         # Should only be used for the 'register' values
-        key = "_"+key
+        key = "_" + key
         if hasattr(self, key):
             attr = getattr(self, key)
             if isinstance(attr, list):

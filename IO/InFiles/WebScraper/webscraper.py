@@ -1,4 +1,6 @@
 import platform
+import re
+
 from selenium import webdriver
 from selenium.common import TimeoutException
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -11,22 +13,21 @@ import time
 
 
 class WebScraper:
-    def __init__(self, secret):
+    def __init__(self, secret, base_station, child_radio_list):
         # Using https://scrapfly.io/blog/web-scraping-with-selenium-and-python/ as a guide.
         # Verifies latest version of chrome is installed
         '''
         GeckoDriverManager().install()
         self.driver = webdriver.Firefox()
         '''
+        self.base_station = base_station
+        self.child_radio_list = child_radio_list
         # Set up the Firefox service with the driver from GeckoDriverManager
         self.driver = self.get_firefox_driver()
         self.secret = secret
 
         # Login to Base Station
         self.login_to_base_station()
-
-        time.sleep(500)
-        self.driver.quit()
 
     def get_firefox_driver(self):
         system_architecture = platform.machine()
@@ -69,3 +70,47 @@ class WebScraper:
 
         except TimeoutException:
             print("Username or password field did not load within the specified time")
+
+    def update_settings(self):
+        pass
+
+    def read_first_time(self):
+        # gets the 'static' values that are used to change around data.
+
+        # GET CHANNEL & Freq + parse
+        channel_text = self.driver.find_element(By.ID, "channel-value").text
+        match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
+        if match:
+            self.base_station.channel = int(match.group(1))  # Extracts 17
+            self.base_station.freq = int(match.group(2))  # Extracts 491
+
+        # GET NOISE + parse
+        freq_text = self.driver.find_element(By.ID, "selfnf-value").text
+        match = re.search(r"-?\d+", freq_text)
+        if match:
+            self.base_station.noise = int(match.group())  # Extracts -104 as an integer
+
+        # GET TX Power
+        tx_power_text = self.driver.find_element(By.ID, "txpwr-value").text
+        match = re.search(r"-?\d+", tx_power_text)
+        if match:
+            self.base_station.tx_power = int(match.group())  # Extracts the numeric value as an integer
+
+        # GET RX Gain
+        rx_gain_text = self.driver.find_element(By.ID, "rxgain-value").text
+        match = re.search(r"-?\d+", rx_gain_text)
+        if match:
+            self.base_station.rx_gain = int(match.group())  # Extracts -2 as an integer
+
+        # GET Channel Bandwidth
+        channel_bw_text = self.driver.find_element(By.ID, "chanbw-value").text
+        match = re.search(r"/d+", channel_bw_text)
+        if match:
+            self.base_station.bandwidth = int(match.group())  # Extracts -2 as an integer
+
+        # Gets the rest of the variable data
+        self.read_data()
+
+    def read_data(self):
+        # Get temp + everything else
+        pass

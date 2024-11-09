@@ -2,7 +2,6 @@ import os
 
 from IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
 from datetime import date, datetime
-import csv
 
 
 class CSVFile(OutfileParent):
@@ -29,9 +28,8 @@ class CSVFile(OutfileParent):
 
     def build_file_names(self):
         for radio_unit in self.child_radio_list:
-
             file_name = f"TVWSScenario_{radio_unit.name}_{self.date}_{self.time}.csv"
-            # Time is an issue, ":" causes issues with windows file structure, Replace the stuff
+            # Time is an issue, ":" causes issues with Windows file structure, Replace the stuff
             safe_file_name = file_name.replace(":", "_")
             file_location = os.path.join(self.location, safe_file_name)
 
@@ -41,7 +39,6 @@ class CSVFile(OutfileParent):
         i = 0
         for file in self.file_name_list:
             # Gets child radio, makes code cleaner.
-            print("***")
             CRadio = self.child_radio_list[i]
             with open(file, 'w') as file:
                 print(f"Created file: {file}")
@@ -52,14 +49,47 @@ class CSVFile(OutfileParent):
                 file.write(f"{CRadio.name},{CRadio.base_antenna_angle},{CRadio.this_antenna_angle},"
                            f"{CRadio.h_distance},{CRadio.v_distance},{CRadio.special_char_name},"
                            f"{CRadio.special_char_value}\n")
-                # Headder Table 2:
-                file.write(f"RXGain,Channel,Freq,Noise,ParentTXPower,Bandwidth,DownS0,DownS1,DownRssi,DownNoiseFloor,"
-                           f"DownSNR,ChildTXPower,UpS0,UpS1,UpRSSI,UpNoiseFloor,UpSNR,PingTimeAVG\n")
-            i+=1
+                # Header Table 2:
+                file.write(f"Date,Time,Channel,Freq,Noise,ParentTXPower,ParentRXGain,ParentTemp,ParentBandwidth,DownS0,"
+                           f"DownS1,DownRssi,DownNoiseFloor,DownSNR,ChildTXPower,UpS0,UpS1,UpRSSI,UpNoiseFloor,UpSNR,"
+                           f"PingTimeAVG\n")
+            i += 1
 
     def write_to_outfile(self):
-        pass
+        i = 0
+        for file in self.file_name_list:
+            # Gets child radio, makes code cleaner.
+            PRadio = self.base_station
+            CRadio = self.child_radio_list[i]
+            self.update_time()
+            with open(file, 'w') as file:
+                down_so = CRadio.pull_data("down_s0")
+                down_s1 = CRadio.pull_data("down_s1")
+                down_rssi = CRadio.pull_data("down_rssi")
+                down_noise_floor = CRadio.pull_data("down_noise_floor")
+                down_snr = CRadio.pull_data("down_snr")
+                tx_power = CRadio.pull_data("tx_power")
+                up_s0 = CRadio.pull_data("up_s0")
+                up_s1 = CRadio.pull_data("up_s1")
+                up_rssi = CRadio.pull_data("up_rssi")
+                up_noise_floor = CRadio.pull_data("up_noise_floor")
+                up_snr = CRadio.pull_data("up_snr")
+                # PING TIME AVG NOT WORKING *********************************************************
+                ping_time_avg = "0"
 
+                # ADDS ENTRY IN Table 2:
+                file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.freq},{PRadio.noise},{PRadio.tx_power},"
+                           f"{PRadio.rx_gain},{PRadio.temp},{PRadio.bandwidth},{down_so},{down_s1},{down_rssi},"
+                           f"{down_noise_floor},{down_snr},{tx_power},{up_s0},{up_s1},{up_rssi},{up_noise_floor},"
+                           f"{up_snr},{ping_time_avg}\n")
+
+                # Header for reference.
+                '''
+                file.write(f"Date,Time,Channel,Freq,Noise,ParentTXPower,ParentRXGain,ParentTemp,ParentBandwidth,DownS0,"
+                           f"DownS1,DownRssi,DownNoiseFloor,DownSNR,ChildTXPower,UpS0,UpS1,UpRSSI,UpNoiseFloor,UpSNR,"
+                           f"PingTimeAVG\n")
+                '''
+            i += 1
 
     def update_time(self):
         self.date = date.today()
