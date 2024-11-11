@@ -77,6 +77,7 @@ class WebScraper:
 
     def read_first_time(self):
         # gets the 'static' values that are used to change around data.
+        print(f"(ReadDataThread): Reading from {self.base_station.name}.")
 
         # Wait till FREQ register exists in the HTML Code.
         channel_element = WebDriverWait(self.driver, 10).until(
@@ -127,7 +128,7 @@ class WebScraper:
 
         # GET Channel Bandwidth + parse
         channel_bw_text = self.driver.find_element(By.ID, "chanbw-value").text
-        print(f"Channel BW text:::: {channel_bw_text})") # HHEREREHERE______________________
+        #print(f"Channel BW text:::: {channel_bw_text})") # HHEREREHERE______________________
         match = re.match(r"(\d+)\s*MHz", channel_bw_text)
         if match:
             self.base_station.bandwidth = float(match.group(1))  # Extracts -2 as an integer
