@@ -231,6 +231,7 @@ class WebScraper:
 
     def initialize_settings(self):
         # Verify config settings match startup...
+        print("(Webscraper): Verifying Web-GUI settings.")
         self.verify_config_settings_matches_startup("channel")
         self.verify_config_settings_matches_startup("tx_power")
         self.verify_config_settings_matches_startup("rx_gain")
@@ -248,6 +249,7 @@ class WebScraper:
             # if not matching
             if bs_attr is not c_attr:
                 # change the setting
+                print(f"(WebScraper): Changing the \"{setting_to_check}\" setting to: {c_attr}")
                 change_setting_method = getattr(self, f"change_{setting_to_check}")
                 change_setting_method(c_attr)
 

@@ -107,7 +107,7 @@ class UpdateSettings:
             self.web_scraper.change_bandwidth(self.extract_float_from_string(bandwidth))
         self.read_event.set()
 
-    def get_value_or_default(lst, idx, default="up"):
+    def get_value_or_default(self, lst, idx, default="up"):
         return lst[idx] if lst else default
 
     def extract_float_from_string(self, text):
