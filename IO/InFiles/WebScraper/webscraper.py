@@ -141,29 +141,29 @@ class WebScraper:
             up_text = self.driver.find_element(By.ID, up_id).text
             match = re.search(r"\[ (-?\d+) \| (-?\d+) \] (-?\d+) / (-?\d+) / (-?\d+)", up_text)
             if match:
-                radio.pushdata("up_s0", int(match.group(1)))
-                radio.pushdata("up_s1", int(match.group(2)))
-                radio.pushdata("up_rssi", int(match.group(3)))
-                radio.pushdata("up_noise_floor", int(match.group(4)))
-                radio.pushdata("up_snr", int(match.group(5)))
+                radio.push_data("up_s0", int(match.group(1)))
+                radio.push_data("up_s1", int(match.group(2)))
+                radio.push_data("up_rssi", int(match.group(3)))
+                radio.push_data("up_noise_floor", int(match.group(4)))
+                radio.push_data("up_snr", int(match.group(5)))
 
             # Gen Down DATA ID
             down_id = f"staConf{radio_count+1}snr-value"
             down_text = self.driver.find_element(By.ID, down_id).text
             match = re.search(r"\[ (-?\d+) \| (-?\d+) \] (-?\d+) / (-?\d+) / (-?\d+)", down_text)
             if match:
-                radio.pushdata("down_s0", int(match.group(1)))
-                radio.pushdata("down_s1", int(match.group(2)))
-                radio.pushdata("down_rssi", int(match.group(3)))
-                radio.pushdata("down_noise_floor", int(match.group(4)))
-                radio.pushdata("down_snr", int(match.group(5)))
+                radio.push_data("down_s0", int(match.group(1)))
+                radio.push_data("down_s1", int(match.group(2)))
+                radio.push_data("down_rssi", int(match.group(3)))
+                radio.push_data("down_noise_floor", int(match.group(4)))
+                radio.push_data("down_snr", int(match.group(5)))
 
             # Gets TX power ID from each radio
             tx_power_id = f"staConf{radio_count+1}txpwr-value"
             tx_text = self.driver.find_element(By.ID, tx_power_id).text
             match = re.match(r"(-?\d+)dBm", tx_text)
             if match:
-                radio.pushdata("tx_power", int(match.group(1)))
+                radio.push_data("tx_power", int(match.group(1)))
             radio_count += 1
 
     def open_all_child_radio_down_data(self):
