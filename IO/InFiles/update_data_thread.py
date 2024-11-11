@@ -16,6 +16,7 @@ def update_data_thread(read_data_event, write_data_event, web_scraper, config):
     while 1:
         read_data_event.wait()
         # Read data
+        print("(UpdateDataThread): Starting Data reading.")
         web_scraper.read_data()
         write_counter += 1
         # If number of reads reached, write to outfile

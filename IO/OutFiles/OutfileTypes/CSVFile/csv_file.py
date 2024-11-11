@@ -59,6 +59,7 @@ class CSVFile(OutfileParent):
     def write_to_outfile(self):
         i = 0
         for file in self.file_name_list:
+            print(f"(WriteDataThread): Writing to {self.name}.")
             # Gets child radio, makes code cleaner.
             PRadio = self.base_station
             CRadio = self.child_radio_list[i]

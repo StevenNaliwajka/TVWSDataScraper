@@ -5,6 +5,7 @@ def write_data_thread(read_data_event, write_data_event, outfile_list):
     while 1:
         # Wait till set by the update_data_thread
         write_data_event.wait()
+        print("(WriteDataThread): Writing data.")
         read_data_event.clear()
         write_data_event.clear()
 

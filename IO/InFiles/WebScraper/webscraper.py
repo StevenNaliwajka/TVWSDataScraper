@@ -143,6 +143,7 @@ class WebScraper:
     def read_data(self):
         radio_count = 1
         for radio in self.child_radio_list:
+            print(f"(ReadDataThread): Reading from {radio.name}.")
             # GEN UP DATA ID
             up_id = f"sta{radio_count}snr"
             up_text = self.driver.find_element(By.ID, up_id).text
