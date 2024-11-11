@@ -101,36 +101,36 @@ class WebScraper:
         if match:
             self.base_station.channel = int(match.group(1))  # Extracts 17
             print(f"Base_Station: Channel = {self.base_station.channel}")
-            self.base_station.freq = int(match.group(2))  # Extracts 491
+            self.base_station.freq = float(match.group(2))  # Extracts 491
             print(f"Base_Station: Freq = {self.base_station.freq}")
 
         # GET NOISE + parse
         freq_text = self.driver.find_element(By.ID, "selfnf-value").text
         match = re.search(r"-?\d+", freq_text)
         if match:
-            self.base_station.noise = int(match.group())  # Extracts -104 as an integer
+            self.base_station.noise = float(match.group())  # Extracts -104 as an integer
         print(f"Base_Station: Noise = {self.base_station.noise}")
 
         # GET TX Power + parse
         tx_power_text = self.driver.find_element(By.ID, "txpwr-value").text
         match = re.search(r"-?\d+", tx_power_text)
         if match:
-            self.base_station.tx_power = int(match.group())  # Extracts the numeric value as an integer
+            self.base_station.tx_power = float(match.group())  # Extracts the numeric value as an integer
         print(f"Base_Station: TX_Power = {self.base_station.tx_power}")
 
         # GET RX Gain + parse
         rx_gain_text = self.driver.find_element(By.ID, "rxgain-value").text
         match = re.search(r"-?\d+", rx_gain_text)
         if match:
-            self.base_station.rx_gain = int(match.group())  # Extracts -2 as an integer
+            self.base_station.rx_gain = float(match.group())  # Extracts -2 as an integer
         print(f"Base_Station: RX_Gain = {self.base_station.rx_gain}")
 
         # GET Channel Bandwidth + parse
         channel_bw_text = self.driver.find_element(By.ID, "chanbw-value").text
         print(f"Channel BW text:::: {channel_bw_text})") # HHEREREHERE______________________
-        match = re.search(r"/d+", channel_bw_text)
+        match = re.match(r"(\d+)\s*MHz", channel_bw_text)
         if match:
-            self.base_station.bandwidth = int(match.group())  # Extracts -2 as an integer
+            self.base_station.bandwidth = float(match.group(1))  # Extracts -2 as an integer
         print(f"Base_Station: Bandwidth = {self.base_station.bandwidth}")
 
         # Open up the child radio data menus.
@@ -182,9 +182,9 @@ class WebScraper:
             tx_power_id = f"staConf{radio_count+1}txpwr-value"
             tx_text = self.driver.find_element(By.ID, tx_power_id).text
             print(f"TX TEXT:::: {tx_text}") # HEREREEEEEEEEEEEEEEEEEEEEEEEEEEE
-            match = re.match(r"(-?\d+)dBm", tx_text)
+            match = re.match(r"(\d+)\s*dBm", tx_text)
             if match:
-                radio.push_data("tx_power", int(match.group(1)))
+                radio.push_data("tx_power", float(match.group(1)))
             # PRINTS DATA JUST GOTTEN
             print(f"{radio.name}: TX_Power = {radio._tx_power}")
 
