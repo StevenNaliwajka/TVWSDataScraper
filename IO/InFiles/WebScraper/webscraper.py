@@ -296,8 +296,13 @@ class WebScraper:
         #print(f"Clicking {button_id}")
         self.driver.execute_script("arguments[0].click();", button)
 
-        dropdown = self.driver.find_element("id", dropdown_name)
+        dropdown = self.driver.find_element(By.ID, dropdown_name)
         dropdown.click()
+
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, f"//select[@id='{dropdown_name}']/option"))
+        )
+
         select = Select(dropdown)
         if new_value.lower() == "up":
             # SET CHANNEL 1 UP, IF TOPPED OUT, ROLLOVER BOTTOM.
