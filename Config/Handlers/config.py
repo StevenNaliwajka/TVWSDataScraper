@@ -76,4 +76,5 @@ class Config:
                         # if true
                         if value in {True, "t", "true"}:
                             # add that setting.
+                            print(sub_setting)
                             setting_list.append(sub_setting)
