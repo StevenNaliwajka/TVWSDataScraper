@@ -293,6 +293,7 @@ class WebScraper:
         dropdown_name = f"{id}-config"
         save_button_id = f"{id}-save-btn"
         button = self.driver.find_element(By.ID, button_id)
+        print(f"Clicking {button_id}")
         button.click()
 
         dropdown = self.driver.find_element("id", dropdown_name)
