@@ -324,6 +324,12 @@ class WebScraper:
         )
 
         select = Select(dropdown)
+
+        WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(
+                (By.XPATH, f"//select[@id='{dropdown_name}']/option[normalize-space(.)='{new_value}']"))
+        )
+
         if new_value.lower() == "up":
             # SET CHANNEL 1 UP, IF TOPPED OUT, ROLLOVER BOTTOM.
             new_option = None
@@ -361,7 +367,7 @@ class WebScraper:
             #select.select_by_visible_text(new_value)
             option = self.driver.find_element(By.XPATH,
                                               f"//select[@id='{dropdown_name}']/option[normalize-space(.)='{new_value}']")
-            option.click()
+            self.driver.execute_script("arguments[0].click();", option)
 
         # Check for button existence and click it
         button = self.driver.find_element(By.ID, save_button_id)
