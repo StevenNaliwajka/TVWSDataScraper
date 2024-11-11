@@ -108,6 +108,9 @@ class UpdateSettings:
         self.read_event.set()
 
     def get_value_or_default(self, lst, idx, default="up"):
+        print(lst)
+        print(idx)
+        print(default)
         return lst[idx] if lst else default
 
     def extract_float_from_string(self, text):
