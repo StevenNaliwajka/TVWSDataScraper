@@ -50,8 +50,8 @@ class UpdateSettings:
 
     def level_one(self):
         #print(self.channel_list)
-        num_channels = len(self.channel_list)
         if self.test_channel:
+            num_channels = len(self.channel_list)
             for i in range(num_channels):
                 channel_idx = (self.channel_start_idx + i) % num_channels
                 self.level_two(channel_idx)
@@ -59,8 +59,8 @@ class UpdateSettings:
             self.level_two(self.channel_start_idx)
 
     def level_two(self, channel_idx):
-        num_tx_powers = len(self.tx_power_list)
         if self.test_tx_power:
+            num_tx_powers = len(self.tx_power_list)
             for j in range(num_tx_powers):
                 tx_power_idx = (self.tx_power_start_idx + j) % num_tx_powers
                 self.level_three(channel_idx, tx_power_idx)
@@ -68,8 +68,8 @@ class UpdateSettings:
             self.level_three(channel_idx, self.tx_power_start_idx)
 
     def level_three(self, channel_idx, tx_power_idx):
-        num_rx_gains = len(self.rx_gain_list)
         if self.test_rx_gain:
+            num_rx_gains = len(self.rx_gain_list)
             for k in range(num_rx_gains):
                 rx_gain_idx = (self.rx_gain_start_idx + k) % num_rx_gains
                 self.level_four(channel_idx, tx_power_idx, rx_gain_idx)
@@ -77,8 +77,8 @@ class UpdateSettings:
             self.level_four(channel_idx, tx_power_idx, self.rx_gain_start_idx)
 
     def level_four(self, channel_idx, tx_power_idx, rx_gain_idx):
-        num_bandwidths = len(self.bandwidth_list)
         if self.test_bandwidth:
+            num_bandwidths = len(self.bandwidth_list)
             for l in range(num_bandwidths):
                 bandwidth_idx = (self.bandwidth_start_idx + l) % num_bandwidths
                 self.update_web_scraper_settings(channel_idx, tx_power_idx, rx_gain_idx, bandwidth_idx)
