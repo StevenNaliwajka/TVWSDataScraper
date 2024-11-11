@@ -19,7 +19,7 @@ def gen_settings_to_test_config_json():
             "name": "tx_power",
             "start_setting": "3dBm",
             "test": "T",
-            "sub-settings": [
+            "sub_settings": [
                 {
                     "20dBm": "T",
                     "19dBm": "T",
@@ -44,9 +44,9 @@ def gen_settings_to_test_config_json():
         },
         {
             "name": "rx_gain",
-            "start-setting": "-2 dB",
+            "start_setting": "-2 dB",
             "test": "T",
-            "sub-settings": [
+            "sub_settings": [
                 {
                     "12dBm": "T",
                     "11.5dBm": "T",
@@ -98,9 +98,9 @@ def gen_settings_to_test_config_json():
         },
         {
             "name": "Bandwidth",
-            "start-setting": "6 dB",
+            "start_setting": "6 dB",
             "test": "T",
-            "sub-settings": [
+            "sub_settings": [
                 {
                     "Chanbw 6 MHz": "T",
                     "Chanbw 12 MHz": "T",

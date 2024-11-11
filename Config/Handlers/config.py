@@ -54,6 +54,7 @@ class Config:
         # Verify json file is built correctly and then returns the data.
         data = validate_json_file(settings_json_path)
 
+
         # for every setting
         for setting in data["radioSettingsToTest"]:
             # get name
@@ -67,14 +68,14 @@ class Config:
             # If the setting is to be tested
             if setting["test"].lower() in {True, "t", "true"}:
                 # If sub-settings exist.
-                if "sub-settings" in setting:
+                if "sub_settings" in setting:
                     # get the setting list
                     setting_list = getattr(self, f"{name}_list", None)
 
                     # for every sub-setting
-                    for sub_setting, value in setting["sub-settings"][0].items():
+                    for sub_setting, value in setting["sub_settings"][0].items():
                         # if true
-                        if value in {True, "t", "true"}:
+                        if value.lower() in {True, "t", "true"}:
                             # add that setting.
-                            print(sub_setting)
+                            #print(sub_setting)
                             setting_list.append(sub_setting)
