@@ -5,6 +5,7 @@ from IO.FirstTimeRun.gen_general_config_json import gen_general_config_json
 from IO.FirstTimeRun.gen_outfile_config_json import gen_outfile_config_json
 from IO.FirstTimeRun.gen_radio_config_json import gen_radio_config_json
 from IO.FirstTimeRun.gen_secret_env import gen_secret_file
+from IO.FirstTimeRun.gen_settings_to_test_config_json import gen_settings_to_test_config_json
 
 
 def config_init():
@@ -21,8 +22,10 @@ def config_init():
     # Handles secret data, Ips/passwords/usernames
     secret_flag = gen_secret_file()
 
+    test_settings_flag = gen_settings_to_test_config_json()
+
     # if any returned true, require a re-run and prompt user to config files.
-    if general_config_flag or outfile_config_flag or radio_config_flag or secret_flag:
+    if general_config_flag or outfile_config_flag or radio_config_flag or secret_flag or test_settings_flag:
         # Sleep is there to get the error log to show up correctly.
         time.sleep(.0005)
         sys.exit("Please enter secret information and configure the config in \'Config/\', then re-run")

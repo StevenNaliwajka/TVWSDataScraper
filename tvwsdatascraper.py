@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # Initializes config files and prompts user to configure them.
     config_init()
 
-    # Populate Config
+    # Populate Config with test settings.
     config = Config()
     # Populate Secret
     secret = Secret()

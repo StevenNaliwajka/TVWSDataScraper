@@ -1,8 +1,5 @@
 # .gitignore
-Config/general_config.json
-Config/outfile_config.json
-Config/radio_config.json
-Config/secret.env
+Config/*
 CSVOutput/
 CSVOutput/*
 .env

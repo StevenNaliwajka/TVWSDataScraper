@@ -1,6 +1,8 @@
 import json
 import os
 
+from IO.FirstTimeRun.HelperMethods.create_config_file import create_config_file
+
 
 def gen_general_config_json():
     # Define the path to the JSON file
@@ -14,13 +16,4 @@ def gen_general_config_json():
         "writes_per_setting": 4
     }
 
-    # Check if the file already exists
-    if not os.path.exists(json_file_path):
-        # Create and write the default JSON data
-        with open(json_file_path, "w") as file:
-            json.dump(default_config, file, indent=4)
-        print(f"(Config) {json_file_path} has been created with default configuration.")
-        return True
-    else:
-        print(f"(Config) {json_file_path} already exists. No action taken.")
-        return False
+    return create_config_file(json_file_path, default_config)
