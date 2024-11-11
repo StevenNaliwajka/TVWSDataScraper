@@ -64,7 +64,7 @@ class CSVFile(OutfileParent):
             PRadio = self.base_station
             CRadio = self.child_radio_list[i]
             self.update_time()
-            with open(file, 'w') as file:
+            with open(file, 'a') as file:
                 down_so = CRadio.pull_data("down_s0")
                 down_s1 = CRadio.pull_data("down_s1")
                 down_rssi = CRadio.pull_data("down_rssi")
