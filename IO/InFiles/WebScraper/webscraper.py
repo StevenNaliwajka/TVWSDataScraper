@@ -261,7 +261,16 @@ class WebScraper:
         current_value = f"{self.base_station.__dict__[setting_type]} {unit}"
 
         if isinstance(value, int):
-            new_value = f"{value} {unit}"
+            if unit == "CH":
+                new_value = f"{unit} {value}"
+            else:
+                new_value = f"{value} {unit}"
+            self.change_generic_setting(setting_type, new_value, current_value)
+        if isinstance(value, float):
+            if unit == "CH":
+                new_value = f"{unit} {value}"
+            else:
+                new_value = f"{value} {unit}"
             self.change_generic_setting(setting_type, new_value, current_value)
         elif value.lower() == "up":
             self.change_generic_setting(setting_type, "up", current_value)
