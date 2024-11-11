@@ -257,7 +257,7 @@ class WebScraper:
                 change_setting_method = getattr(self, f"change_{setting_to_check}")
                 change_setting_method(c_attr)
 
-    def change_setting(self, setting_type, value, unit, read_method):
+    def change_setting(self, setting_type, setting_tag, value, unit, read_method):
         current_value = f"{self.base_station.__dict__[setting_type]} {unit}"
 
         if isinstance(value, int):
@@ -265,18 +265,18 @@ class WebScraper:
                 new_value = f"{unit} {value}"
             else:
                 new_value = f"{value} {unit}"
-            self.change_generic_setting(setting_type, new_value, current_value)
+            self.change_generic_setting(setting_tag, new_value, current_value)
         if isinstance(value, float):
             value = self.clean_decimal(value)
             if unit == "CH":
                 new_value = f"{unit} {value}"
             else:
                 new_value = f"{value} {unit}"
-            self.change_generic_setting(setting_type, new_value, current_value)
+            self.change_generic_setting(setting_tag, new_value, current_value)
         elif value.lower() == "up":
-            self.change_generic_setting(setting_type, "up", current_value)
+            self.change_generic_setting(setting_tag, "up", current_value)
         elif value.lower() == "down":
-            self.change_generic_setting(setting_type, "down", current_value)
+            self.change_generic_setting(setting_tag, "down", current_value)
 
         # Call the corresponding read method
         read_method()
@@ -292,20 +292,20 @@ class WebScraper:
             return str(num)
 
     def change_channel(self, channel):
-        print(f"channel: {channel}")
-        self.change_setting("channel", channel, "CH", self.read_channel_and_freq)
+        print(f"(Webscraper): Changing channel: {channel}")
+        self.change_setting("channel", "channel", channel, "CH", self.read_channel_and_freq)
 
     def change_tx_power(self, tx_power):
-        print(f"channel: {tx_power}")
-        self.change_setting("txpwr", tx_power, "dBm", self.read_tx_power)
+        print(f"(Webscraper): Changing tx_power: {tx_power}")
+        self.change_setting("tx_power", "txpwr", tx_power, "dBm", self.read_tx_power)
 
     def change_rx_gain(self, rx_gain):
-        print(f"channel: {rx_gain}")
-        self.change_setting("rx_gain", rx_gain, "dB", self.read_rx_gain)
+        print(f"(Webscraper): Changing rx_gain: {rx_gain}")
+        self.change_setting("rx_gain", "rxgain", rx_gain, "dB", self.read_rx_gain)
 
     def change_bandwidth(self, bandwidth):
-        print(f"channel: {bandwidth}")
-        self.change_setting("bandwidth", bandwidth, "CH", self.read_channel_and_freq)
+        print(f"(Webscraper): Changing bandwidth: {bandwidth}")
+        self.change_setting("bandwidth", "chanbw", bandwidth, "CH", self.read_channel_and_freq)
 
     def change_generic_setting(self, id, new_value, current_value):
         # Check for button existence and click it
