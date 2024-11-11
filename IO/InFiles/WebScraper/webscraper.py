@@ -78,23 +78,22 @@ class WebScraper:
     def read_first_time(self):
         # gets the 'static' values that are used to change around data.
 
-        # WAIT TILL FREQ EXISTS
+        # Wait till FREQ register exists in the HTML Code.
         channel_element = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.ID, "channel-value"))
         )
-        print("Freq Exists")
-        # Wait for data to load on the radio.
+        # Wait for FREQ data to populate and load on the WEBGUI and not be NONE.
         wait_flag = 1
         while wait_flag:
             channel_text = channel_element.text
             match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
             if match and match.group(1) and int(match.group(1)) != 0:
                 wait_flag = 0
-                print(int(match.group(1)))
+                #print(int(match.group(1)))
             else:
+                #print("")
                 pass
             time.sleep(.5)
-        print("Freq NonZero")
 
         # GET CHANNEL & Freq + parse
         channel_text = channel_element.text
@@ -112,29 +111,31 @@ class WebScraper:
             self.base_station.noise = int(match.group())  # Extracts -104 as an integer
         print(f"Base_Station: Noise = {self.base_station.noise}")
 
-        # GET TX Power
+        # GET TX Power + parse
         tx_power_text = self.driver.find_element(By.ID, "txpwr-value").text
         match = re.search(r"-?\d+", tx_power_text)
         if match:
             self.base_station.tx_power = int(match.group())  # Extracts the numeric value as an integer
         print(f"Base_Station: TX_Power = {self.base_station.tx_power}")
 
-        # GET RX Gain
+        # GET RX Gain + parse
         rx_gain_text = self.driver.find_element(By.ID, "rxgain-value").text
         match = re.search(r"-?\d+", rx_gain_text)
         if match:
             self.base_station.rx_gain = int(match.group())  # Extracts -2 as an integer
         print(f"Base_Station: RX_Gain = {self.base_station.rx_gain}")
 
-        # GET Channel Bandwidth
+        # GET Channel Bandwidth + parse
         channel_bw_text = self.driver.find_element(By.ID, "chanbw-value").text
+        print(f"Channel BW text:::: {channel_bw_text})") # HHEREREHERE______________________
         match = re.search(r"/d+", channel_bw_text)
         if match:
             self.base_station.bandwidth = int(match.group())  # Extracts -2 as an integer
         print(f"Base_Station: Bandwidth = {self.base_station.bandwidth}")
 
+        # Open up the child radio data menus.
         self.open_all_child_radio_down_data()
-        # wait for data to propagate.
+        # wait for HTML to Load.
         time.sleep(3)
         # Gets the rest of the variable data
         self.read_data()
@@ -152,6 +153,7 @@ class WebScraper:
                 radio.push_data("up_rssi", int(match.group(3)))
                 radio.push_data("up_noise_floor", int(match.group(4)))
                 radio.push_data("up_snr", int(match.group(5)))
+            # PRINTS DATA JUST GOTTEN
             print(f"{radio.name}: Up_s0 = {radio._up_s0}")
             print(f"{radio.name}: Up_s1 = {radio._up_s1}")
             print(f"{radio.name}: Up_rssi = {radio._up_rssi}")
@@ -169,6 +171,7 @@ class WebScraper:
                 radio.push_data("down_rssi", int(match.group(3)))
                 radio.push_data("down_noise_floor", int(match.group(4)))
                 radio.push_data("down_snr", int(match.group(5)))
+            # PRINTS DATA JUST GOTTEN
             print(f"{radio.name}: Down_s0 = {radio._down_s0}")
             print(f"{radio.name}: Down_s1 = {radio._down_s1}")
             print(f"{radio.name}: Down_rssi = {radio._down_rssi}")
@@ -178,9 +181,11 @@ class WebScraper:
             # Gets TX power ID from each radio
             tx_power_id = f"staConf{radio_count+1}txpwr-value"
             tx_text = self.driver.find_element(By.ID, tx_power_id).text
+            print(f"TX TEXT:::: {tx_text}") # HEREREEEEEEEEEEEEEEEEEEEEEEEEEEE
             match = re.match(r"(-?\d+)dBm", tx_text)
             if match:
                 radio.push_data("tx_power", int(match.group(1)))
+            # PRINTS DATA JUST GOTTEN
             print(f"{radio.name}: TX_Power = {radio._tx_power}")
 
             radio_count += 1
