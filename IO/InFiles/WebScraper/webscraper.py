@@ -314,8 +314,10 @@ class WebScraper:
                     break
                 if current_value == option.text:
                     option_flag = True
-            if option_flag is None:
+            if not option_flag:
                 new_option = select.options[0].text
+            if new_option is None:
+                raise ValueError("New_option is incorect. It cant be None")
             select.select_by_visible_text(new_option)
 
         elif new_value.lower() == "down":
@@ -330,6 +332,8 @@ class WebScraper:
                 new_option = option.text
             if option_flag is None:
                 new_option = select.options[-1].text
+            if new_option is None:
+                raise ValueError("New_option is incorect. It cant be None")
             select.select_by_visible_text(new_option)
 
         else:
