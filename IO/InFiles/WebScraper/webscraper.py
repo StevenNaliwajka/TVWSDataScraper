@@ -182,7 +182,7 @@ class WebScraper:
             tx_power_id = f"staConf{radio_count+1}txpwr-value"
             tx_text = self.driver.find_element(By.ID, tx_power_id).text
             print(f"TX TEXT:::: {tx_text}") # HEREREEEEEEEEEEEEEEEEEEEEEEEEEEE
-            match = re.match(r"(\d+)\s*dBm", tx_text)
+            match = re.match(r"(-?\d+(\.\d+)?)\s*dBm", tx_text)
             if match:
                 radio.push_data("tx_power", float(match.group(1)))
             # PRINTS DATA JUST GOTTEN
