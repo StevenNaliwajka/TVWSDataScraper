@@ -297,7 +297,7 @@ class WebScraper:
         self.driver.execute_script("arguments[0].click();", button)
 
         dropdown = self.driver.find_element(By.ID, dropdown_name)
-        dropdown.click()
+        self.driver.execute_script("arguments[0].click();", dropdown)
 
         WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, f"//select[@id='{dropdown_name}']/option"))
@@ -338,4 +338,4 @@ class WebScraper:
 
         # Check for button existence and click it
         button = self.driver.find_element(By.ID, save_button_id)
-        button.click()
+        self.driver.execute_script("arguments[0].click();", button)
