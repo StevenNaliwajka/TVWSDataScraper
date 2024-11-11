@@ -101,31 +101,37 @@ class WebScraper:
         match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
         if match:
             self.base_station.channel = int(match.group(1))  # Extracts 17
+            print(f"Base_Station: Channel = {self.base_station.channel}")
             self.base_station.freq = int(match.group(2))  # Extracts 491
+            print(f"Base_Station: Freq = {self.base_station.freq}")
 
         # GET NOISE + parse
         freq_text = self.driver.find_element(By.ID, "selfnf-value").text
         match = re.search(r"-?\d+", freq_text)
         if match:
             self.base_station.noise = int(match.group())  # Extracts -104 as an integer
+        print(f"Base_Station: Noise = {self.base_station.noise}")
 
         # GET TX Power
         tx_power_text = self.driver.find_element(By.ID, "txpwr-value").text
         match = re.search(r"-?\d+", tx_power_text)
         if match:
             self.base_station.tx_power = int(match.group())  # Extracts the numeric value as an integer
+        print(f"Base_Station: TX_Power = {self.base_station.tx_power}")
 
         # GET RX Gain
         rx_gain_text = self.driver.find_element(By.ID, "rxgain-value").text
         match = re.search(r"-?\d+", rx_gain_text)
         if match:
             self.base_station.rx_gain = int(match.group())  # Extracts -2 as an integer
+        print(f"Base_Station: RX_Gain = {self.base_station.rx_gain}")
 
         # GET Channel Bandwidth
         channel_bw_text = self.driver.find_element(By.ID, "chanbw-value").text
         match = re.search(r"/d+", channel_bw_text)
         if match:
             self.base_station.bandwidth = int(match.group())  # Extracts -2 as an integer
+        print(f"Base_Station: Bandwidth = {self.base_station.bandwidth}")
 
         self.open_all_child_radio_down_data()
         # wait for data to propagate.
@@ -146,6 +152,12 @@ class WebScraper:
                 radio.push_data("up_rssi", int(match.group(3)))
                 radio.push_data("up_noise_floor", int(match.group(4)))
                 radio.push_data("up_snr", int(match.group(5)))
+            print(f"{radio.name}: Up_s0 = {radio._up_s0}")
+            print(f"{radio.name}: Up_s1 = {radio._up_s1}")
+            print(f"{radio.name}: Up_rssi = {radio._up_rssi}")
+            print(f"{radio.name}: Up_Noise_Floor = {radio._up_noise_floor}")
+            print(f"{radio.name}: Up_snr = {radio._up_snr}")
+
 
             # Gen Down DATA ID
             down_id = f"staConf{radio_count+1}snr-value"
@@ -157,6 +169,11 @@ class WebScraper:
                 radio.push_data("down_rssi", int(match.group(3)))
                 radio.push_data("down_noise_floor", int(match.group(4)))
                 radio.push_data("down_snr", int(match.group(5)))
+            print(f"{radio.name}: Down_s0 = {radio._down_s0}")
+            print(f"{radio.name}: Down_s1 = {radio._down_s1}")
+            print(f"{radio.name}: Down_rssi = {radio._down_rssi}")
+            print(f"{radio.name}: Down_Noise_Floor = {radio._down_noise_floor}")
+            print(f"{radio.name}: Down_snr = {radio._down_snr}")
 
             # Gets TX power ID from each radio
             tx_power_id = f"staConf{radio_count+1}txpwr-value"
@@ -164,6 +181,8 @@ class WebScraper:
             match = re.match(r"(-?\d+)dBm", tx_text)
             if match:
                 radio.push_data("tx_power", int(match.group(1)))
+            print(f"{radio.name}: TX_Power = {radio._tx_power}")
+
             radio_count += 1
 
     def open_all_child_radio_down_data(self):
