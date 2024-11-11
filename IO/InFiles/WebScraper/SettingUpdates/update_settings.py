@@ -92,6 +92,7 @@ class UpdateSettings:
         self.update_event.clear()
         channel = self.get_value_or_default(self.channel_list, channel_idx)
         if channel != self.base_station.channel:
+
             self.web_scraper.change_channel(self.extract_float_from_string(channel))
 
         tx_power = self.get_value_or_default(self.tx_power_list, tx_power_idx)
@@ -114,6 +115,8 @@ class UpdateSettings:
 
     def extract_float_from_string(self, text):
         # Use regular expression to find the first float or integer in the string
+        if text in {"up", "down"}:
+            return text
         match = re.search(r"[-+]?\d*\.\d+|\d+", text)
         if match:
             return float(match.group())
