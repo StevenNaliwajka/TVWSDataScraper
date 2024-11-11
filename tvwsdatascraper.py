@@ -27,7 +27,7 @@ if __name__ == "__main__":
     outfile_list = read_outfile_config(base_station, radio_children_list)
 
     # Creates WebScraper Object
-    web_scraper = WebScraper(secret, base_station, radio_children_list)
+    web_scraper = WebScraper(secret, config, base_station, radio_children_list)
 
     print(f"(TVWSDataScraper) Initializing Threads.")
     # Creates instance of ThreadManager where threads are created.

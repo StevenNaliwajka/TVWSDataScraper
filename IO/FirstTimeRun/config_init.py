@@ -28,4 +28,4 @@ def config_init():
     if general_config_flag or outfile_config_flag or radio_config_flag or secret_flag or test_settings_flag:
         # Sleep is there to get the error log to show up correctly.
         time.sleep(.0005)
-        sys.exit("Please enter secret information and configure the config in \'Config/\', then re-run")
+        sys.exit("Please enter secret information and configure the config files in \'Config/\', then re-run")
