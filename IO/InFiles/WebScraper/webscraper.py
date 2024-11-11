@@ -267,6 +267,7 @@ class WebScraper:
                 new_value = f"{value} {unit}"
             self.change_generic_setting(setting_type, new_value, current_value)
         if isinstance(value, float):
+            value = self.clean_decimal(value)
             if unit == "CH":
                 new_value = f"{unit} {value}"
             else:
@@ -280,13 +281,23 @@ class WebScraper:
         # Call the corresponding read method
         read_method()
 
+    def clean_decimal(self, value):
+        # Convert to float to handle cases like "10.0" and "10.5"
+        num = float(value)
+
+        # If the float has no decimal part, convert to int, else keep it as is
+        if num.is_integer():
+            return str(int(num))
+        else:
+            return str(num)
+
     def change_channel(self, channel):
         print(f"channel: {channel}")
         self.change_setting("channel", channel, "CH", self.read_channel_and_freq)
 
     def change_tx_power(self, tx_power):
         print(f"channel: {tx_power}")
-        self.change_setting("tx_power", tx_power, "dBm", self.read_tx_power)
+        self.change_setting("txpwr", tx_power, "dBm", self.read_tx_power)
 
     def change_rx_gain(self, rx_gain):
         print(f"channel: {rx_gain}")
