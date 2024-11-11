@@ -39,9 +39,11 @@ See the Documentation folder for more.
 
 
 ## Features
-Input: Uses Selenium to navigate through webgui, toggles through settings and records data.
+Input: Uses Selenium to navigate through webgui, toggles through settings and records data. RSSI value > -40 is danger.  If a value like that is detected when incrementing settings. Stops navigating the settings up that way.
 
 Output: Currently only .csv files supported, DB can be implemented if school has somewhere to store data.
+
+Its my first time writing a webscraper. A fun activity however, it has quite a few performance inprovement opportunities. This thing was written on and off over two weeks to hit a deadline.
 
 # SETUP:
 1) While in the TVWSDataScraper/ path, run the bash file to download requirements:
