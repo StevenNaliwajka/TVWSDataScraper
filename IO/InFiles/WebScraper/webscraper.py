@@ -247,8 +247,11 @@ class WebScraper:
             # get base station value
             bs_attr = getattr(bs, setting_to_check)
             # if not matching
-            if bs_attr is not c_attr:
-                print(f"BS_ATTR {bs_attr} : C_ATTR {c_attr}")
+            match = re.search(r"[-+]?\d*\.\d+|\d+", c_attr)
+            if match:
+                c_float_attr = float(match.group())
+            if bs_attr is not c_float_attr:
+                # print(f"BS_ATTR {bs_attr} : C_ATTR {c_attr}")
                 # change the setting
                 print(f"(WebScraper): Changing the \"{setting_to_check}\" setting to: {c_attr}")
                 change_setting_method = getattr(self, f"change_{setting_to_check}")
@@ -257,27 +260,31 @@ class WebScraper:
     def change_setting(self, setting_type, value, unit, read_method):
         current_value = f"{self.base_station.__dict__[setting_type]} {unit}"
 
-        if value.lower() == "up":
+        if isinstance(value, int):
+            new_value = f"{value} {unit}"
+            self.change_generic_setting(setting_type, new_value, current_value)
+        elif value.lower() == "up":
             self.change_generic_setting(setting_type, "up", current_value)
         elif value.lower() == "down":
             self.change_generic_setting(setting_type, "down", current_value)
-        elif isinstance(value, int):
-            new_value = f"{value} {unit}"
-            self.change_generic_setting(setting_type, new_value, current_value)
 
         # Call the corresponding read method
         read_method()
 
     def change_channel(self, channel):
+        print(f"channel: {channel}")
         self.change_setting("channel", channel, "CH", self.read_channel_and_freq)
 
     def change_tx_power(self, tx_power):
+        print(f"channel: {tx_power}")
         self.change_setting("tx_power", tx_power, "dBm", self.read_tx_power)
 
     def change_rx_gain(self, rx_gain):
+        print(f"channel: {rx_gain}")
         self.change_setting("rx_gain", rx_gain, "dB", self.read_rx_gain)
 
     def change_bandwidth(self, bandwidth):
+        print(f"channel: {bandwidth}")
         self.change_setting("bandwidth", bandwidth, "CH", self.read_channel_and_freq)
 
     def change_generic_setting(self, id, new_value, current_value):

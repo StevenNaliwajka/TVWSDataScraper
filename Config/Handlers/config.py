@@ -32,7 +32,7 @@ class Config:
         self.bandwidth_list = []
 
         self.read_settings_to_test_json()
-        print(self.rx_gain_list)
+        #print(self.rx_gain_list)
 
 
     def load_config_from_json_files(self):
