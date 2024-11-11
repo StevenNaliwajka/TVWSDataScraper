@@ -46,6 +46,7 @@ class UpdateSettings:
         return None
 
     def level_one(self):
+        print(self.channel_list)
         num_channels = len(self.channel_list)
         if self.test_channel:
             for i in range(num_channels):
