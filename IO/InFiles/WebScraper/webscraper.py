@@ -258,7 +258,7 @@ class WebScraper:
             self.change_generic_setting(setting_type, "up", current_value)
         elif value.lower() == "down":
             self.change_generic_setting(setting_type, "down", current_value)
-        else:
+        elif isinstance(value, int):
             new_value = f"{value} {unit}"
             self.change_generic_setting(setting_type, new_value, current_value)
 

@@ -1,3 +1,6 @@
+from typing import re
+
+
 class UpdateSettings:
     def __init__(self, web_scraper, config):
         self.web_scraper = web_scraper
@@ -46,7 +49,7 @@ class UpdateSettings:
         return None
 
     def level_one(self):
-        print(self.channel_list)
+        #print(self.channel_list)
         num_channels = len(self.channel_list)
         if self.test_channel:
             for i in range(num_channels):
@@ -89,20 +92,26 @@ class UpdateSettings:
         self.update_event.clear()
         channel = self.get_value_or_default(self.channel_list, channel_idx)
         if channel != self.base_station.channel:
-            self.web_scraper.change_channel(channel)
+            self.web_scraper.change_channel(self.extract_float_from_string(channel))
 
         tx_power = self.get_value_or_default(self.tx_power_list, tx_power_idx)
         if tx_power != self.base_station.tx_power:
-            self.web_scraper.change_tx_power(tx_power)
+            self.web_scraper.change_tx_power(self.extract_float_from_string(tx_power))
 
         rx_gain = self.get_value_or_default(self.rx_gain_list, rx_gain_idx)
         if rx_gain != self.base_station.rx_gain:
-            self.web_scraper.change_rx_gain(rx_gain)
+            self.web_scraper.change_rx_gain(self.extract_float_from_string(rx_gain))
 
         bandwidth = self.get_value_or_default(self.bandwidth_list, bandwidth_idx)
         if bandwidth != self.base_station.bandwidth:
-            self.web_scraper.change_bandwidth(bandwidth)
+            self.web_scraper.change_bandwidth(self.extract_float_from_string(bandwidth))
         self.read_event.set()
 
     def get_value_or_default(lst, idx, default="up"):
         return lst[idx] if lst else default
+
+    def extract_float_from_string(self, text):
+        # Use regular expression to find the first float or integer in the string
+        match = re.search(r"[-+]?\d*\.\d+|\d+", text)
+        if match:
+            return float(match.group())
