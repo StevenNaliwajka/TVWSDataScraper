@@ -329,7 +329,7 @@ class WebScraper:
             new_option = None
             option_flag = False
             for option in select.options:
-                if option_flag is True:
+                if option_flag:
                     new_option = option.text
                     break
                 if current_value == option.text:
@@ -347,7 +347,7 @@ class WebScraper:
             for option in select.options:
                 if current_value == option.text:
                     option_flag = True
-                if option_flag is True:
+                if option_flag:
                     break
                 new_option = option.text
             if option_flag is None:
@@ -358,7 +358,10 @@ class WebScraper:
 
         else:
             # Set channel to int
-            select.select_by_visible_text(new_value)
+            #select.select_by_visible_text(new_value)
+            option = self.driver.find_element(By.XPATH,
+                                              f"//select[@id='{dropdown_name}']/option[normalize-space(.)='{new_value}']")
+            option.click()
 
         # Check for button existence and click it
         button = self.driver.find_element(By.ID, save_button_id)
