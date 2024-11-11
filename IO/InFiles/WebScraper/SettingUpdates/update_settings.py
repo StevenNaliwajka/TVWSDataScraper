@@ -80,6 +80,7 @@ class UpdateSettings:
             self.update_web_scraper_settings(channel_idx, tx_power_idx, rx_gain_idx, self.bandwidth_start_idx)
 
     def update_web_scraper_settings(self, channel_idx, tx_power_idx, rx_gain_idx, bandwidth_idx):
+
         channel = self.get_value_or_default(self.channel_list, channel_idx)
         if channel != self.base_station.channel:
             self.web_scraper.change_channel(channel)

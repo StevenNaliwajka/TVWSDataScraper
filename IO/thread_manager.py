@@ -27,7 +27,7 @@ class ThreadManager:
                                         args=(
                                             read_data_event, write_data_event, outfile_list))
         self.thread3 = threading.Thread(target=self.update_settings_object.update_settings_thread,
-                                        args=(1, base_station, update_settings_event))
+                                        args=(base_station, update_settings_event))
 
     def start(self):
         print("(ThreadManager) Starting Update Thread")
