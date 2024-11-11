@@ -2,7 +2,7 @@ import platform
 import re
 
 from selenium import webdriver
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, NoSuchElementException
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -96,7 +96,6 @@ class WebScraper:
             time.sleep(.5)
         print("Freq NonZero")
 
-
         # GET CHANNEL & Freq + parse
         channel_text = channel_element.text
         match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
@@ -128,9 +127,55 @@ class WebScraper:
         if match:
             self.base_station.bandwidth = int(match.group())  # Extracts -2 as an integer
 
+        self.open_all_child_radio_down_data()
+        # wait for data to propagate.
+        time.sleep(3)
         # Gets the rest of the variable data
         self.read_data()
 
     def read_data(self):
-        # Get temp + everything else
-        pass
+        radio_count = 1
+        for radio in self.child_radio_list:
+            # GEN UP DATA ID
+            up_id = f"sta{radio_count}snr"
+            up_text = self.driver.find_element(By.ID, up_id).text
+            match = re.search(r"\[ (-?\d+) \| (-?\d+) \] (-?\d+) / (-?\d+) / (-?\d+)", up_text)
+            if match:
+                radio.pushdata("up_s0", int(match.group(1)))
+                radio.pushdata("up_s1", int(match.group(2)))
+                radio.pushdata("up_rssi", int(match.group(3)))
+                radio.pushdata("up_noise_floor", int(match.group(4)))
+                radio.pushdata("up_snr", int(match.group(5)))
+
+            # Gen Down DATA ID
+            down_id = f"staConf{radio_count+1}snr-value"
+            down_text = self.driver.find_element(By.ID, down_id).text
+            match = re.search(r"\[ (-?\d+) \| (-?\d+) \] (-?\d+) / (-?\d+) / (-?\d+)", down_text)
+            if match:
+                radio.pushdata("down_s0", int(match.group(1)))
+                radio.pushdata("down_s1", int(match.group(2)))
+                radio.pushdata("down_rssi", int(match.group(3)))
+                radio.pushdata("down_noise_floor", int(match.group(4)))
+                radio.pushdata("down_snr", int(match.group(5)))
+
+            # Gets TX power ID from each radio
+            tx_power_id = f"staConf{radio_count+1}txpwr-value"
+            tx_text = self.driver.find_element(By.ID, tx_power_id).text
+            match = re.match(r"(-?\d+)dBm", tx_text)
+            if match:
+                radio.pushdata("tx_power", int(match.group(1)))
+            radio_count += 1
+
+    def open_all_child_radio_down_data(self):
+        button_number = 1
+
+        while True:
+            button_id = f"sta{button_number}btn"
+            try:
+                # Check for button existence and click it
+                button = self.driver.find_element(By.ID, button_id)
+                button.click()
+                button_number += 1
+            except NoSuchElementException:
+                # Stop the method when button is not found
+                break
