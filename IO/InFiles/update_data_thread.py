@@ -1,7 +1,7 @@
 import time
 
 
-def update_data_thread(write_data_event, web_scraper, config):
+def update_data_thread(read_data_event, write_data_event, web_scraper, config):
     # Login and set up the settings to specs.
     # start by pulling read_data_event high.
     # when its read the data X number of times (X from config), it  pulls write_data_event high and allows
@@ -14,6 +14,7 @@ def update_data_thread(write_data_event, web_scraper, config):
     setting_counter = 0
     web_scraper.read_first_time()
     while 1:
+        read_data_event.wait()
         # Read data
         web_scraper.read_data()
         write_counter += 1
@@ -22,7 +23,7 @@ def update_data_thread(write_data_event, web_scraper, config):
             write_data_event.set()
             write_counter = 0
             # +1 to setting_counter
-            setting_counter +=1
+            setting_counter += 1
         # if number of writes reached, update settings
         if setting_counter == config.writes_per_setting:
             web_scraper.update_settings()
