@@ -4,6 +4,7 @@ class UpdateSettings:
         self.config = config
         self.update_event = None
         self.base_station = None
+        self.read_event = None
 
         self.channel_list, self.test_channel = self.init_test_param(config, "channel")
         self.tx_power_list, self.test_tx_power = self.init_test_param(config, "tx_power")
@@ -21,9 +22,10 @@ class UpdateSettings:
         test_param = test_flag and param_list is not None
         return param_list, test_param
 
-    def update_settings_thread(self, base_station, update_settings_event):
+    def update_settings_thread(self, base_station, update_settings_event, read_event):
         self.base_station = base_station
         self.update_event = update_settings_event
+        self.read_event = read_event
 
         self.channel_start_idx = self.find_start_index(self.config.starting_channel, self.channel_list)
         self.tx_power_start_idx = self.find_start_index(self.config.starting_tx_power, self.tx_power_list)
@@ -80,7 +82,10 @@ class UpdateSettings:
             self.update_web_scraper_settings(channel_idx, tx_power_idx, rx_gain_idx, self.bandwidth_start_idx)
 
     def update_web_scraper_settings(self, channel_idx, tx_power_idx, rx_gain_idx, bandwidth_idx):
-
+        self.update_event.wait()
+        print("(SettingsDataThread): Updating settings.")
+        self.read_event.clear()
+        self.update_event.clear()
         channel = self.get_value_or_default(self.channel_list, channel_idx)
         if channel != self.base_station.channel:
             self.web_scraper.change_channel(channel)
@@ -96,6 +101,7 @@ class UpdateSettings:
         bandwidth = self.get_value_or_default(self.bandwidth_list, bandwidth_idx)
         if bandwidth != self.base_station.bandwidth:
             self.web_scraper.change_bandwidth(bandwidth)
+        self.read_event.set()
 
     def get_value_or_default(lst, idx, default="up"):
         return lst[idx] if lst else default
