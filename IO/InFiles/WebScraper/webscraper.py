@@ -248,6 +248,7 @@ class WebScraper:
             bs_attr = getattr(bs, setting_to_check)
             # if not matching
             if bs_attr is not c_attr:
+                print(f"BS_ATTR {bs_attr} : C_ATTR {c_attr}")
                 # change the setting
                 print(f"(WebScraper): Changing the \"{setting_to_check}\" setting to: {c_attr}")
                 change_setting_method = getattr(self, f"change_{setting_to_check}")

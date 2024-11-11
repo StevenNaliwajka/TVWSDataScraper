@@ -1,4 +1,4 @@
-from typing import re
+import re
 
 
 class UpdateSettings:
