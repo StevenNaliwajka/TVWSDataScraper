@@ -1,4 +1,5 @@
 import json
+import time
 
 from Config.Handlers.HelperMethods.json_support_methods import validate_json_file
 
@@ -78,4 +79,7 @@ class Config:
                         if value.lower() in {True, "t", "true"}:
                             # add that setting.
                             #print(sub_setting)
+                            #print(sub_setting)
+                            #print(value)
+                            #time.sleep(.005)
                             setting_list.append(sub_setting)

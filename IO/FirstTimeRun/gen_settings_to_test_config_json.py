@@ -97,7 +97,7 @@ def gen_settings_to_test_config_json():
             ]
         },
         {
-            "name": "Bandwidth",
+            "name": "bandwidth",
             "start_setting": "6 dB",
             "test": "T",
             "sub_settings": [
