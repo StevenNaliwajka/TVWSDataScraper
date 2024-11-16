@@ -13,7 +13,7 @@ Input: Uses Selenium to navigate through webgui and records data.
 
 Output: Currently only .csv files supported.
 
-Its my first time writing a webscraper. A fun activity however, it has quite a few performance inprovement opportunities. This thing was written on and off over two weeks to hit a deadline.
+Its my first time writing a webscraper. A fun activity however, it has quite a few performance inprovement opportunities. This thing was written on and off over a week to hit a deadline.
 
 
 ## Planned inprovements
