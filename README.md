@@ -57,6 +57,7 @@ See the Documentation folder for more.
 '
 bash setup.sh
 '
+
 2) Config + Secret files are built on first run to save from leaking settings. Run the below code to run the program.
 
 'python tvwsdatascraper.py'
