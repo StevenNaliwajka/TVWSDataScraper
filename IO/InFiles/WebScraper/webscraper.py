@@ -221,9 +221,10 @@ class WebScraper:
         while True:
             button_id = f"sta{button_number}btn"
             try:
-                # Check for button existence and click it
+                # Check for button existence
                 button = self.driver.find_element(By.ID, button_id)
-                button.click()
+                # Use JavaScript to click the button
+                self.driver.execute_script("arguments[0].click();", button)
                 button_number += 1
             except NoSuchElementException:
                 # Stop the method when button is not found
