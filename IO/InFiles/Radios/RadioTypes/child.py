@@ -49,9 +49,9 @@ class Child(RadioParent):
         # Should only be used for the 'register' values
         # Stores data in lists, averages the values stored.
         if hasattr(self, key):
-            value = getattr(self, key)
-            avg = sum(value) / len(value)
-            if isinstance(value, list):
+            values = getattr(self, key)
+            avg = sum(values) / len(values) if len(values) > 0 else 0
+            if isinstance(values, list):
                 setattr(self, key, [])
             else:
                 setattr(self, key, None)
