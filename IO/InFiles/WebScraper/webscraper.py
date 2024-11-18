@@ -165,7 +165,9 @@ class WebScraper:
             print(f"(ReadDataThread): Reading from {radio.name}.")
             # GEN UP DATA ID
             up_id = f"sta{radio_count}snr"
-            up_text = self.driver.find_element(By.ID, up_id).text
+            up_text = WebDriverWait(self.driver, 10).until(
+                EC.presence_of_element_located((By.ID, up_id))
+            ).text
             match = re.search(r"\[ (-?\d+) \| (-?\d+) \] (-?\d+) / (-?\d+) / (-?\d+)", up_text)
             if match:
                 radio.push_data("up_s0", int(match.group(1)))
