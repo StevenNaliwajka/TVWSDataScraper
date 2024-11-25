@@ -175,14 +175,20 @@ class WebScraper:
                 radio.push_data("up_rssi", int(match.group(3)))
                 radio.push_data("up_noise_floor", int(match.group(4)))
                 radio.push_data("up_snr", int(match.group(5)))
+                
+                ##Adding additional columns for Modulation info - Mariel_11/25
+                radio.push_data("up_txmod", txt(match.group(6)))
+                radio.push_data("up_txpkt", txt(match.group(7)))
+                radio.push_data("up_rxmod", int(match.group(8)))
+                radio.push_data("up_rxpkt", txt(match.group(9)))
             # PRINTS DATA JUST GOTTEN
-            '''
-            print(f"{radio.name}: Up_s0 = {radio._up_s0}")
-            print(f"{radio.name}: Up_s1 = {radio._up_s1}")
-            print(f"{radio.name}: Up_rssi = {radio._up_rssi}")
-            print(f"{radio.name}: Up_Noise_Floor = {radio._up_noise_floor}")
-            print(f"{radio.name}: Up_snr = {radio._up_snr}")
-            '''
+            
+            print(f"{radio.name}: Up_TxMod = {radio._up_txmod}")
+            print(f"{radio.name}: Up_TxPkt = {radio._up_txpkt}")
+            print(f"{radio.name}: Up_RxMod = {radio._up_rxmod}")
+            print(f"{radio.name}: Up_RxPkt = {radio._up_rxpkt}")
+            
+            
 
             # Gen Down DATA ID
             down_id = f"staConf{radio_count + 1}snr-value"
@@ -196,6 +202,13 @@ class WebScraper:
                 radio.push_data("down_rssi", int(match.group(3)))
                 radio.push_data("down_noise_floor", int(match.group(4)))
                 radio.push_data("down_snr", int(match.group(5)))
+
+                ##Adding additional columns for Modulation info - Mariel_11/25
+                #radio.push_data("down_txmod", txt(match.group(6)))
+                #radio.push_data("down_rxmod", txt(match.group(7)))
+                #radio.push_data("down_temp", int(match.group(8)))
+                #radio.push_data("down_loc", txt(match.group(9)))
+                
             # PRINTS DATA JUST GOTTEN
             '''
             print(f"{radio.name}: Down_s0 = {radio._down_s0}")
