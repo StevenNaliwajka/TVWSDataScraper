@@ -175,20 +175,18 @@ class WebScraper:
                 radio.push_data("up_rssi", int(match.group(3)))
                 radio.push_data("up_noise_floor", int(match.group(4)))
                 radio.push_data("up_snr", int(match.group(5)))
-                
-                ##Adding additional columns for Modulation info - Mariel_11/25
-                radio.push_data("up_txmod", txt(match.group(6)))
-                radio.push_data("up_txpkt", txt(match.group(7)))
-                radio.push_data("up_rxmod", int(match.group(8)))
-                radio.push_data("up_rxpkt", txt(match.group(9)))
+
+                radio.push_data("up_txmod", str(match.group(6)))
+                radio.push_data("up_txpkt", str(match.group(7)))
+                radio.push_data("up_rxmod", str(match.group(8)))
+                radio.push_data("up_rxpkt", str(match.group(9)))
+
             # PRINTS DATA JUST GOTTEN
             
             print(f"{radio.name}: Up_TxMod = {radio._up_txmod}")
             print(f"{radio.name}: Up_TxPkt = {radio._up_txpkt}")
             print(f"{radio.name}: Up_RxMod = {radio._up_rxmod}")
             print(f"{radio.name}: Up_RxPkt = {radio._up_rxpkt}")
-            
-            
 
             # Gen Down DATA ID
             down_id = f"staConf{radio_count + 1}snr-value"
