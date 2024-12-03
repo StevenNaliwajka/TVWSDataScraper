@@ -175,11 +175,12 @@ class WebScraper:
                 radio.push_data("up_rssi", int(match.group(3)))
                 radio.push_data("up_noise_floor", int(match.group(4)))
                 radio.push_data("up_snr", int(match.group(5)))
-                
+
                 radio.push_data("up_txmod", str(match.group(6)))
                 radio.push_data("up_txpkt", str(match.group(7)))
                 radio.push_data("up_rxmod", str(match.group(8)))
                 radio.push_data("up_rxpkt", str(match.group(9)))
+
             # PRINTS DATA JUST GOTTEN
             
             print(f"{radio.name}: Up_TxMod = {radio._up_txmod}")
@@ -199,6 +200,13 @@ class WebScraper:
                 radio.push_data("down_rssi", int(match.group(3)))
                 radio.push_data("down_noise_floor", int(match.group(4)))
                 radio.push_data("down_snr", int(match.group(5)))
+
+                ##Adding additional columns for Modulation info - Mariel_11/25
+                #radio.push_data("down_txmod", txt(match.group(6)))
+                #radio.push_data("down_rxmod", txt(match.group(7)))
+                #radio.push_data("down_temp", int(match.group(8)))
+                #radio.push_data("down_loc", txt(match.group(9)))
+                
             # PRINTS DATA JUST GOTTEN
             '''
             print(f"{radio.name}: Down_s0 = {radio._down_s0}")
