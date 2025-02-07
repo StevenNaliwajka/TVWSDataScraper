@@ -1,2 +1,0 @@
-Update install script to include a check for pip.
-Integrate VENV creation into this thing.

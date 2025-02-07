@@ -39,7 +39,6 @@ class WebScraper:
 
     def get_firefox_driver(self):
         system_platform = platform.system()
-        print(system_platform)
         if system_platform == "Windows":
             service = FirefoxService(GeckoDriverManager().install())
             firefox_download_url = "https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US"
@@ -71,7 +70,6 @@ class WebScraper:
         project_dir = os.path.abspath(os.path.join(current_path, *[".."] * levels_up))
         firefox_dir = os.path.join(project_dir, "Firefox")
         os.makedirs(firefox_dir, exist_ok=True)
-        print(os.listdir(firefox_dir))
         if not os.path.exists(firefox_dir) or not os.listdir(firefox_dir):
             print("Folder is empty. Downloading Firefox Binary")
             firefox_filename = "firefox"+extension
