@@ -99,7 +99,7 @@ class WebScraper:
         if system_platform == "Windows":
             firefox_binary = os.path.join(firefox_dir, "MozillaFirefox", "firefox.exe")
         elif system_platform == "Linux":
-            pass
+            firefox_binary = os.path.join(firefox_dir, "firefox", "firefox-bin")
         return firefox_binary
 
 
