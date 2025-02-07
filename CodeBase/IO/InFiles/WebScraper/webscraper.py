@@ -1,5 +1,10 @@
+import glob
+import os
 import platform
 import re
+import subprocess
+import tarfile
+import zipfile
 
 from selenium import webdriver
 from selenium.common import TimeoutException, NoSuchElementException
@@ -10,7 +15,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.firefox import GeckoDriverManager
-
+import urllib.request
 import time
 
 
@@ -33,26 +38,70 @@ class WebScraper:
         self.login_to_base_station()
 
     def get_firefox_driver(self):
-        system_architecture = platform.machine()
-        # print(system_architecture)
-        # For x86_64 architecture (Windows,linux)
-        if system_architecture == "AMD64":
+        system_platform = platform.system()
+        print(system_platform)
+        if system_platform == "Windows":
             service = FirefoxService(GeckoDriverManager().install())
-        elif system_architecture == "x86_64":
+            firefox_download_url = "https://download.mozilla.org/?product=firefox-latest&os=win64&lang=en-US"
+            extension = ".exe"
+        elif system_platform == "Linux":
             service = FirefoxService(GeckoDriverManager().install())
-        # For ARM architectures (Raspberry Pi)
+            firefox_download_url = "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+            extension = ".tar.xz"
+            '''
+            # For ARM architectures (Raspberry Pi)
         elif system_architecture in ["armv7l", "aarch64"]:
-            service = FirefoxService("/usr/local/bin/geckodriver")  # Path to manually installed geckodriver on Pi
+                service = FirefoxService("/usr/local/bin/geckodriver")  # Path to manually installed geckodriver on Pi
+                firefox_download_url = None
+                archive_ext = None
+            '''
         else:
-            raise RuntimeError("Unsupported architecture: " + system_architecture)
+            raise RuntimeError("Unsupported architecture: " + system_platform)
 
-        # Firefox Options
-        firefox_options = Options()
-        firefox_options.add_argument("-profile")
-        firefox_options.add_argument("/tmp/firefox_profile")  # Temporary profile
+        binary_path = self.verify_get_local_firefox_install(firefox_download_url,system_platform, extension)
+        options = Options()
+        options.binary_location =binary_path
 
         # Initialize the WebDriver with the appropriate service
-        return webdriver.Firefox(service=service)
+        return webdriver.Firefox(service=service, options=options)
+
+    def verify_get_local_firefox_install(self, install_url, system_platform, extension):
+        current_path = os.path.abspath(__file__)
+        levels_up = 5
+        project_dir = os.path.abspath(os.path.join(current_path, *[".."] * levels_up))
+        firefox_dir = os.path.join(project_dir, "Firefox")
+        os.makedirs(firefox_dir, exist_ok=True)
+        print(os.listdir(firefox_dir))
+        if not os.path.exists(firefox_dir) or not os.listdir(firefox_dir):
+            print("Folder is empty. Downloading Firefox Binary")
+            firefox_filename = "firefox"+extension
+            firefox_path = os.path.join(firefox_dir, firefox_filename)
+            urllib.request.urlretrieve(install_url, firefox_path)
+            firefox_archive = next(glob.iglob(os.path.join(firefox_dir, firefox_filename)), None)
+            custom_install_path = os.path.join(firefox_dir, "MozillaFirefox")
+
+            if system_platform == "Windows":
+                subprocess.run([
+                    firefox_archive, "/S", f"/InstallDirectoryPath={custom_install_path}"
+                ], check=True)
+                print("Firefox installation completed.")
+
+            elif system_platform == "Linux":
+                if firefox_archive:
+                    print(f"Extracting: {firefox_archive}")
+                    with tarfile.open(firefox_archive, "r:*") as tar:
+                        tar.extractall(firefox_dir)
+                    os.remove(firefox_archive)  # Clean up
+                else:
+                    print("Failed to find the downloaded Firefox archive.")
+                    exit(1)
+        firefox_binary = None
+        if system_platform == "Windows":
+            firefox_binary = os.path.join(firefox_dir, "MozillaFirefox", "firefox.exe")
+        elif system_platform == "Linux":
+            pass
+        return firefox_binary
+
 
     def login_to_base_station(self):
         self.driver.get(self.secret.basestation_ip)
