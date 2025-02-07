@@ -6,3 +6,4 @@ CSVOutput/*
 .json
 .idea/
 __pycache__/
+Firefox/
