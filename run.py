@@ -30,34 +30,39 @@ if __name__ == "__main__":
         print(f"Virtual environment Python not found: {venv_python}")
         sys.exit(1)
 
-    # Update/DL pip
+    # Ensure pip is installed inside the virtual environment
     try:
         subprocess.run([venv_python, "-m", "pip", "--version"], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError:
-        print("pip is not installed. Attempting to install it...")
-        try:
-            subprocess.run([venv_python, "-m", "ensurepip", "--default-pip"], check=True)
-        except subprocess.CalledProcessError:
-            print("ensurepip is not available. Trying system installation...")
-            subprocess.run([sys.executable, "-m", "pip", "install", "--upgrade", "pip"], check=True)
-        print("pip has been installed and upgraded.")
+        print("pip is not installed. Installing pip manually...")
 
-    # Checks for packages needed to install
-    # print("Checking installed packages...")
+        # Try installing pip manually via get-pip.py
+        import urllib.request
+
+        pip_url = "https://bootstrap.pypa.io/get-pip.py"
+        pip_installer_path = os.path.join(os.path.dirname(__file__), "get-pip.py")
+
+        try:
+            urllib.request.urlretrieve(pip_url, pip_installer_path)
+            subprocess.run([venv_python, pip_installer_path], check=True)
+            os.remove(pip_installer_path)  # Clean up
+            print("pip has been installed manually.")
+        except Exception as e:
+            print(f"Failed to install pip manually: {e}")
+            sys.exit(1)
+
+    # Ensure pip is up-to-date
+    subprocess.run([venv_python, "-m", "pip", "install", "--upgrade", "pip"], check=True)
+
+    # Check installed packages
     result = subprocess.run([venv_python, "-m", "pip", "list"], capture_output=True, text=True, check=True)
     installed_packages = {line.split()[0].lower() for line in result.stdout.splitlines()[2:]}
     packages_to_install = [pkg for pkg in packages_to_install if pkg.lower() not in installed_packages]
 
-
     if packages_to_install:
-        subprocess.run([venv_python, "-m", "ensurepip", "--upgrade"], check=True)
-        subprocess.run([venv_python, "-m", "pip", "install", "--upgrade", "pip"], check=True)
         print(f"Installing missing packages: {packages_to_install}")
         subprocess.run([venv_python, "-m", "pip", "install"] + packages_to_install, check=True)
-    else:
-        pass
-        # print("All packages are already installed.")
 
-    # Run the main script using the virtual environment Python
+    # Run the main script
     main_script = os.path.join(os.path.dirname(__file__), "CodeBase", "tvwsdatascraper.py")
     subprocess.run([venv_python, main_script] + sys.argv[1:])
