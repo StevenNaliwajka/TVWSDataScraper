@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # Check if venv exists
     if not os.path.exists(venv_dir):
         print("Creating virtual environment...")
-        result = subprocess.run([sys.executable, "-m", "venv", venv_dir], capture_output=True, text=True)
+        result = subprocess.run([sys.executable, "-m", "venv", "--without-pip", venv_dir], capture_output=True, text=True)
         if result.returncode != 0:
             print(f"Error creating virtual environment: {result.stderr}")
             sys.exit(1)
@@ -30,11 +30,11 @@ if __name__ == "__main__":
         print(f"Virtual environment Python not found: {venv_python}")
         sys.exit(1)
 
-    # Ensure pip is installed inside the virtual environment
+    # Ensure ensurepip is available
     try:
-        subprocess.run([venv_python, "-m", "pip", "--version"], check=True, capture_output=True, text=True)
+        subprocess.run([venv_python, "-m", "ensurepip", "--default-pip"], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError:
-        print("pip is not installed. Installing pip manually...")
+        print("ensurepip is missing or failed. Trying to install pip manually...")
 
         # Try installing pip manually via get-pip.py
         import urllib.request
@@ -63,11 +63,8 @@ if __name__ == "__main__":
         print(f"Installing missing packages: {packages_to_install}")
         subprocess.run([venv_python, "-m", "pip", "install"] + packages_to_install, check=True)
 
-
     project_root = os.path.dirname(os.path.abspath(__file__))
-    # Add 'CodeBase' to sys.path
     sys.path.append(os.path.join(project_root, "CodeBase"))
-
 
     # Run the main script
     subprocess.run([venv_python, "-m", "CodeBase.tvwsdatascraper"])
