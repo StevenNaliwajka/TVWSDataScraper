@@ -13,10 +13,15 @@ profile_name = "selenium_profile"
 firefox_profile_dir = os.path.join(firefox_base_dir, profile_name)
 
 # Ensure Firefox has run at least once
-if not os.path.exists(firefox_base_dir):
+if not os.path.exists(profiles_ini):
     print("Firefox has never been launched before. Initializing...")
-    subprocess.run(["firefox"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+    # Start Firefox headless in the background
+    firefox_process = subprocess.Popen(["firefox", "--headless"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(5)  # Give Firefox time to initialize
+    firefox_process.terminate()  # Kill the process
+
+    # Check if profiles.ini was created
     if not os.path.exists(profiles_ini):
         print("profiles.ini is still missing. Firefox might not be installed correctly.")
         exit(1)
