@@ -1,14 +1,10 @@
-import threading
-
-from Config.Handlers.config import Config
-from Config.Handlers.read_outfile_config import read_outfile_config
-from Config.Handlers.read_radio_config import read_radio_config
-from Config.Handlers.secret import Secret
-from IO.FirstTimeRun.config_init import config_init
-from IO.InFiles import update_data_thread
-from IO.InFiles.WebScraper.webscraper import WebScraper
-from IO.OutFiles import write_data_thread
-from IO.thread_manager import ThreadManager
+from CodeBase.Handlers.config import Config
+from CodeBase.Handlers.read_outfile_config import read_outfile_config
+from CodeBase.Handlers.read_radio_config import read_radio_config
+from CodeBase.Handlers.secret import Secret
+from CodeBase.IO.FirstTimeRun.config_init import config_init
+from CodeBase.IO.InFiles.WebScraper.webscraper import WebScraper
+from CodeBase.IO.thread_manager import ThreadManager
 
 if __name__ == "__main__":
     print(f"(TVWSDataScraper) Initializing TVWS Web Scraper.")

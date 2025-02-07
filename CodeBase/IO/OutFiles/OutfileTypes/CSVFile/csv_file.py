@@ -1,6 +1,6 @@
 import os
 
-from IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
+from CodeBase.IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
 from datetime import date, datetime
 
 
@@ -10,7 +10,7 @@ class CSVFile(OutfileParent):
         # If no slashes, assume that the file is not an abs path, create in root of project directory
         if "/" not in location and "\\" not in location:
             current_path = os.path.abspath(__file__)
-            levels_up = 5
+            levels_up = 6
             parent_folder = os.path.abspath(os.path.join(current_path, *[".."] * levels_up))
             location = os.path.join(parent_folder, location)
         super().__init__(name, outfile_type, location, base_station, child_radio_list)

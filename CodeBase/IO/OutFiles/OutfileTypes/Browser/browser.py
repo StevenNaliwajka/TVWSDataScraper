@@ -1,4 +1,4 @@
-from IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
+from CodeBase.IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
 
 
 class Browser(OutfileParent):

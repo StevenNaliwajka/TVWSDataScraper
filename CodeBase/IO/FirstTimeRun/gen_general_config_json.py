@@ -1,7 +1,4 @@
-import json
-import os
-
-from IO.FirstTimeRun.HelperMethods.create_config_file import create_config_file
+from CodeBase.IO.FirstTimeRun.HelperMethods.create_config_file import create_config_file
 
 
 def gen_general_config_json():

@@ -1,8 +1,8 @@
 import threading
 
-from IO.InFiles.WebScraper.SettingUpdates.update_settings import UpdateSettings
-from IO.InFiles.update_data_thread import update_data_thread
-from IO.OutFiles.write_data_thread import write_data_thread
+from CodeBase.IO.InFiles.WebScraper.SettingUpdates.update_settings import UpdateSettings
+from CodeBase.IO.InFiles.update_data_thread import update_data_thread
+from CodeBase.IO.OutFiles.write_data_thread import write_data_thread
 
 
 class ThreadManager:

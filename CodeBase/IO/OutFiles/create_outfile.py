@@ -1,6 +1,6 @@
-from IO.OutFiles.OutfileTypes.Browser.browser import Browser
-from IO.OutFiles.OutfileTypes.CSVFile.csv_file import CSVFile
-from IO.OutFiles.OutfileTypes.LocalDB.localdb import LocalDB
+from CodeBase.IO.OutFiles.OutfileTypes.Browser.browser import Browser
+from CodeBase.IO.OutFiles.OutfileTypes.CSVFile.csv_file import CSVFile
+from CodeBase.IO.OutFiles.OutfileTypes.LocalDB.localdb import LocalDB
 
 
 def create_outfile(name, outfile_type, location, base_station, child_radio_list):

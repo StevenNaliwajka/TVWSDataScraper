@@ -1,6 +1,4 @@
-import os
-
-from IO.FirstTimeRun.HelperMethods.create_config_file import create_env_file
+from CodeBase.IO.FirstTimeRun.HelperMethods.create_config_file import create_env_file
 
 
 def gen_secret_file():

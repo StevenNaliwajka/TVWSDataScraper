@@ -1,8 +1,6 @@
-import json
-
-from Config.Handlers.HelperMethods.json_support_methods import validate_json_file
-from IO.InFiles.Radios.RadioTypes.child import Child
-from IO.InFiles.Radios.RadioTypes.parent import Parent
+from CodeBase.Handlers.HelperMethods.json_support_methods import validate_json_file
+from CodeBase.IO.InFiles.Radios.RadioTypes.child import Child
+from CodeBase.IO.InFiles.Radios.RadioTypes.parent import Parent
 
 
 def read_radio_config():
