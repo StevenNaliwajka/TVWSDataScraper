@@ -4,6 +4,7 @@ import os
 
 def create_config_file(json_file_path, default_config):
     # Check if the file already exists
+    os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
     if not os.path.exists(json_file_path):
         # Create and write the default JSON data
         with open(json_file_path, "w") as file:

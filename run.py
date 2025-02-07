@@ -64,13 +64,10 @@ if __name__ == "__main__":
         subprocess.run([venv_python, "-m", "pip", "install"] + packages_to_install, check=True)
 
 
-    #888888888888888888888888888888888888888888888888888888888888888888888
     project_root = os.path.dirname(os.path.abspath(__file__))
     # Add 'CodeBase' to sys.path
     sys.path.append(os.path.join(project_root, "CodeBase"))
 
 
     # Run the main script
-    #main_script = os.path.join(os.path.dirname(__file__), "CodeBase", "tvwsdatascraper.py")
-    #subprocess.run([venv_python, main_script] + sys.argv[1:])
     subprocess.run([venv_python, "-m", "CodeBase.tvwsdatascraper"])
