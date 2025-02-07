@@ -37,6 +37,8 @@ class WebScraper:
         # For x86_64 architecture (Windows,linux)
         if system_architecture == "AMD64":
             service = FirefoxService(GeckoDriverManager().install())
+        if system_architecture == "x86_64":
+            service = FirefoxService(GeckoDriverManager().install())
         # For ARM architectures (Raspberry Pi)
         elif system_architecture in ["armv7l", "aarch64"]:
             service = FirefoxService("/usr/local/bin/geckodriver")  # Path to manually installed geckodriver on Pi
