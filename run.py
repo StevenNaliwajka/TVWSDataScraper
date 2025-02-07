@@ -34,11 +34,13 @@ if __name__ == "__main__":
     try:
         subprocess.run([venv_python, "-m", "pip", "--version"], check=True, capture_output=True, text=True)
     except subprocess.CalledProcessError:
-        print("pip is not installed. Installing pip...")
-        subprocess.run([venv_python, "-m", "ensurepip", "--upgrade"], check=True)
-        subprocess.run([venv_python, "-m", "pip", "install", "--upgrade", "pip"], check=True)
+        print("pip is not installed. Attempting to install it...")
+        try:
+            subprocess.run([venv_python, "-m", "ensurepip", "--default-pip"], check=True)
+        except subprocess.CalledProcessError:
+            print("ensurepip is not available. Trying system installation...")
+            subprocess.run([sys.executable, "-m", "pip", "install", "--upgrade", "pip"], check=True)
         print("pip has been installed and upgraded.")
-
 
     # Checks for packages needed to install
     # print("Checking installed packages...")
