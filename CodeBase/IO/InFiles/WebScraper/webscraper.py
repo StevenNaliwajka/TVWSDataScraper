@@ -3,6 +3,7 @@ import re
 
 from selenium import webdriver
 from selenium.common import TimeoutException, NoSuchElementException
+from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
@@ -37,13 +38,18 @@ class WebScraper:
         # For x86_64 architecture (Windows,linux)
         if system_architecture == "AMD64":
             service = FirefoxService(GeckoDriverManager().install())
-        if system_architecture == "x86_64":
+        elif system_architecture == "x86_64":
             service = FirefoxService(GeckoDriverManager().install())
         # For ARM architectures (Raspberry Pi)
         elif system_architecture in ["armv7l", "aarch64"]:
             service = FirefoxService("/usr/local/bin/geckodriver")  # Path to manually installed geckodriver on Pi
         else:
             raise RuntimeError("Unsupported architecture: " + system_architecture)
+
+        # Firefox Options
+        firefox_options = Options()
+        firefox_options.add_argument("-profile")
+        firefox_options.add_argument("/tmp/firefox_profile")  # Temporary profile
 
         # Initialize the WebDriver with the appropriate service
         return webdriver.Firefox(service=service)
