@@ -10,10 +10,6 @@ import sys
 
 if __name__ == "__main__":
     print(f"(TVWSDataScraper) Initializing TVWS Web Scraper.")
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    # Add 'CodeBase' to sys.path
-    sys.path.append(os.path.join(project_root, "CodeBase"))
-
 
     # Initializes config files and prompts user to configure them.
     config_init()
