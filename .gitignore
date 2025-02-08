@@ -7,3 +7,4 @@ CSVOutput/*
 .idea/
 __pycache__/
 Firefox/
+venv/
