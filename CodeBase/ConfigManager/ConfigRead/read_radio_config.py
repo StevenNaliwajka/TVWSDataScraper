@@ -1,6 +1,6 @@
 from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
-from CodeBase.Webscraper.Radios.RadioTypes.child import Child
-from CodeBase.Webscraper.Radios.RadioTypes.parent import Parent
+from CodeBase.Radios.RadioTypes.child import Child
+from CodeBase.Radios.RadioTypes.parent import Parent
 
 
 def read_radio_config():

@@ -1,4 +1,4 @@
-from CodeBase.Webscraper.Radios.radio_parent import RadioParent
+from CodeBase.Radios.radio_parent import RadioParent
 
 
 class Parent(RadioParent):
