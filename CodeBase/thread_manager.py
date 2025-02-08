@@ -1,7 +1,7 @@
 import threading
 
-from CodeBase.Webscraper.SettingUpdates.update_settings import UpdateSettings
-from CodeBase.Threading.Threads.update_data_thread import update_data_thread
+from CodeBase.Webscraper.Updates.update_settings import UpdateSettings
+from CodeBase.Webscraper.Updates.update_data_thread import update_data_thread
 from CodeBase.OutFiles.write_data_thread import write_data_thread
 
 

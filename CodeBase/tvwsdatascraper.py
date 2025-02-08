@@ -4,7 +4,7 @@ from CodeBase.ConfigManager.ConfigRead.read_radio_config import read_radio_confi
 from CodeBase.ConfigManager.secret import Secret
 from CodeBase.ConfigManager.ConfigRead.config_init import config_init
 from CodeBase.Webscraper.webscraper import WebScraper
-from CodeBase.Threading.thread_manager import ThreadManager
+from CodeBase.thread_manager import ThreadManager
 
 if __name__ == "__main__":
     print(f"(TVWSDataScraper) Initializing TVWS Web Scraper.")
