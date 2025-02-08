@@ -2,15 +2,6 @@ import json
 import sys
 import time
 
-'''
-def check_for_null_data(config_name, data, string_to_check):
-    try:
-        result = data[string_to_check]
-        return result
-    except TypeError:
-        sys.exit(f"{config_name}: \'{string_to_check}\', configured incorrectly.")
-'''
-
 def validate_json_file(file_path):
     try:
         # Open and read the file contents

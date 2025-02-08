@@ -24,6 +24,7 @@ def update_data_thread(read_data_event, write_data_event, update_settings_event,
         read_counter += 1
         # If number of reads reached, write to outfile
         if read_counter == config.reads_between_writes:
+            # this allows write_data_thread to write
             write_data_event.set()
             read_counter = 0
             # +1 to setting_counter

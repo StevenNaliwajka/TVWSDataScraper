@@ -1,6 +1,6 @@
 import os
 
-from CodeBase.IO.OutFiles.OutfileTypes.outfile_parent import OutfileParent
+from CodeBase.OutFiles.OutfileTypes.outfile_parent import OutfileParent
 from datetime import date, datetime
 
 

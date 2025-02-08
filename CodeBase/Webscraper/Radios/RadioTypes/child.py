@@ -1,4 +1,4 @@
-from CodeBase.IO.InFiles.Radios.radio_parent import RadioParent
+from CodeBase.Webscraper.Radios.radio_parent import RadioParent
 
 
 class Child(RadioParent):

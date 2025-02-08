@@ -1,4 +1,4 @@
-from CodeBase.IO.FirstTimeRun.HelperMethods.create_config_file import create_config_file
+from CodeBase.ConfigManager.ConfigBuild.create_config_file import create_config_file
 
 
 def gen_settings_to_test_config_json():

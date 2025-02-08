@@ -1,5 +1,5 @@
-from CodeBase.Handlers.HelperMethods.json_support_methods import validate_json_file
-from CodeBase.IO.OutFiles.create_outfile import create_outfile
+from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
+from CodeBase.OutFiles.create_outfile import create_outfile
 
 
 def read_outfile_config(base_station, child_radio_list):

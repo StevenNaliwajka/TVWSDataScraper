@@ -1,7 +1,7 @@
-from CodeBase.Handlers.HelperMethods.json_support_methods import validate_json_file
+from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
 
 
-# from Config.Handlers.HelperMethods.json_support_methods import validate_json_file, check_for_null_data
+# from Config.ConfigManager.ConfigRead.json_support_methods import validate_json_file, check_for_null_data
 
 
 class Config:
