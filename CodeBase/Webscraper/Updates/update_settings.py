@@ -9,23 +9,33 @@ class UpdateSettings:
         self.base_station = None
         self.read_event = None
 
-        self.channel_list, self.test_channel = self.init_test_param(config, "channel")
-        self.tx_power_list, self.test_tx_power = self.init_test_param(config, "tx_power")
-        self.rx_gain_list, self.test_rx_gain = self.init_test_param(config, "rx_gain")
-        self.bandwidth_list, self.test_bandwidth = self.init_test_param(config, "bandwidth")
+        self.channel_list, self.test_channel = self.init_test_param("channel")
+        self.tx_power_list, self.test_tx_power = self.init_test_param("tx_power")
+        self.rx_gain_list, self.test_rx_gain = self.init_test_param("rx_gain")
+        self.bandwidth_list, self.test_bandwidth = self.init_test_param("bandwidth")
+
+        self.channel_list = None
+        self.tx_power_list = None
+        self.rx_gain_list = None
+        self.bandwidth_list = None
+
 
         self.channel_start_idx = None
         self.tx_power_start_idx = None
         self.rx_gain_start_idx = None
         self.bandwidth_start_idx = None
 
-    def init_test_param(self, config, param_name):
-        param_list = getattr(config, f"{param_name}_list")
-        test_flag = getattr(config, f"test_{param_name}_flag")
-        test_param = test_flag and param_list is not None
+    def init_test_param(self, param_name):
+        # Gets from config
+        # test flag = Whether or not param shall be tested
+        # var_list = List of Params from console that will be tested
+        test_flag = getattr(self.config, f"test_{param_name}_flag")
+        param_list = None
+        if test_flag:
+            param_list = getattr(self.config, f"{param_name}_list")
         print(f"{param_name}_list = {param_list}")
-        print(f"test_{param_name}_flag = {test_param}")
-        return param_list, test_param
+        print(f"test_{param_name}_flag = {test_flag}")
+        return param_list, test_flag
 
     def update_settings_thread(self, base_station, update_settings_event, read_event):
         self.base_station = base_station
