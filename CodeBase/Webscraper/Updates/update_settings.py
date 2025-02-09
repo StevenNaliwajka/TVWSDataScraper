@@ -1,5 +1,8 @@
 import re
 
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
+
 
 class UpdateSettings:
     def __init__(self, web_scraper, config):
@@ -19,7 +22,6 @@ class UpdateSettings:
         self.rx_gain_list = None
         self.bandwidth_list = None
 
-
         self.channel_start_idx = None
         self.tx_power_start_idx = None
         self.rx_gain_start_idx = None
@@ -32,7 +34,12 @@ class UpdateSettings:
         test_flag = getattr(self.config, f"test_{param_name}_flag")
         param_list = None
         if test_flag:
-            param_list = getattr(self.config, f"{param_name}_list")
+            # Channel Param list is location specific. Pull local data from webgui and read in.
+            if param_name == "channel":
+                channel_dropdown = Select(self.web_scraper.driver.find_element(By.ID, "channel-config"))
+                param_list = channel_dropdown.options
+            else:
+                param_list = getattr(self.config, f"{param_name}_list")
         print(f"{param_name}_list = {param_list}")
         print(f"test_{param_name}_flag = {test_flag}")
         return param_list, test_flag
