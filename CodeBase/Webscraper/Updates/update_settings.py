@@ -23,6 +23,8 @@ class UpdateSettings:
         param_list = getattr(config, f"{param_name}_list")
         test_flag = getattr(config, f"test_{param_name}_flag")
         test_param = test_flag and param_list is not None
+        print(f"{param_name}_list = {param_list}")
+        print(f"test_{param_name}_flag = {test_param}")
         return param_list, test_param
 
     def update_settings_thread(self, base_station, update_settings_event, read_event):

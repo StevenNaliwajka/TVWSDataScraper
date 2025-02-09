@@ -34,5 +34,5 @@ class ThreadManager:
         self.thread1.start()
         print("(ThreadManager) Starting Write Thread")
         self.thread2.start()
-        #print("(ThreadManager) Starting Settings Thread")
-        #self.thread3.start()
+        print("(ThreadManager) Starting Settings Thread")
+        self.thread3.start()
