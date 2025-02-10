@@ -30,7 +30,8 @@ class WebScraper:
 
 
     def login_to_base_station(self):
-        self.driver.get(self.secret.basestation_ip)
+        website = f"https://{self.secret.basestation_ip}/gws/"
+        self.driver.get(website)
         try:
             # Wait for the username input field to be present
             username_field = WebDriverWait(self.driver, 10).until(
