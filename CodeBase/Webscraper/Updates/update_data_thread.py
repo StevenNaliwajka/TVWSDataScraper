@@ -7,6 +7,7 @@ def update_data_thread(read_data_event, write_data_event, update_settings_event,
     # when its read the data X number of times (X from config), it  pulls write_data_event high and allows
     # write data to push to DB.
     # Give time to registers to populate on WEBGUI.
+
     time.sleep(5)
     print("Thread creation done.")
     read_counter = 0
@@ -20,6 +21,7 @@ def update_data_thread(read_data_event, write_data_event, update_settings_event,
         read_data_event.wait()
         # Read data
         print("(UpdateDataThread): Starting Data reading.")
+        # This is what triggers reading the data into memory from webgui
         web_scraper.read_data()
         read_counter += 1
         # If number of reads reached, write to outfile

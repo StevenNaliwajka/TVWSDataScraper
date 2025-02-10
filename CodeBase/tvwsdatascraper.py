@@ -13,17 +13,20 @@ if __name__ == "__main__":
     config_init()
 
     # Populate Config with test settings.
+    print(f"(TVWSDataScraper) Parsing Config.")
     config = Config()
     # Populate Secret
     secret = Secret()
 
     # Get radio Base station and a list of the children.
-    base_station, radio_children_list = read_radio_config()
+    base_station, radio_children_list = read_radio_config(secret)
 
     # Generate a list of all the outfile. Allows for multiple options to write data at once.
+    print(f"(TVWSDataScraper) Generating Outfile List.")
     outfile_list = read_outfile_config(base_station, radio_children_list)
 
     # Creates WebScraper Object
+    print(f"(TVWSDataScraper) Initalizing Webscraper.")
     web_scraper = WebScraper(secret, config, base_station, radio_children_list)
 
     print(f"(TVWSDataScraper) Initializing Threads.")
@@ -33,7 +36,3 @@ if __name__ == "__main__":
     print(f"(TVWSDataScraper) Starting Program.")
     # Starts Program.
     program.start()
-
-
-
-

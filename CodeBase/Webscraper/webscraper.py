@@ -88,7 +88,24 @@ class WebScraper:
         # wait for HTML to Load.
         time.sleep(3)
         # Gets the rest of the variable data
+        self.get_radio_gui_position_from_ip()
         self.read_data()
+
+    def get_radio_gui_position_from_ip(self):
+        for radio in self.child_radio_list:
+            count = None
+            # Get table ID
+            table_id = f"staConf{radio.ip}"
+            table = self.driver.find_element(By.ID, table_id)
+
+            # Get the element within that table.
+            td_element = table.find_element(By.CSS_SELECTOR, f"td[id^='staConf'][id$='icon-value']")
+            # Get ID
+            td_id = td_element.get_attribute("id")
+            # Get Count+1
+            number = td_id.replace(f"staConf", "").replace("icon-value", "").strip()
+            count = number-1
+            radio.radio_count = count
 
     def read_channel_and_freq(self):
         # GET CHANNEL & Freq + parse
@@ -143,8 +160,8 @@ class WebScraper:
         '''
 
     def read_data(self):
-        radio_count = 1
         for radio in self.child_radio_list:
+            radio_count = radio.radio_count
             print(f"(ReadDataThread): Reading from {radio.name}.")
             # GEN UP DATA ID
             up_id = f"sta{radio_count}snr"
@@ -202,8 +219,6 @@ class WebScraper:
             '''
             print(f"{radio.name}: TX_Power = {radio._tx_power}")
             '''
-
-            radio_count += 1
 
     def open_all_child_radio_down_data(self):
         button_number = 1

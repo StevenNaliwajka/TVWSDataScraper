@@ -1,6 +1,9 @@
 import os
+import sys
 
 from dotenv import load_dotenv
+
+from CodeBase.ConfigManager.secret_client import SecretClient
 
 
 class Secret:
@@ -10,9 +13,24 @@ class Secret:
         self.basestation_ip = os.getenv("BASESTATION_IP")
         self.basestation_username = os.getenv("BASESTATION_USERNAME")
         self.basestation_password = os.getenv("BASESTATION_PASSWORD")
-        self.client1_ip = os.getenv("CLIENT1_IP")
-        self.client1_username = os.getenv("CLIENT1_USERNAME")
-        self.client1_password = os.getenv("CLIENT1_PASSWORD")
-        self.client2_ip = os.getenv("CLIENT2_IP")
-        self.client2_username = os.getenv("CLIENT2_USERNAME")
-        self.client2_password = os.getenv("CLIENT2_PASSWORD")
+        self.client_list = []
+
+        # Dynamic Radio Count. Unk how many child radios there are.
+        # Scans through secret config to create X amounts of radios.
+        run = True
+        run_count = 1
+        while run:
+            #print("run_loop")
+            try:
+                ip = os.getenv(f"CLIENT{run_count}_IP")
+                if ip is None:
+                    break
+                username = os.getenv(f"CLIENT{run_count}_USERNAME")
+                password = os.getenv(f"CLIENT{run_count}_PASSWORD")
+                config_list_position = run_count-1
+                self.client_list.append(SecretClient(config_list_position, ip, username, password))
+                run_count += 1
+            except:
+                run = False
+        if run_count == 1:
+            sys.exit("Error: At least one client radio is required.")

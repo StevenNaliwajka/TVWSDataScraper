@@ -2,9 +2,9 @@ from CodeBase.Radios.radio_parent import RadioParent
 
 
 class Parent(RadioParent):
-    def __init__(self, name):
+    def __init__(self, name, ip):
         # The base station, currently for all intents and purposes, there should only be one.
-        super().__init__(name)
+        super().__init__(name, ip)
 
         # 'constants', will be changed in the webGUI to get changes data.
         # Currently there are on avg 4 channels avail.
@@ -22,4 +22,3 @@ class Parent(RadioParent):
         self.bandwidth = None
 
         self.temp = None
-

@@ -3,10 +3,10 @@ from CodeBase.Radios.radio_parent import RadioParent
 
 class Child(RadioParent):
     def __init__(self, name, base_antenna_angle, this_antenna_angle, h_distance, v_distance,
-                 special_char_name, special_char_value):
+                 special_char_name, special_char_value, ip):
         # Child radio type, used as a "register" to store data, Constantly pulled from and pushed too.
         # print("Creating A radio pair")
-        super().__init__(name)
+        super().__init__(name, ip)
         # 'config data'
         self.base_antenna_angle = base_antenna_angle
         self.this_antenna_angle = this_antenna_angle
@@ -29,6 +29,9 @@ class Child(RadioParent):
         self._up_noise_floor = []
         self._up_snr = []
         self._ping_time_avg = []
+
+        # Added on run, the position in webgui of radio, 1,2,3,4...
+        self.radio_count = None
 
     def push_data(self, key, value):
         # Should only be used for the 'register' values

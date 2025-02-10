@@ -3,7 +3,7 @@ from CodeBase.Radios.RadioTypes.child import Child
 from CodeBase.Radios.RadioTypes.parent import Parent
 
 
-def read_radio_config():
+def read_radio_config(secret):
     radio_json_path = "Config/radio_config.json"
 
     # If able to be opened
@@ -48,7 +48,9 @@ def read_radio_config():
                     cycle_channel_bandwidth = False
                 '''
                 #base_station = Parent(name, cycle_channel, cycle_tx_power, cycle_rx_gain, cycle_channel_bandwidth)
-                base_station = Parent(name)
+                # Gets the base station IP
+                ip = secret.basestation_ip
+                base_station = Parent(name, ip)
 
             # if a child, get more data and make child radio
             elif outfile_type == "child":
@@ -58,8 +60,10 @@ def read_radio_config():
                 v_distance = radio["v_distance"]
                 special_char_name = radio.get("special_char_name", None)
                 special_char_value = radio.get("special_char_value", None)
+                # Gets the next IP in the list. Assuming user entered in order.
+                ip = secret.client_list[len(radio_child_list) - 1]
                 new_child = Child(name, base_antenna_angle, this_antenna_angle, h_distance, v_distance,
-                                  special_char_name, special_char_value)
+                                  special_char_name, special_char_value, ip)
                 radio_child_list.append(new_child)
             else:
                 raise ValueError(f"Config is Invalid, \"{outfile_type}\" is not an acceptable outfile type.")
