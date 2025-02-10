@@ -46,6 +46,7 @@ class CSVFile(OutfileParent):
                 # Headder Table 1: MetaData
                 file.write(f"ReceiverName,BaseAntennaAngle,ReceiverAntennaAngle,HDistance,"
                            f"VDistance,SpecialCharName,SpecialCharValue\n")
+                # ADD: BaseLocation,ChildLocation
                 # Contents Table 1
                 file.write(f"{CRadio.name},{CRadio.base_antenna_angle},{CRadio.this_antenna_angle},"
                            f"{CRadio.h_distance},{CRadio.v_distance},{CRadio.special_char_name},"
@@ -54,6 +55,8 @@ class CSVFile(OutfileParent):
                 file.write(f"Date,Time,Channel,Freq,Noise,ParentTXPower,ParentRXGain,ParentTemp,ParentBandwidth,DownS0,"
                            f"DownS1,DownRssi,DownNoiseFloor,DownSNR,ChildTXPower,UpS0,UpS1,UpRSSI,UpNoiseFloor,UpSNR,"
                            f"PingTimeAVG\n")
+                # ADD: BaseFreeMem, BaseTemp, BaseUptime, ChildTxType, ChildRxType, ChildOnTime, ChildUplinkTime,
+                # MODIFY: ChangeTXPOWER to have up/down
             i += 1
 
     def write_to_outfile(self):
