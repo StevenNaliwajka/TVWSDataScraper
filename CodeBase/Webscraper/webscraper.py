@@ -105,7 +105,7 @@ class WebScraper:
             # Get ID
             td_id = td_element.get_attribute("id")
             # Get Count+1
-            number = td_id.replace(f"staConf", "").replace("icon-value", "").strip()
+            number = int(td_id.replace(f"staConf", "").replace("icon-value", "").strip())
             count = number-1
             radio.radio_count = count
 
