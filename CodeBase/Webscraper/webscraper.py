@@ -30,7 +30,6 @@ from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_link_time_column impor
 from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_up_rx_column import read_up_rx_column
 from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_up_snr_column import read_up_snr_column
 from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_up_tx_column import read_up_tx_column
-from CodeBase.Webscraper.Updates.ChangeSettings.change_setting import change_setting
 from CodeBase.Webscraper.Updates.verify_config_settings_matches_startup import verify_config_settings_matches_startup
 
 

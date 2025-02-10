@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def read_up_snr_column(driver, radio_count, radio):
     up_id = f"sta{radio_count}snr"
+    print(up_id)
     up_text = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, up_id))
     ).text
