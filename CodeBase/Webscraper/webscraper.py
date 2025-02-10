@@ -96,6 +96,7 @@ class WebScraper:
         for radio in self.child_radio_list:
             count = None
             # Get table ID
+
             table_id = f"staConf{radio.ip}"
             table = self.driver.find_element(By.ID, table_id)
 

@@ -61,7 +61,7 @@ def read_radio_config(secret):
                 special_char_name = radio.get("special_char_name", None)
                 special_char_value = radio.get("special_char_value", None)
                 # Gets the next IP in the list. Assuming user entered in order.
-                ip = secret.client_list[len(radio_child_list) - 1]
+                ip = secret.client_list[len(radio_child_list) - 1].ip
                 new_child = Child(name, base_antenna_angle, this_antenna_angle, h_distance, v_distance,
                                   special_char_name, special_char_value, ip)
                 radio_child_list.append(new_child)
