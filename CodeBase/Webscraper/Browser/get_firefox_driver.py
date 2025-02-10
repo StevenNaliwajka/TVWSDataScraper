@@ -4,7 +4,7 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
 
-from CodeBase.Webscraper.BuildBrowser.verify_get_local_firefox_install import verify_get_local_firefox_install
+from CodeBase.Webscraper.Browser.verify_get_local_firefox_install import verify_get_local_firefox_install
 
 
 def get_firefox_driver():

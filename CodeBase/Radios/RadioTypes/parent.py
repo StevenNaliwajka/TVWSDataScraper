@@ -22,3 +22,6 @@ class Parent(RadioParent):
         self.bandwidth = None
 
         self.temp = None
+        self.uptime_value = None
+        self.base_free_mem = None
+        self.location = None
