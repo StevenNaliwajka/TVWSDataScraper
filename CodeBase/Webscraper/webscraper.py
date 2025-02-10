@@ -172,6 +172,7 @@ class WebScraper:
             ).text
             match = re.search(r"\[ (-?\d+) \| (-?\d+) \] (-?\d+) / (-?\d+) / (-?\d+)", up_text)
             if match:
+                print(match)
                 radio.push_data("up_s0", int(match.group(1)))
                 radio.push_data("up_s1", int(match.group(2)))
                 radio.push_data("up_rssi", int(match.group(3)))
