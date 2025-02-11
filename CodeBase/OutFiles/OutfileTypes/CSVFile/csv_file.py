@@ -39,24 +39,35 @@ class CSVFile(OutfileParent):
         i = 0
         for file in self.file_name_list:
             file_name = file
+
             # Gets child radio, makes code cleaner.
             CRadio = self.child_radio_list[i]
+            # Get parent Radio
+            PRadio = self.base_station
             with open(file, 'w') as file:
                 print(f"(CSVFile) Created file: {file_name}")
                 # Headder Table 1: MetaData
-                file.write(f"ReceiverName,BaseAntennaAngle,ReceiverAntennaAngle,HDistance,"
-                           f"VDistance,SpecialCharName,SpecialCharValue\n")
-                # ADD: BaseLocation,ChildLocation
+                file.write(f"CName,PIp,CIp,"
+                           f"AngleCAntennaToPRadio,AnglePAntennaToCRadio,"
+                           f"HDist,VDist"
+                           f"SpecialValueName,SpecialValue,"
+                           f"PLocation,CLocation\n")
                 # Contents Table 1
-                file.write(f"{CRadio.name},{CRadio.base_antenna_angle},{CRadio.this_antenna_angle},"
-                           f"{CRadio.h_distance},{CRadio.v_distance},{CRadio.special_char_name},"
-                           f"{CRadio.special_char_value}\n")
+                file.write(f"{CRadio.name},{PRadio.Ip},{CRadio.Ip},"
+                           f"{CRadio.this_antenna_angle},{CRadio.base_antenna_angle},"
+                           f"{CRadio.h_distance},{CRadio.v_distance},"
+                           f"{CRadio.special_char_name},{CRadio.special_char_value},"
+                           f"{PRadio.location}, {CRadio.radio_location}\n")
+
                 # Header Table 2:
-                file.write(f"Date,Time,Channel,Freq,Noise,ParentTXPower,ParentRXGain,ParentTemp,ParentBandwidth,DownS0,"
-                           f"DownS1,DownRssi,DownNoiseFloor,DownSNR,ChildTXPower,UpS0,UpS1,UpRSSI,UpNoiseFloor,UpSNR,"
-                           f"PingTimeAVG\n")
-                # ADD: BaseFreeMem, BaseTemp, BaseUptime, ChildTxType, ChildRxType, ChildOnTime, ChildUplinkTime,
-                # MODIFY: ChangeTXPOWER to have up/down
+                file.write(f"Date,Time,Channel,PTxPower,PRxGain,Bandwidth,"
+                           f"PTemp,PUpTime,PFreeMemory,"
+                           f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
+                           f"DTxModulation,DRxModulation,"
+                           f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
+                           f"US0,US1,USRSSI,USNoiseFloor,USNR"
+                           f"UTxModulation,UTxPackets,URxModulation,URxPackets"
+                           f"PinkTimeAVG\n")
             i += 1
 
     def write_to_outfile(self):
@@ -84,6 +95,9 @@ class CSVFile(OutfileParent):
                 ping_time_avg = "0"
 
                 # ADDS ENTRY IN Table 2:
+                file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.tx_power},{PRadio.rx_gain},"
+                           f"{PRadio.bandwidth},")
+
                 file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.freq},{PRadio.noise},{PRadio.tx_power},"
                            f"{PRadio.rx_gain},{PRadio.temp},{PRadio.bandwidth},{down_so},{down_s1},{down_rssi},"
                            f"{down_noise_floor},{down_snr},{tx_power},{up_s0},{up_s1},{up_rssi},{up_noise_floor},"
@@ -91,9 +105,14 @@ class CSVFile(OutfileParent):
 
                 # Header for reference.
                 '''
-                file.write(f"Date,Time,Channel,Freq,Noise,ParentTXPower,ParentRXGain,ParentTemp,ParentBandwidth,DownS0,"
-                           f"DownS1,DownRssi,DownNoiseFloor,DownSNR,ChildTXPower,UpS0,UpS1,UpRSSI,UpNoiseFloor,UpSNR,"
-                           f"PingTimeAVG\n")
+                file.write(f"Date,Time,Channel,PTxPower,PRxGain,Bandwidth,"
+                           f"PTemp,PUpTime,PFreeMemory,"
+                           f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
+                           f"DTxModulation,DRxModulation,"
+                           f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
+                           f"US0,US1,USRSSI,USNoiseFloor,USNR"
+                           f"UTxModulation,UTxPackets,URxModulation,URxPackets"
+                           f"PinkTimeAVG\n")
                 '''
             i += 1
 
