@@ -117,16 +117,3 @@ class WebScraper:
         verify_config_settings_matches_startup("tx_power", self.config, self.base_station)
         verify_config_settings_matches_startup("rx_gain", self.config, self.base_station)
         verify_config_settings_matches_startup("bandwidth", self.config, self.base_station)
-
-
-    '''
-        def clean_decimal(self, value):
-        # Convert to float to handle cases like "10.0" and "10.5"
-        num = float(value)
-
-        # If the float has no decimal part, convert to int, else keep it as is
-        if num.is_integer():
-            return str(int(num))
-        else:
-            return str(num)
-    '''

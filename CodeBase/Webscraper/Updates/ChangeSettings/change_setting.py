@@ -1,3 +1,6 @@
+from CodeBase.Webscraper.Updates.ChangeSettings.change_generic_settings import change_generic_setting
+
+
 def change_setting(base_station, setting_type, setting_tag, value, unit, read_method):
     current_value = f"{base_station.__dict__[setting_type]} {unit}"
 
@@ -21,3 +24,13 @@ def change_setting(base_station, setting_type, setting_tag, value, unit, read_me
 
     # Call the corresponding read method
     read_method()
+
+def clean_decimal(value):
+    # Convert to float to handle cases like "10.0" and "10.5"
+    num = float(value)
+
+    # If the float has no decimal part, convert to int, else keep it as is
+    if num.is_integer():
+        return str(int(num))
+    else:
+        return str(num)

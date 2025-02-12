@@ -1,0 +1,1 @@
+Refactor to have windows install script (.exe) and a linux Bash script.

@@ -24,12 +24,12 @@ def verify_config_settings_matches_startup(setting_to_check, config, base_statio
                 # change the setting
                 print(f"(WebScraper): Changing the \"{setting_to_check}\" setting to: {c_attr}")
                 if setting_to_check == "channel":
-                    change_channel(c_attr)
+                    change_channel(base_station, c_attr)
                 elif setting_to_check == "tx_power":
-                    change_tx_power(c_attr)
+                    change_tx_power(base_station, c_attr)
                 elif setting_to_check == "rx_gain":
-                    change_rx_gain(c_attr)
+                    change_rx_gain(base_station, c_attr)
                 elif setting_to_check == "bandwidth":
-                    change_bandwidth(c_attr)
+                    change_bandwidth(base_station, c_attr)
         else:
             raise ValueError("Existing setting was not parsed correctly")
