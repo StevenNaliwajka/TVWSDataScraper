@@ -7,4 +7,5 @@ def read_down_rx_column(driver, radio_count, radio):
     down_rx_mod = WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.ID, rx_id))
     ).text
-    radio.down_rx_mod = down_rx_mod
+    comma_removed_rx_mod = down_rx_mod.replace(",", "")
+    radio.down_rx_mod = comma_removed_rx_mod

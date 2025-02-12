@@ -49,7 +49,7 @@ class CSVFile(OutfileParent):
                 # Headder Table 1: MetaData
                 file.write(f"CName,PIp,CIp,"
                            f"AngleCAntennaToPRadio,AnglePAntennaToCRadio,"
-                           f"HDist,VDist"
+                           f"HDist,VDist,"
                            f"SpecialValueName,SpecialValue,"
                            f"PLocation,CLocation\n")
                 # Contents Table 1

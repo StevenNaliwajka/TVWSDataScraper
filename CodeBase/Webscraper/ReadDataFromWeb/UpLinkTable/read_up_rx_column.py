@@ -14,8 +14,8 @@ def read_up_rx_column(driver, radio_count, radio):
         # returns Modulation
         #radio.push_data("up_rxmod", rx_text[:match_tx.start()].strip())
         up_rxmod = rx_text[:match_tx.start()].strip()
-        comma_removed_tx_mod = up_rxmod.replace(",", "")
-        radio.up_rxmod = comma_removed_tx_mod
+        comma_removed_rx_mod = up_rxmod.replace(",", "")
+        radio.up_rxmod = comma_removed_rx_mod
         # Returns #TxPkts
         #radio.push_data("up_rxpkt", match_tx.group(1))
         radio.up_rxpkt = match_tx.group(1)
