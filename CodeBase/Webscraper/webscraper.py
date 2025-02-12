@@ -114,10 +114,10 @@ class WebScraper:
     def initialize_settings(self):
         # Verify config settings match startup...
         print("(Webscraper): Verifying Web-GUI settings.")
-        verify_config_settings_matches_startup("channel", self.config, self.base_station)
-        verify_config_settings_matches_startup("tx_power", self.config, self.base_station)
-        verify_config_settings_matches_startup("rx_gain", self.config, self.base_station)
-        verify_config_settings_matches_startup("bandwidth", self.config, self.base_station)
+        verify_config_settings_matches_startup(self,"channel", self.config)
+        verify_config_settings_matches_startup(self,"tx_power", self.config)
+        verify_config_settings_matches_startup(self,"rx_gain", self.config)
+        verify_config_settings_matches_startup(self,"bandwidth", self.config)
 
     def change_tx_power(self, tx_power):
         print(f"(Webscraper): Changing tx_power: {tx_power}")
