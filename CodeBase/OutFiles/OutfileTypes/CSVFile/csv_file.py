@@ -90,7 +90,6 @@ class CSVFile(OutfileParent):
                 up_rssi = CRadio.pull_data("up_rssi")
                 up_noise_floor = CRadio.pull_data("up_noise_floor")
                 up_snr = CRadio.pull_data("up_snr")
-                up_txmod = CRadio.pull_data("up_txmd")
                 # PING TIME AVG NOT WORKING *********************************************************
                 ping_time_avg = "0"
 
