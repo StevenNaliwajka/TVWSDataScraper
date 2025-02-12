@@ -66,7 +66,7 @@ class CSVFile(OutfileParent):
                            f"DTxModulation,DRxModulation,"
                            f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
                            f"US0,US1,USRSSI,USNoiseFloor,USNR"
-                           f"UTxModulation,UTxPackets,URxModulation,URxPackets"
+                           f"UTxModulation,UTxPackets,URxModulation,URxPackets,"
                            f"PingTimeAVG\n")
             i += 1
 

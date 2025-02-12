@@ -8,3 +8,6 @@ def read_down_tx_column(driver, radio_count, radio):
         EC.presence_of_element_located((By.ID, tx_id))
     ).text
     radio.down_tx_mod = down_tx_mod
+
+    comma_removed_tx_mod = down_tx_mod.replace(",", "")
+    radio.down_tx_mod = comma_removed_tx_mod
