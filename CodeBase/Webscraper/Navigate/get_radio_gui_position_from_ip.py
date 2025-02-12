@@ -1,3 +1,6 @@
+import sys
+
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
 
@@ -7,7 +10,11 @@ def get_radio_gui_position_from_ip(child_radio_list, driver):
         # Get table ID
 
         table_id = f"staConf{radio.ip}"
-        table = driver.find_element(By.ID, table_id)
+        try:
+            table = driver.find_element(By.ID, table_id)
+        except NoSuchElementException:
+            print(f"Error: RadioIP ({radio.ip}) not found. Verify Config and re-run.")
+            sys.exit()
 
         # Get the element within that table.
         td_element = table.find_element(By.CSS_SELECTOR, f"td[id^='staConf'][id$='icon-value']")
