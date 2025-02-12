@@ -96,18 +96,19 @@ class WebScraper:
             print(f"(ReadDataThread): Reading from {radio.name}.")
             # Read Up Link Table Data
             read_up_snr_column(self.driver, radio_count, radio)
-            read_up_tx_column((self.driver, radio_count, radio))
-            read_up_rx_column((self.driver, radio_count, radio))
-            read_link_time_column((self.driver, radio_count, radio))
+            read_up_tx_column(self.driver, radio_count, radio)
+            read_up_rx_column(self.driver, radio_count, radio)
+            read_link_time_column(self.driver, radio_count, radio)
 
             # Read Down Link table Data
-            read_down_snr_column((self.driver, radio_count, radio))
-            read_down_location_column((self.driver, radio_count, radio))
-            read_down_pwr_column((self.driver, radio_count, radio))
-            read_down_rx_column((self.driver, radio_count, radio))
-            read_down_temp_column((self.driver, radio_count, radio))
-            read_ear_time_column((self.driver, radio_count, radio))
-            read_down_tx_column((self.driver, radio_count, radio))
+            read_down_snr_column(self.driver, radio_count, radio)
+            read_down_tx_column(self.driver, radio_count, radio)
+            read_down_rx_column(self.driver, radio_count, radio)
+            read_down_temp_column(self.driver, radio_count, radio)
+            read_down_location_column(self.driver, radio_count, radio)
+            read_ear_time_column(self.driver, radio_count, radio)
+            read_down_pwr_column(self.driver, radio_count, radio)
+
 
     def initialize_settings(self):
         # Verify config settings match startup...

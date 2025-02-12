@@ -31,12 +31,16 @@ class Child(RadioParent):
         self._ping_time_avg = []
 
         # String Data
-        self.down_tx = None
-        self.down_rx = None
+        self.down_tx_mod = None
+        self.down_rx_mod = None
         self.radio_temp = None
         self.radio_location = None
         self.radio_uptime = None
         self.radio_up_link_time = None
+        self.up_rxmod = None
+        self.up_rxpkt = None
+        self.up_txmod = None
+        self.up_txpkt = None
 
         # Added on run, the position in webgui of radio, 1,2,3,4...
         self.radio_count = None

@@ -12,6 +12,8 @@ def read_up_tx_column(driver, radio_count, radio):
     match_tx = re.search(r"(\d+ Pkts\.)", tx_text)
     if match_tx:
         # returns Modulation
-        radio.push_data("up_txmod", tx_text[:match_tx.start()].strip())
+        #radio.push_data("up_txmod", tx_text[:match_tx.start()].strip())
+        radio.up_txmod = tx_text[:match_tx.start()].strip()
         # Returns #TxPkts
-        radio.push_data("up_txpkt", match_tx.group(1))
+        #radio.push_data("up_txpkt", match_tx.group(1))
+        radio.up_txpkt = match_tx.group(1)

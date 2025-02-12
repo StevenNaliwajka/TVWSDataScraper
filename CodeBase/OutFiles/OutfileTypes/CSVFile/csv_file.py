@@ -53,7 +53,7 @@ class CSVFile(OutfileParent):
                            f"SpecialValueName,SpecialValue,"
                            f"PLocation,CLocation\n")
                 # Contents Table 1
-                file.write(f"{CRadio.name},{PRadio.Ip},{CRadio.Ip},"
+                file.write(f"{CRadio.name},{PRadio.ip},{CRadio.ip},"
                            f"{CRadio.this_antenna_angle},{CRadio.base_antenna_angle},"
                            f"{CRadio.h_distance},{CRadio.v_distance},"
                            f"{CRadio.special_char_name},{CRadio.special_char_value},"
@@ -67,7 +67,7 @@ class CSVFile(OutfileParent):
                            f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
                            f"US0,US1,USRSSI,USNoiseFloor,USNR"
                            f"UTxModulation,UTxPackets,URxModulation,URxPackets"
-                           f"PinkTimeAVG\n")
+                           f"PingTimeAVG\n")
             i += 1
 
     def write_to_outfile(self):
@@ -96,12 +96,13 @@ class CSVFile(OutfileParent):
 
                 # ADDS ENTRY IN Table 2:
                 file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.tx_power},{PRadio.rx_gain},"
-                           f"{PRadio.bandwidth},")
-
-                file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.freq},{PRadio.noise},{PRadio.tx_power},"
-                           f"{PRadio.rx_gain},{PRadio.temp},{PRadio.bandwidth},{down_so},{down_s1},{down_rssi},"
-                           f"{down_noise_floor},{down_snr},{tx_power},{up_s0},{up_s1},{up_rssi},{up_noise_floor},"
-                           f"{up_snr},{ping_time_avg}\n")
+                           f"{PRadio.bandwidth},{PRadio.temp},{PRadio.uptime_value},{PRadio.base_free_mem},"
+                           f"{down_so},{down_s1},{down_rssi},{down_noise_floor},{down_snr},"
+                           f"{CRadio.down_tx_mod},{CRadio.down_rx_mod},"
+                           f"{CRadio.radio_temp},{CRadio.radio_uptime},{CRadio.radio_up_link_time},{tx_power}"
+                           f"{up_s0},{up_s1},{up_rssi},{up_noise_floor},{up_snr},"
+                           f"{CRadio.up_txmod},{CRadio.up_txpkt},{CRadio.up_rxmod},{CRadio.up_rxpkt},"
+                           f"{ping_time_avg}\n")
 
                 # Header for reference.
                 '''
@@ -112,7 +113,7 @@ class CSVFile(OutfileParent):
                            f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
                            f"US0,US1,USRSSI,USNoiseFloor,USNR"
                            f"UTxModulation,UTxPackets,URxModulation,URxPackets"
-                           f"PinkTimeAVG\n")
+                           f"PingTimeAVG\n")
                 '''
             i += 1
 
