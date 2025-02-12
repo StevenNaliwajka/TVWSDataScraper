@@ -30,6 +30,7 @@ from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_link_time_column impor
 from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_up_rx_column import read_up_rx_column
 from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_up_snr_column import read_up_snr_column
 from CodeBase.Webscraper.ReadDataFromWeb.UpLinkTable.read_up_tx_column import read_up_tx_column
+from CodeBase.Webscraper.Updates.ChangeSettings.change_setting import change_setting
 from CodeBase.Webscraper.Updates.verify_config_settings_matches_startup import verify_config_settings_matches_startup
 
 
@@ -117,3 +118,19 @@ class WebScraper:
         verify_config_settings_matches_startup("tx_power", self.config, self.base_station)
         verify_config_settings_matches_startup("rx_gain", self.config, self.base_station)
         verify_config_settings_matches_startup("bandwidth", self.config, self.base_station)
+
+    def change_tx_power(self, tx_power):
+        print(f"(Webscraper): Changing tx_power: {tx_power}")
+        change_setting(self.driver,self.base_station,"tx_power", "txpwr", tx_power, "dBm", read_tx_power)
+
+    def change_bandwidth(self, bandwidth):
+        print(f"(Webscraper): Changing bandwidth: {bandwidth}")
+        change_setting(self.driver,self.base_station, "bandwidth", "chanbw", bandwidth, "CH", read_channel_and_freq)
+
+    def change_channel(self, channel):
+        print(f"(Webscraper): Changing channel: {channel}")
+        change_setting(self.driver,self.base_station, "channel", "channel", channel, "CH", read_channel_and_freq)
+
+    def change_rx_gain(self, rx_gain):
+        print(f"(Webscraper): Changing rx_gain: {rx_gain}")
+        change_setting(self.driver,self.base_station, "rx_gain", "rxgain", rx_gain, "dB", read_rx_gain)
