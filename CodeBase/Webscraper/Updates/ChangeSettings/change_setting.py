@@ -23,7 +23,7 @@ def change_setting(driver, base_station, setting_type, setting_tag, value, unit,
         change_generic_setting(driver, setting_tag, "down", current_value)
 
     # Call the corresponding read method
-    read_method()
+    read_method(driver, base_station)
 
 def clean_decimal(value):
     # Convert to float to handle cases like "10.0" and "10.5"
