@@ -1,0 +1,6 @@
+{
+    "browser_headless": "T",
+    "sec_between_reads": 10,
+    "reads_between_writes": 1,
+    "writes_per_setting": 4
+}
