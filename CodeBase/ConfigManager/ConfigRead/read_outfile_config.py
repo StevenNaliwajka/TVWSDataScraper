@@ -1,9 +1,12 @@
+import os
+
 from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
 from CodeBase.OutFiles.create_outfile import create_outfile
 
 
 def read_outfile_config(base_station, child_radio_list):
-    outfile_json_path = "Config/outfile_config.json"
+    parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    outfile_json_path = os.path.join(parent_folder, "Config", "outfile_config.json")
 
     # If able to be opened
 
