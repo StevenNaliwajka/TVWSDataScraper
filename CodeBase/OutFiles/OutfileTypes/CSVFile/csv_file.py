@@ -102,7 +102,7 @@ class CSVFile(OutfileParent):
                            f"{PRadio.bandwidth},{PRadio.temp},{PRadio.uptime_value},{PRadio.base_free_mem}," # 6-9
                            f"{down_so},{down_s1},{down_rssi},{down_noise_floor},{down_snr}," #10-14
                            f"{CRadio.down_tx_mod},{CRadio.down_rx_mod}," #15 - 16
-                           f"{CRadio.radio_temp},{CRadio.radio_uptime},{CRadio.radio_up_link_time},{tx_power}," #17-20
+                           f"{CRadio.radio_temp},{CRadio.uptime_value},{CRadio.up_link_time},{tx_power}," #17-20
                            f"{up_s0},{up_s1},{up_rssi},{up_noise_floor},{up_snr}," # 21- 25
                            f"{CRadio.up_txmod},{CRadio.up_txpkt},{CRadio.up_rxmod},{CRadio.up_rxpkt}," # 26 - 29
                            f"{ping_time_avg}\n") # 30
