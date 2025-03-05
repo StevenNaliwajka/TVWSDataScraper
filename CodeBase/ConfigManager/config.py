@@ -39,7 +39,7 @@ class Config:
     def load_config_from_json_files(self):
         # Config File paths
         root = get_config_folder()
-        general_json_path  = root / "general.json"
+        general_json_path  = root / "general_config.json"
 
         # If able to be opened
         data = validate_json_file(general_json_path)
