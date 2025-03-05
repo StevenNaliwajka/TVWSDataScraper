@@ -1,9 +1,11 @@
+import os
+
 from CodeBase.ConfigManager.ConfigBuild.create_config_file import create_env_file
 
 
 def gen_secret_file():
     # Define the path to the secret.env file
-    env_file_path = "Config/secret.env"
+    env_file_path = os.path.join("Config", "secret.env")
     # Content to write in the file
     env_content = {
         "BASESTATION_IP": "",

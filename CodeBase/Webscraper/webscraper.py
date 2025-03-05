@@ -1,3 +1,4 @@
+import logging
 import re
 
 from selenium.webdriver.support.select import Select
@@ -83,32 +84,53 @@ class WebScraper:
         self.read_data()
 
     def read_data(self):
-        # For BaseStation, Read Data
-        read_base_free_mem(self.driver, self.base_station)
-        read_base_location(self.driver, self.base_station)
-        read_base_temp(self.driver, self.base_station)
-        read_base_uptime(self.driver, self.base_station)
+        def read_data(self):
+            max_retries = 3  # Set the number of retries
+            retry_delay = 5  # Seconds to wait before retrying
 
-        # For Each Child radio. Read data
-        for radio in self.child_radio_list:
-            # Get Radio Count, What the GUI 'calls' each radio
-            radio_count = radio.radio_count
+            for attempt in range(max_retries):
+                try:
+                    print(f"(ReadDataThread): Attempt {attempt + 1} to read data.")
 
-            print(f"(ReadDataThread): Reading from {radio.name}.")
-            # Read Up Link Table Data
-            read_up_snr_column(self.driver, radio_count, radio)
-            read_up_tx_column(self.driver, radio_count, radio)
-            read_up_rx_column(self.driver, radio_count, radio)
-            read_link_time_column(self.driver, radio_count, radio)
+                    # For BaseStation, Read Data
+                    read_base_free_mem(self.driver, self.base_station)
+                    read_base_location(self.driver, self.base_station)
+                    read_base_temp(self.driver, self.base_station)
+                    read_base_uptime(self.driver, self.base_station)
 
-            # Read Down Link table Data
-            read_down_snr_column(self.driver, radio_count, radio)
-            read_down_tx_column(self.driver, radio_count, radio)
-            read_down_rx_column(self.driver, radio_count, radio)
-            read_down_temp_column(self.driver, radio_count, radio)
-            read_down_location_column(self.driver, radio_count, radio)
-            read_ear_time_column(self.driver, radio_count, radio)
-            read_down_pwr_column(self.driver, radio_count, radio)
+                    # For Each Child radio. Read data
+                    for radio in self.child_radio_list:
+                        radio_count = radio.radio_count
+                        print(f"(ReadDataThread): Reading from {radio.name}.")
+
+                        # Read Up Link Table Data
+                        read_up_snr_column(self.driver, radio_count, radio)
+                        read_up_tx_column(self.driver, radio_count, radio)
+                        read_up_rx_column(self.driver, radio_count, radio)
+                        read_link_time_column(self.driver, radio_count, radio)
+
+                        # Read Down Link Table Data
+                        read_down_snr_column(self.driver, radio_count, radio)
+                        read_down_tx_column(self.driver, radio_count, radio)
+                        read_down_rx_column(self.driver, radio_count, radio)
+                        read_down_temp_column(self.driver, radio_count, radio)
+                        read_down_location_column(self.driver, radio_count, radio)
+                        read_ear_time_column(self.driver, radio_count, radio)
+                        read_down_pwr_column(self.driver, radio_count, radio)
+
+                    print("(ReadDataThread): Data read successfully.")
+                    return
+
+                except Exception as e:
+                    print(f"Error occurred during data reading: {e}")
+                    logging.error(f"Attempt {attempt + 1} failed: {e}", exc_info=True)
+
+                    if attempt < max_retries - 1:
+                        print(f"(ReadDataThread): Retrying in {retry_delay} seconds...")
+                        time.sleep(retry_delay)
+                    else:
+                        print("(ReadDataThread): Max retries reached. Moving on.")
+                        logging.error("Max retries reached. Data read failed.")
 
 
     def initialize_settings(self):

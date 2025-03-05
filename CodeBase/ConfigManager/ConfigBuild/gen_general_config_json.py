@@ -1,9 +1,11 @@
+import os
+
 from CodeBase.ConfigManager.ConfigBuild.create_config_file import create_config_file
 
 
 def gen_general_config_json():
     # Define the path to the JSON file
-    json_file_path = "Config/general_config.json"
+    json_file_path = os.path.join("Config", "general_config.json")
 
     # Define the JSON data to write if the file doesn't exist
     default_config = {

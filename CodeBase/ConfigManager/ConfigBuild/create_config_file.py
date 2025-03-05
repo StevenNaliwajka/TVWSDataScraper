@@ -4,6 +4,9 @@ import os
 
 def create_config_file(json_file_path, default_config):
     # Check if the file already exists
+
+    parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    json_file_path = os.path.join(parent_folder, json_file_path)
     os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
     if not os.path.exists(json_file_path):
         # Create and write the default JSON data
@@ -16,6 +19,8 @@ def create_config_file(json_file_path, default_config):
         return False
 
 def create_env_file(env_file_path, default_config):
+    parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    env_file_path = os.path.join(parent_folder, env_file_path)
     # Check if the file already exists
     if not os.path.exists(env_file_path):
         # Create and write the default .env data

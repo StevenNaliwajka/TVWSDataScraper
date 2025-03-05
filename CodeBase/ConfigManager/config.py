@@ -1,3 +1,5 @@
+import os
+
 from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
 
 
@@ -34,7 +36,8 @@ class Config:
 
     def load_config_from_json_files(self):
         # Config File paths
-        general_json_path = "Config/general_config.json"
+        parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+        general_json_path = os.path.join(parent_folder, "Config", "general_config.json")
 
         # If able to be opened
         data = validate_json_file(general_json_path)
@@ -49,7 +52,8 @@ class Config:
 
     def read_settings_to_test_json(self):
         # test_settings Config File path.
-        settings_json_path = "Config/settings_to_test_config.json"
+        parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+        settings_json_path = os.path.join(parent_folder, "Config", "settings_to_test_config.json")
         # Verify json file is built correctly and then returns the data.
         data = validate_json_file(settings_json_path)
 

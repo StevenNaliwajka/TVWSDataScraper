@@ -1,10 +1,13 @@
+import os
+
 from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
 from CodeBase.Radios.RadioTypes.child import Child
 from CodeBase.Radios.RadioTypes.parent import Parent
 
 
 def read_radio_config(secret):
-    radio_json_path = "Config/radio_config.json"
+    parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+    radio_json_path = os.path.join(parent_folder, "Config", "radio_config.json")
 
     # If able to be opened
     data = validate_json_file(radio_json_path)
