@@ -1,6 +1,7 @@
 import os
 
 from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
+from CodeBase.Pathing.get_config_folder import get_config_folder
 from CodeBase.Pathing.get_project_root import get_project_root
 
 
@@ -37,9 +38,8 @@ class Config:
 
     def load_config_from_json_files(self):
         # Config File paths
-        root = get_project_root()
+        root = get_config_folder()
         general_json_path  = root / "general.json"
-
 
         # If able to be opened
         data = validate_json_file(general_json_path)
