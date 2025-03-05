@@ -93,8 +93,8 @@ class CSVFile(OutfileParent):
                 # PING TIME AVG NOT WORKING *********************************************************
                 ping_time_avg = "0"
 
-                print(f"DEBUG: RadioUptime {CRadio.radio_uptime}")
-                print(f"DEBUG: RadioUptime {CRadio.radio_up_link_time}")
+                print(f"DEBUG: RadioUptime {CRadio.uptime_value}")
+                print(f"DEBUG: RadioUptime {CRadio.up_link_time}")
                 print(f"DEBUG: TXPOWER {tx_power}")
 
                 # ADDS ENTRY IN Table 2:
