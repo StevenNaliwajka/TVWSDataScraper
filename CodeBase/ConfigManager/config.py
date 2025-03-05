@@ -1,6 +1,7 @@
 import os
 
 from CodeBase.ConfigManager.ConfigRead.json_support_methods import validate_json_file
+from CodeBase.Pathing.get_project_root import get_project_root
 
 
 # from Config.ConfigManager.ConfigRead.json_support_methods import validate_json_file, check_for_null_data
@@ -36,8 +37,9 @@ class Config:
 
     def load_config_from_json_files(self):
         # Config File paths
-        parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-        general_json_path = os.path.join(parent_folder, "Config", "general_config.json")
+        root = get_project_root()
+        general_json_path  = root / "general.json"
+
 
         # If able to be opened
         data = validate_json_file(general_json_path)
