@@ -53,9 +53,10 @@ class Config:
         # self.writes_per_setting = check_for_null_data("general_config", data, "writes_per_setting")
 
     def read_settings_to_test_json(self):
-        # test_settings Config File path.
-        parent_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
-        settings_json_path = os.path.join(parent_folder, "Config", "settings_to_test_config.json")
+        # Config File paths
+        root = get_config_folder()
+        settings_json_path = root / "settings_to_test_config.json"
+
         # Verify json file is built correctly and then returns the data.
         data = validate_json_file(settings_json_path)
 

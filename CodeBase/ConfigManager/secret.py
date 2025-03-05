@@ -4,12 +4,16 @@ import sys
 from dotenv import load_dotenv
 
 from CodeBase.ConfigManager.secret_client import SecretClient
+from CodeBase.Pathing.get_config_folder import get_config_folder
 
 
 class Secret:
     def __init__(self):
+        root = get_config_folder()
+        secret_path = root / "secret.env"
+
         # Reads in secret data from secret .env file
-        load_dotenv("Config/secret.env")
+        load_dotenv(secret_path)
         self.basestation_ip = os.getenv("BASESTATION_IP")
         self.basestation_username = os.getenv("BASESTATION_USERNAME")
         self.basestation_password = os.getenv("BASESTATION_PASSWORD")
