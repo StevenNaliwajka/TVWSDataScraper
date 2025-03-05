@@ -49,25 +49,20 @@ class WebScraper:
         login_to_base_station(self.secret, self.driver)
 
     def read_first_time(self):
-        # gets the 'static' values that are used to change around data.
         print(f"(ReadDataThread): Reading from {self.base_station.name}.")
 
-        # Wait till FREQ register exists in the HTML Code.
+        # Wait for channel element to appear.
         channel_element = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.ID, "channel-value"))
         )
-        # Wait for FREQ data to populate and load on the WEBGUI and not be NONE.
+
         wait_flag = 1
         while wait_flag:
             channel_text = channel_element.text
             match = re.search(r"CH (\d+) \((\d+) MHz\)", channel_text)
             if match and match.group(1) and int(match.group(1)) != 0:
                 wait_flag = 0
-                #print(int(match.group(1)))
-            else:
-                #print("")
-                pass
-            time.sleep(.5)
+            time.sleep(0.5)
 
         read_channel_and_freq(self.driver, self.base_station)
         read_noise(self.driver, self.base_station)
@@ -75,62 +70,65 @@ class WebScraper:
         read_rx_gain(self.driver, self.base_station)
         read_bandwidth(self.driver, self.base_station)
 
-        # Open up the child radio data menus.
+        # Ensure menus open
         open_all_radio_menus(self.driver)
-        # wait for HTML to Load.
-        time.sleep(3)
-        # Gets the rest of the variable data
+
+        # Wait for HTML data to fully populate before reading
+        print("(DEBUG) Waiting additional 5 seconds to ensure data loads...")
+        time.sleep(5)
+
         get_radio_gui_position_from_ip(self.child_radio_list, self.driver)
-        self.read_data()
+
+        print("(DEBUG) Calling read_data()...")
+        self.read_data()  # Ensure this executes
 
     def read_data(self):
-        def read_data(self):
-            max_retries = 3  # Set the number of retries
-            retry_delay = 5  # Seconds to wait before retrying
+        max_retries = 3  # Set the number of retries
+        retry_delay = 5  # Seconds to wait before retrying
 
-            for attempt in range(max_retries):
-                try:
-                    print(f"(ReadDataThread): Attempt {attempt + 1} to read data.")
+        for attempt in range(max_retries):
+            try:
+                print(f"(ReadDataThread): Attempt {attempt + 1} to read data.")
 
-                    # For BaseStation, Read Data
-                    read_base_free_mem(self.driver, self.base_station)
-                    read_base_location(self.driver, self.base_station)
-                    read_base_temp(self.driver, self.base_station)
-                    read_base_uptime(self.driver, self.base_station)
+                # For BaseStation, Read Data
+                read_base_free_mem(self.driver, self.base_station)
+                read_base_location(self.driver, self.base_station)
+                read_base_temp(self.driver, self.base_station)
+                read_base_uptime(self.driver, self.base_station)
 
-                    # For Each Child radio. Read data
-                    for radio in self.child_radio_list:
-                        radio_count = radio.radio_count
-                        print(f"(ReadDataThread): Reading from {radio.name}.")
+                # For Each Child radio. Read data
+                for radio in self.child_radio_list:
+                    radio_count = radio.radio_count
+                    print(f"(ReadDataThread): Reading from {radio.name}.")
 
-                        # Read Up Link Table Data
-                        read_up_snr_column(self.driver, radio_count, radio)
-                        read_up_tx_column(self.driver, radio_count, radio)
-                        read_up_rx_column(self.driver, radio_count, radio)
-                        read_link_time_column(self.driver, radio_count, radio)
+                    # Read Up Link Table Data
+                    read_up_snr_column(self.driver, radio_count, radio)
+                    read_up_tx_column(self.driver, radio_count, radio)
+                    read_up_rx_column(self.driver, radio_count, radio)
+                    read_link_time_column(self.driver, radio_count, radio)
 
-                        # Read Down Link Table Data
-                        read_down_snr_column(self.driver, radio_count, radio)
-                        read_down_tx_column(self.driver, radio_count, radio)
-                        read_down_rx_column(self.driver, radio_count, radio)
-                        read_down_temp_column(self.driver, radio_count, radio)
-                        read_down_location_column(self.driver, radio_count, radio)
-                        read_ear_time_column(self.driver, radio_count, radio)
-                        read_down_pwr_column(self.driver, radio_count, radio)
+                    # Read Down Link Table Data
+                    read_down_snr_column(self.driver, radio_count, radio)
+                    read_down_tx_column(self.driver, radio_count, radio)
+                    read_down_rx_column(self.driver, radio_count, radio)
+                    read_down_temp_column(self.driver, radio_count, radio)
+                    read_down_location_column(self.driver, radio_count, radio)
+                    read_ear_time_column(self.driver, radio_count, radio)
+                    read_down_pwr_column(self.driver, radio_count, radio)
 
-                    print("(ReadDataThread): Data read successfully.")
-                    return
+                print("(ReadDataThread): Data read successfully.")
+                return
 
-                except Exception as e:
-                    print(f"Error occurred during data reading: {e}")
-                    logging.error(f"Attempt {attempt + 1} failed: {e}", exc_info=True)
+            except Exception as e:
+                print(f"Error occurred during data reading: {e}")
+                logging.error(f"Attempt {attempt + 1} failed: {e}", exc_info=True)
 
-                    if attempt < max_retries - 1:
-                        print(f"(ReadDataThread): Retrying in {retry_delay} seconds...")
-                        time.sleep(retry_delay)
-                    else:
-                        print("(ReadDataThread): Max retries reached. Moving on.")
-                        logging.error("Max retries reached. Data read failed.")
+                if attempt < max_retries - 1:
+                    print(f"(ReadDataThread): Retrying in {retry_delay} seconds...")
+                    time.sleep(retry_delay)
+                else:
+                    print("(ReadDataThread): Max retries reached. Moving on.")
+                    logging.error("Max retries reached. Data read failed.")
 
 
     def initialize_settings(self):
