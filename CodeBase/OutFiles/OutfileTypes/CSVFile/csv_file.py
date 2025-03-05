@@ -60,13 +60,13 @@ class CSVFile(OutfileParent):
                            f"{PRadio.location}, {CRadio.radio_location}\n")
 
                 # Header Table 2:
-                file.write(f"Date,Time,Channel,PTxPower,PRxGain,Bandwidth,"
-                           f"PTemp,PUpTime,PFreeMemory,"
+                file.write(f"Date (Mon/Day/Year),Time (Hour:Min:Sec),Channel,PTxPower,PRxGain,Bandwidth,"
+                           f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"
                            f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
                            f"DTxModulation,DRxModulation,"
-                           f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
-                           f"US0,US1,USRSSI,USNoiseFloor,USNR,"
-                           f"UTxModulation,UTxPackets,URxModulation,URxPackets,"
+                           f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"
+                           f"US0,US1,USRSSI,USNoiseFloor,USNR"
+                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.)"
                            f"PingTimeAVG\n")
             i += 1
 
