@@ -48,8 +48,8 @@ class CSVFile(OutfileParent):
                 print(f"(CSVFile) Created file: {file_name}")
                 # Headder Table 1: MetaData
                 file.write(f"CName,PIp,CIp,"
-                           f"AngleCAntennaToPRadio,AnglePAntennaToCRadio,"
-                           f"HDist,VDist,"
+                           f"AngleCAntennaToPRadio (°),AnglePAntennaToCRadio (°),"
+                           f"HDist (ft),VDist (ft),"
                            f"SpecialValueName,SpecialValue,"
                            f"PLocation,CLocation\n")
                 # Contents Table 1
@@ -65,7 +65,7 @@ class CSVFile(OutfileParent):
                            f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
                            f"DTxModulation,DRxModulation,"
                            f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
-                           f"US0,US1,USRSSI,USNoiseFloor,USNR"
+                           f"US0,US1,USRSSI,USNoiseFloor,USNR,"
                            f"UTxModulation,UTxPackets,URxModulation,URxPackets,"
                            f"PingTimeAVG\n")
             i += 1
@@ -93,25 +93,29 @@ class CSVFile(OutfileParent):
                 # PING TIME AVG NOT WORKING *********************************************************
                 ping_time_avg = "0"
 
+                print(f"DEBUG: RadioUptime {CRadio.radio_uptime}")
+                print(f"DEBUG: RadioUptime {CRadio.radio_up_link_time}")
+                print(f"DEBUG: TXPOWER {tx_power}")
+
                 # ADDS ENTRY IN Table 2:
-                file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.tx_power},{PRadio.rx_gain},"
-                           f"{PRadio.bandwidth},{PRadio.temp},{PRadio.uptime_value},{PRadio.base_free_mem},"
-                           f"{down_so},{down_s1},{down_rssi},{down_noise_floor},{down_snr},"
-                           f"{CRadio.down_tx_mod},{CRadio.down_rx_mod},"
-                           f"{CRadio.radio_temp},{CRadio.radio_uptime},{CRadio.radio_up_link_time},{tx_power}"
-                           f"{up_s0},{up_s1},{up_rssi},{up_noise_floor},{up_snr},"
-                           f"{CRadio.up_txmod},{CRadio.up_txpkt},{CRadio.up_rxmod},{CRadio.up_rxpkt},"
-                           f"{ping_time_avg}\n")
+                file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.tx_power},{PRadio.rx_gain}," # 1-5
+                           f"{PRadio.bandwidth},{PRadio.temp},{PRadio.uptime_value},{PRadio.base_free_mem}," # 6-9
+                           f"{down_so},{down_s1},{down_rssi},{down_noise_floor},{down_snr}," #10-14
+                           f"{CRadio.down_tx_mod},{CRadio.down_rx_mod}," #15 - 16
+                           f"{CRadio.radio_temp},{CRadio.radio_uptime},{CRadio.radio_up_link_time},{tx_power}," #17-20
+                           f"{up_s0},{up_s1},{up_rssi},{up_noise_floor},{up_snr}," # 21- 25
+                           f"{CRadio.up_txmod},{CRadio.up_txpkt},{CRadio.up_rxmod},{CRadio.up_rxpkt}," # 26 - 29
+                           f"{ping_time_avg}\n") # 30
 
                 # Header for reference.
                 '''
-                file.write(f"Date,Time,Channel,PTxPower,PRxGain,Bandwidth,"
-                           f"PTemp,PUpTime,PFreeMemory,"
+                file.write(f"Date (Mon/Day/Year),Time (Hour:Min:Sec),Channel,PTxPower,PRxGain,Bandwidth,"
+                           f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"
                            f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
                            f"DTxModulation,DRxModulation,"
-                           f"CTemp,CUpTime,ULinkUpTime,CTxPower,"
+                           f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"
                            f"US0,US1,USRSSI,USNoiseFloor,USNR"
-                           f"UTxModulation,UTxPackets,URxModulation,URxPackets"
+                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.)"
                            f"PingTimeAVG\n")
                 '''
             i += 1
