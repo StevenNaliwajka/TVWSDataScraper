@@ -65,8 +65,8 @@ class CSVFile(OutfileParent):
                            f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
                            f"DTxModulation,DRxModulation,"
                            f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"
-                           f"US0,US1,USRSSI,USNoiseFloor,USNR"
-                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.)"
+                           f"US0,US1,USRSSI,USNoiseFloor,USNR,"
+                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.),"
                            f"PingTimeAVG\n")
             i += 1
 
@@ -109,14 +109,14 @@ class CSVFile(OutfileParent):
 
                 # Header for reference.
                 '''
-                file.write(f"Date (Mon/Day/Year),Time (Hour:Min:Sec),Channel,PTxPower,PRxGain,Bandwidth,"
-                           f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"
-                           f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
-                           f"DTxModulation,DRxModulation,"
-                           f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"
-                           f"US0,US1,USRSSI,USNoiseFloor,USNR"
-                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.)"
-                           f"PingTimeAVG\n")
+                file.write(f"Date (Mon/Day/Year),Time (Hour:Min:Sec),Channel,PTxPower,PRxGain,Bandwidth," # 1-6
+                           f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"  # 7-9
+                           f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"  #10-14
+                           f"DTxModulation,DRxModulation,"     #15 - 16
+                           f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"  #17-20
+                           f"US0,US1,USRSSI,USNoiseFloor,USNR,"          #21-25
+                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.)," # 26-29
+                           f"PingTimeAVG\n")  # 30
                 '''
             i += 1
 
