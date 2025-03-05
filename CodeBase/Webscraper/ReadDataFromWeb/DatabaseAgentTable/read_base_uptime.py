@@ -22,5 +22,5 @@ def read_base_uptime(driver, base_station):
 
     # Format
     formatted_uptime = f"{days}-{hours:02}:{minutes:02}:{seconds:02}"
-    print(f"(DEBUG) Uptime: {formatted_uptime}")
+    # print(f"(DEBUG) Uptime: {formatted_uptime}")
     base_station.uptime_value = formatted_uptime

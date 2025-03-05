@@ -25,5 +25,5 @@ def read_link_time_column(driver, radio_count, radio):
 
     # Format
     formatted_uptime = f"{days}-{hours:02}:{minutes:02}:{seconds:02}"
-    print(f"(DEBUG) Uptime: {formatted_uptime}")
+    print(f"(DEBUG) Link Uptime: {formatted_uptime}")
     radio.up_link_time = formatted_uptime
