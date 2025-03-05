@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def read_link_time_column(driver, radio_count, radio):
     # Get base station uptime text
-    link_value = driver.find_element(By.ID, f"sta{radio_count + 1}link-time").text
+    link_value = driver.find_element(By.ID, f"sta{radio_count}link-time").text
 
     # extract
     matches = re.findall(r"(\d+)Days|(\d+)h|(\d+)m|(\d+)s", link_value)
