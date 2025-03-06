@@ -1,4 +1,5 @@
 import os
+import re
 
 from CodeBase.OutFiles.OutfileTypes.outfile_parent import OutfileParent
 from datetime import date, datetime
@@ -28,10 +29,13 @@ class CSVFile(OutfileParent):
 
     def build_file_names(self):
         for radio_unit in self.child_radio_list:
-            file_name = f"TVWSScenario-{radio_unit.name}-{self.date}_{self.time}.csv"
-            # Time is an issue, ":" causes issues with Windows file structure, Replace the stuff
-            safe_file_name = file_name.replace(":", "_")
-            file_location = os.path.join(self.location, safe_file_name)
+            unit_id = radio_unit.unit_id
+            time = self.time
+            safe_time = time.replace(":", "-")
+            hour_min = re.sub(r'-\d+$', '', safe_time)
+            file_name = f"TVWSScenario_instance{unit_id}_{self.date}_{hour_min}.csv"
+
+            file_location = os.path.join(self.location, file_name)
 
             self.file_name_list.append(file_location)
 
