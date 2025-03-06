@@ -124,12 +124,14 @@ class WebScraper:
                 logging.error(f"Attempt {attempt + 1} failed: {e}", exc_info=True)
 
                 if attempt < max_retries - 1:
+                    print("(ReadDataThread): Ensuring all radio menus are opened before retrying...")
+                    open_all_radio_menus(self.driver)
+
                     print(f"(ReadDataThread): Retrying in {retry_delay} seconds...")
                     time.sleep(retry_delay)
                 else:
                     print("(ReadDataThread): Max retries reached. Moving on.")
                     logging.error("Max retries reached. Data read failed.")
-
 
     def initialize_settings(self):
         # Verify config settings match startup...

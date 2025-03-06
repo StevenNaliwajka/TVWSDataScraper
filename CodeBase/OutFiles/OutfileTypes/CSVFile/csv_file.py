@@ -28,7 +28,7 @@ class CSVFile(OutfileParent):
 
     def build_file_names(self):
         for radio_unit in self.child_radio_list:
-            file_name = f"TVWSScenario_{radio_unit.name}_{self.date}_{self.time}.csv"
+            file_name = f"TVWSScenario-{radio_unit.name}-{self.date}_{self.time}.csv"
             # Time is an issue, ":" causes issues with Windows file structure, Replace the stuff
             safe_file_name = file_name.replace(":", "_")
             file_location = os.path.join(self.location, safe_file_name)
