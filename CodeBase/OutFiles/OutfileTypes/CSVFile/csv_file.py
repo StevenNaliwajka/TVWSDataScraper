@@ -29,7 +29,8 @@ class CSVFile(OutfileParent):
 
     def build_file_names(self):
         for radio_unit in self.child_radio_list:
-            unit_id = radio_unit.unit_id
+            name = radio_unit.name
+            unit_id = int(name[5:])
             time = self.time
             safe_time = time.replace(":", "-")
             hour_min = re.sub(r'-\d+$', '', safe_time)
