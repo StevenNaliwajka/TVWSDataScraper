@@ -28,11 +28,12 @@ class CSVFile(OutfileParent):
         self.create_file_and_init()
 
     def build_file_names(self):
+        self.update_time()
         for radio_unit in self.child_radio_list:
             name = radio_unit.name
             unit_id = int(name[5:])
-            hour_min_sec = datetime.now().strftime('%H-%M-%S')
-            file_name = f"TVWSScenario_instance{unit_id}_{self.date}_{hour_min_sec}.csv"
+
+            file_name = f"TVWSScenario_instance{unit_id}_{self.date}_{self.time}.csv"
 
             file_location = os.path.join(self.location, file_name)
 
@@ -63,7 +64,7 @@ class CSVFile(OutfileParent):
                            f"{PRadio.location}, {CRadio.radio_location}\n")
 
                 # Header Table 2:
-                file.write(f"Date (Mon/Day/Year),Time (Hour:Min:Sec),Channel,PTxPower,PRxGain,Bandwidth,"
+                file.write(f"Date (Year-Mon-Day),Time (Hour-Min-Sec),Channel,PTxPower,PRxGain,Bandwidth,"
                            f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"
                            f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
                            f"DTxModulation,DRxModulation,"
@@ -96,10 +97,6 @@ class CSVFile(OutfileParent):
                 # PING TIME AVG NOT WORKING *********************************************************
                 ping_time_avg = "0"
 
-                print(f"DEBUG: RadioUptime {CRadio.uptime_value}")
-                print(f"DEBUG: RadioUptime {CRadio.up_link_time}")
-                print(f"DEBUG: TXPOWER {tx_power}")
-
                 # ADDS ENTRY IN Table 2:
                 file.write(f"{self.date},{self.time},{PRadio.channel},{PRadio.tx_power},{PRadio.rx_gain}," # 1-5
                            f"{PRadio.bandwidth},{PRadio.temp},{PRadio.uptime_value},{PRadio.base_free_mem}," # 6-9
@@ -112,18 +109,18 @@ class CSVFile(OutfileParent):
 
                 # Header for reference.
                 '''
-                file.write(f"Date (Mon/Day/Year),Time (Hour:Min:Sec),Channel,PTxPower,PRxGain,Bandwidth," # 1-6
-                           f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"  # 7-9
-                           f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"  #10-14
-                           f"DTxModulation,DRxModulation,"     #15 - 16
-                           f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"  #17-20
-                           f"US0,US1,USRSSI,USNoiseFloor,USNR,"          #21-25
-                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.)," # 26-29
-                           f"PingTimeAVG\n")  # 30
+                file.write(f"Date (Year-Mon-Day),Time (Hour-Min-Sec),Channel,PTxPower,PRxGain,Bandwidth,"
+                           f"PTemp (°C),PUpTime (Day-Hour:Min:Sec),PFreeMemory (%),"
+                           f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
+                           f"DTxModulation,DRxModulation,"
+                           f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"
+                           f"US0,US1,URSSI,USNoiseFloor,USNR,"
+                           f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.),"
+                           f"PingTimeAVG\n")
                 '''
             i += 1
 
     def update_time(self):
         self.date = datetime.today().strftime('%Y-%m-%d')
         current_time = datetime.now().time()
-        self.time = current_time.strftime("%H:%M:%S")
+        self.time = current_time.strftime("%H-%M-%S")
