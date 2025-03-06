@@ -70,7 +70,7 @@ class CSVFile(OutfileParent):
                            f"DS0,DS1,DRSSI,DNoiseFloor,DSNR,"
                            f"DTxModulation,DRxModulation,"
                            f"CTemp (°C),CUpTime,ULinkUpTime,CTxPower,"
-                           f"US0,US1,USRSSI,USNoiseFloor,USNR,"
+                           f"US0,US1,URSSI,USNoiseFloor,USNR,"
                            f"UTxModulation,UTxPackets (Pkts.),URxModulation,URxPackets (Pkts.),"
                            f"PingTimeAVG\n")
             i += 1
