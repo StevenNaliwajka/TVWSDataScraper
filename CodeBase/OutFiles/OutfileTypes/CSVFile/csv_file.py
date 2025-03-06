@@ -31,10 +31,8 @@ class CSVFile(OutfileParent):
         for radio_unit in self.child_radio_list:
             name = radio_unit.name
             unit_id = int(name[5:])
-            time = self.time
-            safe_time = time.replace(":", "-")
-            hour_min = re.sub(r'-\d+$', '', safe_time)
-            file_name = f"TVWSScenario_instance{unit_id}_{self.date}_{hour_min}.csv"
+            hour_min_sec = datetime.now().strftime('%H-%M-%S')
+            file_name = f"TVWSScenario_instance{unit_id}_{self.date}_{hour_min_sec}.csv"
 
             file_location = os.path.join(self.location, file_name)
 
