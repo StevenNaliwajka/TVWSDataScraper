@@ -124,6 +124,6 @@ class CSVFile(OutfileParent):
             i += 1
 
     def update_time(self):
-        self.date = datetime.today().strftime('%Y/%m/%d')
+        self.date = datetime.today().strftime('%Y-%m-%d')
         current_time = datetime.now().time()
         self.time = current_time.strftime("%H:%M:%S")
