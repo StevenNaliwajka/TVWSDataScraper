@@ -1,5 +1,5 @@
 # .gitignore
-Config/*
+Config
 CSVOutput/
 CSVOutput/*
 .env
