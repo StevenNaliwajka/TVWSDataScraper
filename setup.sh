@@ -18,7 +18,8 @@ bash "$SCRIPT_DIR/CodeBase/Setup/install_python.sh"
 # Create VENV and install requirements
 bash "$SCRIPT_DIR/CodeBase/Setup/setup_venv.sh"
 
-# Install the Firefox Browser
+# Install GeckoDriver
+bash "$SCRIPT_DIR/CodeBase/Setup/get_verify_geckodriver.sh"
 
 echo "Configure Configs In /Config/*"
 echo "Once finished run 'run.sh'"
