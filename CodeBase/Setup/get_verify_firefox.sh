@@ -8,7 +8,7 @@ if [ -z "$PROJECT_ROOT" ]; then
 fi
 
 # Set Firefox version explicitly
-FIREFOX_VERSION="135.0"
+FIREFOX_VERSION="115.10.0esr"
 ARCHIVE_NAME="firefox-${FIREFOX_VERSION}.tar.bz2"
 DOWNLOAD_URL="https://ftp.mozilla.org/pub/firefox/releases/${FIREFOX_VERSION}/linux-x86_64/en-US/firefox-${FIREFOX_VERSION}.tar.bz2"
 
@@ -26,6 +26,10 @@ if [ ! -d "$INSTALL_DIR" ] || [ -z "$(ls -A "$INSTALL_DIR")" ]; then
   curl -L "$DOWNLOAD_URL" -o "$ARCHIVE_PATH"
 
   echo "[*] Extracting archive..."
+  if ! file "$ARCHIVE_PATH" | grep -q 'bzip2'; then
+    echo "[!] Downloaded file is not a valid bzip2 archive. Download failed or version does not exist."
+    exit 1
+  fi
   tar -xjf "$ARCHIVE_PATH" -C "$FIREFOX_DIR"
   rm "$ARCHIVE_PATH"
 
