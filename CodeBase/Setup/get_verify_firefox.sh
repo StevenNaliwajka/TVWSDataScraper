@@ -7,31 +7,28 @@ if [ -z "$PROJECT_ROOT" ]; then
   PROJECT_ROOT="$(realpath "$SCRIPT_DIR/../..")"
 fi
 
+# Set Firefox version explicitly
+FIREFOX_VERSION="135.0"
+ARCHIVE_NAME="firefox-${FIREFOX_VERSION}.tar.bz2"
+DOWNLOAD_URL="https://ftp.mozilla.org/pub/firefox/releases/${FIREFOX_VERSION}/linux-x86_64/en-US/firefox-${FIREFOX_VERSION}.tar.bz2"
+
 # Paths
 FIREFOX_DIR="$PROJECT_ROOT/CodeBase/Firefox"
 INSTALL_DIR="$FIREFOX_DIR/firefox"
-ARCHIVE_PATH="$FIREFOX_DIR/firefox-latest.tar"
-DOWNLOAD_URL="https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US"
+ARCHIVE_PATH="$FIREFOX_DIR/$ARCHIVE_NAME"
 
 # Create target directory
 mkdir -p "$FIREFOX_DIR"
 
-# Download if not installed or folder is empty
+# Download and install if not already present
 if [ ! -d "$INSTALL_DIR" ] || [ -z "$(ls -A "$INSTALL_DIR")" ]; then
-  echo "[*] Downloading latest Firefox..."
+  echo "[*] Downloading Firefox v$FIREFOX_VERSION..."
   curl -L "$DOWNLOAD_URL" -o "$ARCHIVE_PATH"
 
-  echo "[*] Detecting archive format..."
-  ARCHIVE_TYPE=$(file "$ARCHIVE_PATH")
-
-  case "$ARCHIVE_TYPE" in
-    *gzip*)   echo "[*] Extracting gzip archive...";  tar -xzf "$ARCHIVE_PATH" -C "$FIREFOX_DIR" ;;
-    *bzip2*)  echo "[*] Extracting bzip2 archive..."; tar -xjf "$ARCHIVE_PATH" -C "$FIREFOX_DIR" ;;
-    *XZ*)     echo "[*] Extracting xz archive...";    tar -xJf "$ARCHIVE_PATH" -C "$FIREFOX_DIR" ;;
-    *)        echo "[!] Unsupported archive format: $ARCHIVE_TYPE"; exit 1 ;;
-  esac
-
+  echo "[*] Extracting archive..."
+  tar -xjf "$ARCHIVE_PATH" -C "$FIREFOX_DIR"
   rm "$ARCHIVE_PATH"
+
   echo "[*] Firefox installed at: $INSTALL_DIR"
 else
   echo "[*] Firefox already present at: $INSTALL_DIR"
