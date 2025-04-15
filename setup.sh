@@ -25,5 +25,20 @@ bash "$PROJECT_ROOT/CodeBase/Setup/get_verify_geckodriver.sh"
 # Install Firefox
 bash "$PROJECT_ROOT/CodeBase/Setup/get_verify_firefox.sh"
 
+# Ensure CSVOutput directory is writable by the current user
+CSV_OUTPUT_DIR="$PROJECT_ROOT/CSVOutput"
+
+if [ ! -d "$CSV_OUTPUT_DIR" ]; then
+  echo "(Setup) Creating CSVOutput directory at: $CSV_OUTPUT_DIR"
+  mkdir -p "$CSV_OUTPUT_DIR"
+fi
+
+if [ "$(stat -c '%U' "$CSV_OUTPUT_DIR")" != "$USER" ]; then
+  echo "(Setup) Fixing permissions on $CSV_OUTPUT_DIR (was owned by root)"
+  sudo chown -R "$USER":"$USER" "$CSV_OUTPUT_DIR"
+else
+  echo "(Setup) CSVOutput directory is already owned by $USER"
+fi
+
 echo "Configure Configs In /Config/*"
 echo "Once finished run 'run.sh'"
