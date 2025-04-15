@@ -11,7 +11,7 @@ from CodeBase.Webscraper.Browser.verify_get_local_firefox_install import verify_
 def get_firefox_driver():
     project_root = os.path.dirname(os.path.abspath(__file__ + "/../../.."))
     binary_path = os.path.join(project_root, "CodeBase", "Firefox", "firefox", "firefox-bin")
-    service = FirefoxService(executable_path="/usr/local/bin/geckodriver")
+    service = FirefoxService(executable_path="/usr/local/bin/geckodriver", log_path="/tmp/geckodriver.log")
 
     options = Options()
     options.binary_location = binary_path
