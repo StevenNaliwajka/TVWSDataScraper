@@ -9,14 +9,14 @@ fi
 
 echo "[*] Project root is: $PROJECT_ROOT"
 
-# Ensure curl is available
+# Ensure required tools are available
 sudo apt update
-sudo apt install -y curl
+sudo apt install -y curl jq
 
 echo "[*] Fetching latest geckodriver version..."
 
-# Get latest version tag safely (ensure it's the tag, not the release URL)
-LATEST_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | grep '"tag_name":' | head -n 1 | cut -d'"' -f4)
+# Correctly extract tag name using jq
+LATEST_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.tag_name')
 
 if [ -z "$LATEST_VERSION" ]; then
   echo "[!] Failed to determine latest geckodriver version."
