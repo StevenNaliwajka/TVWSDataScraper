@@ -1,9 +1,13 @@
 #!/bin/bash
 set -e
 
+# Determine project root from environment or fallback
+if [ -z "$PROJECT_ROOT" ]; then
+  SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+  PROJECT_ROOT="$(realpath "$SCRIPT_DIR/../..")"
+fi
+
 # Paths
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(realpath "$SCRIPT_DIR/../..")"
 FIREFOX_DIR="$PROJECT_ROOT/CodeBase/Firefox"
 INSTALL_DIR="$FIREFOX_DIR/firefox"
 ARCHIVE_PATH="$FIREFOX_DIR/firefox-latest.tar"
