@@ -6,6 +6,15 @@ export PROJECT_ROOT
 
 echo "Welcome to TVWS Setup"
 
+# Fix permissions for the full project directory if needed
+REAL_USER=${SUDO_USER:-$USER}
+if [ "$(stat -c '%U' "$PROJECT_ROOT")" != "$REAL_USER" ]; then
+  echo "(Setup) Fixing ownership of $PROJECT_ROOT to $REAL_USER"
+  sudo chown -R "$REAL_USER":"$REAL_USER" "$PROJECT_ROOT"
+else
+  echo "(Setup) $PROJECT_ROOT is already owned by $REAL_USER"
+fi
+
 # Setup Configs
 bash "$PROJECT_ROOT/CodeBase/Setup/CreateConfig/general_config.sh"
 bash "$PROJECT_ROOT/CodeBase/Setup/CreateConfig/outfile_config.sh"
@@ -33,11 +42,11 @@ if [ ! -d "$CSV_OUTPUT_DIR" ]; then
   mkdir -p "$CSV_OUTPUT_DIR"
 fi
 
-if [ "$(stat -c '%U' "$CSV_OUTPUT_DIR")" != "$USER" ]; then
-  echo "(Setup) Fixing permissions on $CSV_OUTPUT_DIR (was owned by root)"
-  sudo chown -R "$USER":"$USER" "$CSV_OUTPUT_DIR"
+if [ "$(stat -c '%U' "$CSV_OUTPUT_DIR")" != "$REAL_USER" ]; then
+  echo "(Setup) Fixing permissions on $CSV_OUTPUT_DIR (was owned by someone else)"
+  sudo chown -R "$REAL_USER":"$REAL_USER" "$CSV_OUTPUT_DIR"
 else
-  echo "(Setup) CSVOutput directory is already owned by $USER"
+  echo "(Setup) CSVOutput directory is already owned by $REAL_USER"
 fi
 
 echo "Configure Configs In /Config/*"
