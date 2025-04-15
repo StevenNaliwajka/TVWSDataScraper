@@ -1,12 +1,8 @@
 import os
-import platform
+import subprocess
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
-
-from CodeBase.Webscraper.Browser.verify_get_local_firefox_install import verify_get_local_firefox_install
-
 
 def get_firefox_driver():
     project_root = os.path.dirname(os.path.abspath(__file__ + "/../../.."))
@@ -18,5 +14,11 @@ def get_firefox_driver():
 
     print("Using Firefox binary:", options.binary_location)
 
-    # Initialize the WebDriver with the appropriate service
+    # NEW: Try to print version of Firefox
+    try:
+        version = subprocess.check_output([binary_path, "--version"], text=True).strip()
+        print("Detected Firefox version:", version)
+    except Exception as e:
+        print("Could not determine Firefox version:", e)
+
     return webdriver.Firefox(service=service, options=options)
