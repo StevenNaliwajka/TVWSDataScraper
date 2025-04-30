@@ -4,6 +4,21 @@
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export PROJECT_ROOT
 
+# Parse optional -venv flag
+EXISTING_VENV=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -venv)
+      EXISTING_VENV="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+  esac
+done
+
 echo "Welcome to TVWS Setup"
 
 # Fix permissions for the full project directory if needed
@@ -26,7 +41,7 @@ bash "$PROJECT_ROOT/CodeBase/Setup/CreateConfig/settings_to_test_config.sh"
 bash "$PROJECT_ROOT/CodeBase/Setup/install_python.sh"
 
 # Create VENV and install requirements
-bash "$PROJECT_ROOT/CodeBase/Setup/setup_venv.sh"
+bash "$PROJECT_ROOT/CodeBase/Setup/setup_venv.sh" -venv "$EXISTING_VENV"
 
 # Install GeckoDriver
 bash "$PROJECT_ROOT/CodeBase/Setup/get_verify_geckodriver.sh"
