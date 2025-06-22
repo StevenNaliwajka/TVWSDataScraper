@@ -1,3 +1,7 @@
+# DEPRICATED June 22 2025. SAVED FOR RECORDs. 
+# SEE [KSU-OfficeNode](https://github.com/StevenNaliwajka/KSU-OfficeNode) for where this was merged into.
+
+
 # TVWSDataScraper
 
 A repo for a directed study project. Used to navigate the 'GWS5000' TVWS radio's WebUI and gather data.
